@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'partials/_header.html.twig' %}
+    <div class="container">
+        {% include '_partials/slider.html.twig' %}
+        <hr>
+        <div class="row">
+            <div class="col-lg-4">
+                <h3 class="text-left">Service du mois</h3>
+                {% include 'partials/_service.html.twig' %}
+            </div>
+            <div class="col-lg-4">
+                <h3 class="text-left">Nouveaux prestataires</h3>
+                {% include 'partials/_workers.html.twig' %}
+            </div>
+            <div class="col-lg-4">
+                <h3 class="text-left">Recherche</h3>
+                {% include 'partials/_search.html.twig' %}
+            </div>
+        </div>
+
+        {% include 'partials/_footer.html.twig' %}
+
+    </div> <!-- /container -->
+    <div class="container">
+        <div class="row">
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+{% endblock %}
