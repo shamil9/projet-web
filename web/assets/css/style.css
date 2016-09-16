@@ -1,3 +1,7 @@
-.jumbotron {
-    background: none;
+.address div:first-child {
+    padding-left: 3px;
+}
+
+.address div:last-child {
+    padding-right: 0px;
 }
