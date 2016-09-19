@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+    {% for user in users %}
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="media">
+                        <div class="media-left media-top">
+                            <a href="{{ path("pro_user_profile", {'user': user.id}) }}">
+                                <img class="media-object pro_avatar--size" src="{{ asset("assets/img/icons/user.svg") }}" alt="">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{ user.name }}</h4>
+                            <p>{{ user.description }}</p>
+                            <small class="glyphicon glyphicon-map-marker" aria-hidden="true"></small> {{ user.city }}
+                            <span class="pull-right"><small class="glyphicon glyphicon-earphone
+" aria-hidden="true"></small> {{ user.phone }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

@@ -39,7 +39,7 @@ class User extends BaseUser
     protected $zip;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $phone;
 

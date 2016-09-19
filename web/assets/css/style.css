@@ -6,16 +6,19 @@
     padding-right: 0px;
 }
 
-.pro_avatar {
+.pro_userbar {
     position: relative;
     background-color: #eeeeee;
     padding: 10px;
 }
 
+.pro_avatar {
+    margin-top: -60px;
+    padding-left: 30px;
+}
+
 .pro_avatar--size {
     height: 100px;
-    margin-top: -60px;
-    margin-left: 30px;
 }
 
 .pro-tabs {

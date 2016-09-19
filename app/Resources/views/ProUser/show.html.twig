@@ -42,9 +42,11 @@
                     </a>
                 </div>
             </div>
-            <div class="pro_avatar">
-                <img src="{{ asset('assets/img/icons/user.svg') }}" alt="Avatar" class="pro_avatar--size">
-                Tel Email Twitter Facebook
+            <div class="pro_userbar col-lg-12">
+                <div class="pro_avatar col-lg-4">
+                    <img src="{{ asset('assets/img/icons/user.svg') }}" alt="Avatar" class="pro_avatar--size">
+                </div>
+                <span class="pull-right">Tel Email Twitter Facebook</span>
             </div>
         </div>
     </div>
@@ -122,4 +124,5 @@
         </div>
 
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
