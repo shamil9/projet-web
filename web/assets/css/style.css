@@ -5,3 +5,23 @@
 .address div:last-child {
     padding-right: 0px;
 }
+
+.pro_avatar {
+    position: relative;
+    background-color: #eeeeee;
+    padding: 10px;
+}
+
+.pro_avatar--size {
+    height: 100px;
+    margin-top: -60px;
+    margin-left: 30px;
+}
+
+.pro-tabs {
+    margin-top: 50px;
+}
+
+.footer {
+    margin-top: 100px;
+}
