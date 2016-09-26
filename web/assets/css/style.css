@@ -19,10 +19,21 @@
 
 .pro_avatar--size {
     height: 100px;
+    margin: 0;
 }
 
 .pro-tabs {
     margin-top: 50px;
+}
+
+.pro_user-info {
+    font-size: 25px;
+    padding-left: 20px;
+}
+
+.pro_social-icons {
+    padding-top: 6px;
+    height: 30px;
 }
 
 .footer {

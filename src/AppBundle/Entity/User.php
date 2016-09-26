@@ -1,12 +1,13 @@
 <?php
 
 namespace AppBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="users")
  */
 class User extends BaseUser
@@ -16,12 +17,12 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    protected $id;
+    public $id;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $name;
+    public $name;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -36,7 +37,7 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $zip;
+    public $zip;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -58,9 +59,15 @@ class User extends BaseUser
      */
     protected $tva;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="user")
+     * @ORM\JoinTable(name="categories_users")
+     */
+    public $category;
+
     public function __construct()
     {
-        parent::__construct();
+        $this->category = new ArrayCollection();
     }
 
     /**
@@ -189,6 +196,22 @@ class User extends BaseUser
     public function setZip( $zip )
     {
         $this->zip = $zip;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
     }
 
 }

@@ -1,4 +1,4 @@
-projet-web
+ Annuaire Bien-Être
 ==========
 
-A Symfony project created on September 9, 2016, 8:23 am.
+Un projet Symfony en cadre de troisième année.

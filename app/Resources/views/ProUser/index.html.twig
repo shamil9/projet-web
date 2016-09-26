@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Liste de prestataires{% endblock %}
+
 {% block body %}
 <div class="container">
     <div class="row">
@@ -14,7 +16,9 @@
                             </a>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">{{ user.name }}</h4>
+                            <h4 class="media-heading">
+                                <a href="{{ path("pro_user_profile", {'user': user.id}) }}">{{ user.name }}</a>
+                            </h4>
                             <p>{{ user.description }}</p>
                             <small class="glyphicon glyphicon-map-marker" aria-hidden="true"></small> {{ user.city }}
                             <span class="pull-right"><small class="glyphicon glyphicon-earphone
@@ -27,9 +31,5 @@
     {% endfor %}
     </div>
 </div>
-{% endblock %}
-
-{% block title %}
-
 {% endblock %}
 

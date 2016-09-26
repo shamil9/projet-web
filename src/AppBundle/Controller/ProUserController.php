@@ -16,7 +16,11 @@ class ProUserController extends BaseController
      */
     public function showAction(Request $request, User $user)
     {
-        return $this->render('ProUser/show.html.twig', ['user' => $user]);
+        $users = $this->getRepository('AppBundle:User')->findSuggestions($user);
+
+        return $this->render('ProUser/show.html.twig', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -28,5 +32,17 @@ class ProUserController extends BaseController
         $users = $this->getRepository('AppBundle:User')->findAll();
 
         return $this->render('ProUser/index.html.twig', ['users' => $users]);
+    }
+
+    /**
+     * @Route("/suggestions/{user}", name="pro_users_suggestions")
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function showSuggestions(User $user)
+    {
+        $users = $this->getRepository('AppBundle:User')->findSuggestions($user);
+
+        return $this->json($users);
     }
 }
