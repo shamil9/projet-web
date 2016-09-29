@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProUserRepository")
  * @ORM\Table(name="users")
  */
 class User extends BaseUser
@@ -60,14 +60,20 @@ class User extends BaseUser
     private $tva;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $registrationDate;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Category", inversedBy="user")
      * @ORM\JoinTable(name="categories_users")
      */
-    private $category;
+    private $categories;
 
     public function __construct()
     {
-        $this->category = new ArrayCollection();
+        parent::__construct();
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -201,17 +207,33 @@ class User extends BaseUser
     /**
      * @return mixed
      */
-    public function getCategory()
+    public function getCategories()
     {
-        return $this->category;
+        return $this->categories;
     }
 
     /**
-     * @param mixed $category
+     * @param mixed $categories
      */
-    public function setCategory($category)
+    public function setCategories($categories)
     {
-        $this->category = $category;
+        $this->categories = $categories;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegistrationDate()
+    {
+        return $this->registrationDate;
+    }
+
+    /**
+     * @param mixed $registrationDate
+     */
+    public function setRegistrationDate()
+    {
+        $this->registrationDate = new \DateTime('now');
     }
 
 }

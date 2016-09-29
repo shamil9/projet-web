@@ -29,6 +29,9 @@ class CreateProUsers implements FixtureInterface, ContainerAwareInterface
 
         for ($i = 0; $i < 10; $i++) {
             $proUser = new User();
+            $proUser->setEnabled(1);
+            $proUser->setLocked(0);
+            $proUser->setExpired(0);
             $proUser->setUsername($faker->userName);
             $proUser->setEmail($faker->email);
             $proUser->setPassword($faker->password());
@@ -40,7 +43,8 @@ class CreateProUsers implements FixtureInterface, ContainerAwareInterface
             $proUser->setTva($faker->vat);
             $proUser->setWebsite($faker->url);
             $proUser->setZip($faker->postcode);
-            $proUser->setCategory($categories->random(3)->all());
+            $proUser->setCategories($categories->random(3)->all());
+            $proUser->setRegistrationDate();
 
             $manager->persist($proUser);
             $manager->flush();
