@@ -16,7 +16,7 @@ class ProUserController extends BaseController
      */
     public function showAction(Request $request, User $user)
     {
-        $users = $this->getRepository('AppBundle:User')->findSuggestions($user);
+        $suggestions = $this->getRepository('AppBundle:User')->findSuggestions($user);
 
         return $this->render('ProUser/show.html.twig', [
             'user' => $user
@@ -41,8 +41,17 @@ class ProUserController extends BaseController
      */
     public function showSuggestions(User $user)
     {
-        $users = $this->getRepository('AppBundle:User')->findSuggestions($user);
+        $suggestions = $this->getRepository('AppBundle:User')->findSuggestions($user);
+        $foo = $this->collection($suggestions);
 
-        return $this->json($users);
+        $bar = $foo->map(function($item, $key) use ($suggestions) {
+            return [
+                'name' => $item->getName(),
+                'id' => $item->getId(),
+                'categ' => $item->getCategory()
+            ];
+        });
+
+        return $this->json($bar);
     }
 }

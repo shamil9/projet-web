@@ -145,5 +145,6 @@ class Category
     {
         return $this->promoted;
     }
+
 }
 

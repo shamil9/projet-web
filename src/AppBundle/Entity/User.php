@@ -17,53 +17,53 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    public $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    public $name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $city;
+    private $city;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $street;
+    private $street;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    public $zip;
+    private $zip;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $phone;
+    private $phone;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $description;
+    private $description;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $website;
+    private $website;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $tva;
+    private $tva;
 
     /**
      * @ORM\ManyToMany(targetEntity="Category", inversedBy="user")
      * @ORM\JoinTable(name="categories_users")
      */
-    public $category;
+    private $category;
 
     public function __construct()
     {
