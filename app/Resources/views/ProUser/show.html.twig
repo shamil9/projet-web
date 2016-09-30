@@ -100,6 +100,7 @@
                         </div>
                         <div role="tabpanel" class="tab-pane" id="localisation">
                             <h1>Localisation</h1>
+                            <div id="map" class="col-lg-6 map"></div>
                         </div>
                     </div>
 
@@ -119,12 +120,41 @@
 </div>
 {% endblock %}
 {% block javascripts %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt6NP5o5G-VPddw-tdyZ7I-N41_l04Sic"></script>
+    <script src="{{ asset('assets/js/gmaps.js') }}"></script>
     {#TODO Déplacer dans un fichier JS#}
     <script>
+
+        //Affichage de la carte GMAPS
+        var map;
+        $(document).ready(function () {
+            map = new GMaps({
+                el: '#map',
+                lat: -12.043333,
+                lng: -77.028333
+            });
+            GMaps.geocode({
+                address: '{{ user.city }}',
+                callback: function (results, status) {
+                    if (status == 'OK') {
+                        var latlng = results[0].geometry.location;
+                        map.setCenter(latlng.lat(), latlng.lng());
+                        map.addMarker({
+                            lat: latlng.lat(),
+                            lng: latlng.lng()
+                        });
+                    }
+                }
+            });
+        });
+
+        //Recuperation du json avec les suggestions
         $.getJSON('{{ path("pro_users_suggestions", {'user': user.id}) }}', function (data) {
             if (data.length < 1)
                     return showSuggestions('<h3 class="text-center">Aucun résultat trouvé</h3>');
             var html = '';
+
+            //Construction du HTML
             for (var key in data) {
                 html += "<div class='col-lg-3'>" +
                             "<a href='" + data[key].id + "' class='thumbnail'>" +

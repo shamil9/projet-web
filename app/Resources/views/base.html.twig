@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     </head>
     <body>
-        {% include 'partials/_header.html.twig' %}
+        {{ render(controller('AppBundle:Default:navigationRender')) }}
         {% block body %}{% endblock %}
         {% include ':partials:_footer.html.twig' %}
 

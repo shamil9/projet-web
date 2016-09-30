@@ -44,4 +44,15 @@ class ProUserRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findCitiesWithProUsers()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        return $qb->select(['user.city', $qb->expr()->count('user.id')])
+            ->from('AppBundle:User', 'user')
+            ->groupBy('user.city')
+            ->getQuery()
+            ->getResult();
+    }
 }

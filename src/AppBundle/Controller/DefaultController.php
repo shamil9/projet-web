@@ -12,7 +12,7 @@ class DefaultController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
+
         return $this->render('default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
         ]);
@@ -32,7 +32,7 @@ class DefaultController extends BaseController
 
     public function navigationRenderAction()
     {
-        $regions = '';
+        $regions = $this->getRepository('AppBundle:User')->findCitiesWithProUsers();
 
         return $this->render('partials/_header.html.twig', [
             'regions' => $regions

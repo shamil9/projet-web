@@ -6,7 +6,19 @@
                     <li><a href="/">Accueil</a></li>
                     <li><a href="/">À propos</a></li>
                     <li><a href="{{ path("pro_users_index") }}">Partenaire</a></li>
-                    <li><a href="/">Par région</a></li>
+                    <li><a href="/" class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">Par région <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            {% for ville in regions %}
+                                <li>
+                                    <a href="#">{{ ville.city }} <span class="badge pull-right">{{ ville.1 }}</span></a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
                     <li><a href="/">Stages</a></li>
                     <li><a href="/">Contact</a></li>
                 </ul>

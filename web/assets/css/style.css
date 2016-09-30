@@ -39,3 +39,8 @@
 .footer {
     margin-top: 100px;
 }
+
+.map {
+    width: 100% !important;
+    height: 500px !important;
+}
