@@ -1,7 +1,7 @@
 <?php namespace AppBundle\DataFixtures\ORM;
 
 
-use AppBundle\Entity\User;
+use AppBundle\Entity\ProMember;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -28,8 +28,9 @@ class CreateProUsers implements FixtureInterface, ContainerAwareInterface
         $categories = new Collection($em->getRepository('AppBundle:Category')->findAll());
 
         for ($i = 0; $i < 10; $i++) {
-            $proUser = new User();
+            $proUser = new ProMember();
             $proUser->setEnabled(1);
+            $proUser->setIsActive(1);
             $proUser->setLocked(0);
             $proUser->setExpired(0);
             $proUser->setUsername($faker->userName);

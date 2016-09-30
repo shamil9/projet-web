@@ -1,17 +1,24 @@
 <?php
 
 namespace AppBundle\Entity;
-use Doctrine\Common\Collections\ArrayCollection;
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProUserRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="users")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="user_type", type="string")
+ * @ORM\DiscriminatorMap({"member"="Member", "pro_member"="ProMember", "user"="User"});
+ *
  */
 class User extends BaseUser
 {
+    const TYPE_MEMBER = 'member';
+    const TYPE_PRO_USER = 'pro_member';
+    const TYPE_USER = 'user';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -20,204 +27,114 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(name="is_active", type="boolean")
      */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $city;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $street;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $zip;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $phone;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $website;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $tva;
+    protected $isActive;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $registrationDate;
+    protected $registrationDate;
+
+    protected $userType;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Category", inversedBy="user")
-     * @ORM\JoinTable(name="categories_users")
+     * @return mixed
      */
-    private $categories;
-
-    public function __construct()
+    public function getId()
     {
-        parent::__construct();
-        $this->categories = new ArrayCollection();
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
      * @return mixed
      */
-    public function getName()
+    public function getUsername()
     {
-        return $this->name;
+        return $this->username;
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $username
+     * @return $this|void|static
      */
-    public function setName( $name )
+    public function setUsername($username)
     {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * @param mixed $phone
-     */
-    public function setPhone( $phone )
-    {
-        $this->phone = $phone;
+        $this->username = $username;
     }
 
     /**
      * @return mixed
      */
-    public function getDescription()
+    public function getPassword()
     {
-        return $this->description;
+        return $this->password;
     }
 
     /**
-     * @param mixed $description
+     * @param mixed $password
+     * @return $this|void|static
      */
-    public function setDescription( $description )
+    public function setPassword($password)
     {
-        $this->description = $description;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getWebsite()
-    {
-        return $this->website;
-    }
-
-    /**
-     * @param mixed $website
-     */
-    public function setWebsite( $website )
-    {
-        $this->website = $website;
+        $this->password = $password;
     }
 
     /**
      * @return mixed
      */
-    public function getTva()
+    public function getEmail()
     {
-        return $this->tva;
+        return $this->email;
     }
 
     /**
-     * @param mixed $tva
+     * @param mixed $email
+     * @return $this|void|static
      */
-    public function setTva( $tva )
+    public function setEmail($email)
     {
-        $this->tva = $tva;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param mixed $city
-     */
-    public function setCity( $city )
-    {
-        $this->city = $city;
+        $this->email = $email;
     }
 
     /**
      * @return mixed
      */
-    public function getStreet()
+    public function getUserType()
     {
-        return $this->street;
+        return $this->userType;
     }
 
     /**
-     * @param mixed $street
+     * @param mixed $userType
      */
-    public function setStreet( $street )
+    public function setUserType($userType)
     {
-        $this->street = $street;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getZip()
-    {
-        return $this->zip;
-    }
-
-    /**
-     * @param mixed $zip
-     */
-    public function setZip( $zip )
-    {
-        $this->zip = $zip;
+        $this->userType = $userType;
     }
 
     /**
      * @return mixed
      */
-    public function getCategories()
+    public function getIsActive()
     {
-        return $this->categories;
+        return $this->isActive;
     }
 
     /**
-     * @param mixed $categories
+     * @param mixed $isActive
      */
-    public function setCategories($categories)
+    public function setIsActive($isActive)
     {
-        $this->categories = $categories;
+        $this->isActive = $isActive;
     }
 
     /**
@@ -229,7 +146,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param mixed $registrationDate
+     * @internal param mixed $registrationDate
      */
     public function setRegistrationDate()
     {

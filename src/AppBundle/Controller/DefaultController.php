@@ -23,7 +23,7 @@ class DefaultController extends BaseController
      */
     public function latestProUsersAction()
     {
-        $users = $this->getRepository('AppBundle:User')->findLatestProUsers();
+        $users = $this->getRepository('AppBundle:ProMember')->findLatestProUsers();
 
         return $this->render('partials/_latestprousers.html.twig', [
             'users' => $users
@@ -32,7 +32,7 @@ class DefaultController extends BaseController
 
     public function navigationRenderAction()
     {
-        $regions = $this->getRepository('AppBundle:User')->findCitiesWithProUsers();
+        $regions = $this->getRepository('AppBundle:ProMember')->findCitiesWithProUsers();
 
         return $this->render('partials/_header.html.twig', [
             'regions' => $regions

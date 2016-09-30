@@ -3,7 +3,8 @@
 security:
 
     encoders:
-        FOS\UserBundle\Model\UserInterface: bcrypt
+        AppBundle\Entity\User:
+                    algorithm: bcrypt
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
@@ -11,8 +12,10 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username
+        orm:
+            entity:
+                class: AppBundle:User
+                property: username
 #        in_memory:
 #            memory: ~
 
@@ -25,7 +28,7 @@ security:
         main:
             pattern: ^/
             form_login:
-                provider: fos_userbundle
+                provider: orm
                 csrf_token_generator: security.csrf.token_manager
             logout: true
             anonymous: true
@@ -34,7 +37,7 @@ security:
             # http_basic: ~
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
-            # form_login: ~
+            form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }

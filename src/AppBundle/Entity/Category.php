@@ -42,7 +42,7 @@ class Category
     private $promoted;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\ProMember", mappedBy="categories")
      */
     private $user;
 
