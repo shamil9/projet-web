@@ -91,6 +91,13 @@
                         </div>
                         <div role="tabpanel" class="tab-pane" id="stages">
                             <h1>Stages</h1>
+                            {% for stage in user.workshops %}
+                                {{ stage.name }}
+                                {{ stage.description }}
+                                {{ stage.price }}
+                                {{ stage.start|date("m/d/Y") }}
+                                {{ stage.end|date("m/d/Y") }}
+                            {% endfor %}
                         </div>
                         <div role="tabpanel" class="tab-pane" id="promotions">
                             <h1>Promotions</h1>
@@ -134,7 +141,7 @@
                 lng: -77.028333
             });
             GMaps.geocode({
-                address: '{{ user.city }}',
+                address: '{{ user.city }} Belgique',
                 callback: function (results, status) {
                     if (status == 'OK') {
                         var latlng = results[0].geometry.location;

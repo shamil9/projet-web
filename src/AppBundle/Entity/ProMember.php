@@ -10,58 +10,64 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ProMember extends User
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->userType = User::TYPE_PRO_USER;
-        $this->categories = new ArrayCollection();
-    }
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $city;
+    protected $city;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $street;
+    protected $street;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $zip;
+    protected $zip;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $phone;
+    protected $phone;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $website;
+    protected $website;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $tva;
+    protected $tva;
     
     /**
      * @ORM\ManyToMany(targetEntity="Category", inversedBy="user")
      * @ORM\JoinTable(name="categories_users")
      */
-    private $categories;
+    protected $categories;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Workshop", mappedBy="user")
+     */
+    protected $workshops;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->userType = User::TYPE_PRO_USER;
+        $this->categories = new ArrayCollection();
+        $this->workshops = new ArrayCollection();
+    }
     /**
      * @return mixed
      */
@@ -205,4 +211,21 @@ class ProMember extends User
     {
         $this->categories = $categories;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getWorkshops()
+    {
+        return $this->workshops;
+    }
+
+    /**
+     * @param mixed $workshops
+     */
+    public function setWorkshops($workshops)
+    {
+        $this->workshops = $workshops;
+    }
+    
 }

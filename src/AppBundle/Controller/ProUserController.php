@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\ProMember;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +15,7 @@ class ProUserController extends BaseController
      * @param User $user
      * @return string
      */
-    public function showAction(Request $request, User $user)
+    public function showAction(Request $request, ProMember $user)
     {
         return $this->render('ProUser/show.html.twig', [
             'user' => $user
@@ -27,7 +28,7 @@ class ProUserController extends BaseController
      */
     public function listAction()
     {
-        $users = $this->getRepository('AppBundle:User')->findAll();
+        $users = $this->getRepository('AppBundle:ProMember')->findAll();
 
         return $this->render('ProUser/index.html.twig', ['users' => $users]);
     }
