@@ -29,10 +29,7 @@ class CreateProUsers implements FixtureInterface, ContainerAwareInterface
 
         for ($i = 0; $i < 10; $i++) {
             $proUser = new ProMember();
-            $proUser->setEnabled(1);
             $proUser->setIsActive(1);
-            $proUser->setLocked(0);
-            $proUser->setExpired(0);
             $proUser->setUsername($faker->userName);
             $proUser->setEmail($faker->email);
             $proUser->setPassword($faker->password());

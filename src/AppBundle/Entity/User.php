@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorMap({"member"="Member", "pro_member"="ProMember", "user"="User"});
  *
  */
-class User extends BaseUser
+class User 
 {
     const TYPE_MEMBER = 'member';
     const TYPE_PRO_USER = 'pro_member';
@@ -38,6 +37,13 @@ class User extends BaseUser
 
     protected $userType;
 
+    public function __construct()
+    {
+        $this->isActive = true;
+        // may not be needed, see section on salt below
+        // $this->salt = md5(uniqid(null, true));
+    }
+    
     /**
      * @return mixed
      */

@@ -39,7 +39,7 @@ class ProUserController extends BaseController
      */
     public function showSuggestions(User $user)
     {
-        $query = $this->getRepository('AppBundle:User')->findProUserSuggestions($user);
+        $query = $this->getRepository('AppBundle:ProMember')->findProUserSuggestions($user);
         $suggestions = $this->collection($query)
             ->map(function (User $item, $key) {
             return [
