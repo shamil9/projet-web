@@ -59,12 +59,17 @@
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
+
                         <li role="presentation" class="active">
                             <a href="#categories" aria-controls="categories" role="tab" data-toggle="tab">Catégories</a>
                         </li>
+
+                        {% if user.workshops is not empty  %}
                         <li role="presentation">
                             <a href="#stages" aria-controls="stages" role="tab" data-toggle="tab">Stages</a>
                         </li>
+                        {% endif %}
+
                         <li role="presentation">
                             <a href="#promotions" aria-controls="promotions" role="tab" data-toggle="tab">Promotions</a>
                         </li>
@@ -79,32 +84,23 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="categories">
-                            <h1>Catégories</h1>
-                            {% for cat in user.categories %}
-                                <ul>
-                                    <li>
-                                        <h3>{{ cat.name }}</h3>
-                                        {{ cat.description }}
-                                    </li>
-                                </ul>
-                            {% endfor %}
+                            {% include 'ProUser/partials/_categories.html.twig' %}
                         </div>
+
+                        {% if user.workshops is not empty  %}
                         <div role="tabpanel" class="tab-pane" id="stages">
-                            <h1>Stages</h1>
-                            {% for stage in user.workshops %}
-                                {{ stage.name }}
-                                {{ stage.description }}
-                                {{ stage.price }}
-                                {{ stage.start|date("m/d/Y") }}
-                                {{ stage.end|date("m/d/Y") }}
-                            {% endfor %}
+                            {% include 'ProUser/partials/_workshops.html.twig' %}
                         </div>
+                        {% endif %}
+
                         <div role="tabpanel" class="tab-pane" id="promotions">
                             <h1>Promotions</h1>
                         </div>
+
                         <div role="tabpanel" class="tab-pane" id="commentaires">
                             <h1>Commentaires</h1>
                         </div>
+
                         <div role="tabpanel" class="tab-pane" id="localisation">
                             <h1>Localisation</h1>
                             <div id="map" class="col-lg-6 map"></div>
