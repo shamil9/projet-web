@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\ProMember;
+use AppBundle\Entity\Sale;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProUserController extends BaseController
 {
@@ -51,5 +53,26 @@ class ProUserController extends BaseController
         });
 
         return $this->json($suggestions);
+    }
+
+    /**
+     * @Route("/sale/{sale}/pdf", name="pro_user_sale_pdf")
+     * @param Sale $sale
+     * @return Response
+     */
+    public function generateSalePdf(Sale $sale)
+    {
+        $html = $this->renderView(':ProUser:pdf.html.twig', array(
+            'sale'  => $sale
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="promotion_bien_etre.pdf"'
+            )
+        );
     }
 }

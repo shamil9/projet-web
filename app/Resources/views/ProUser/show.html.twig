@@ -56,7 +56,6 @@
         <div class="col-lg-12">
             <div class="pro-tabs">
                 <div>
-
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
 
@@ -64,15 +63,18 @@
                             <a href="#categories" aria-controls="categories" role="tab" data-toggle="tab">Catégories</a>
                         </li>
 
-                        {% if user.workshops is not empty  %}
+                        {% if user.workshops is not empty %}
                         <li role="presentation">
                             <a href="#stages" aria-controls="stages" role="tab" data-toggle="tab">Stages</a>
                         </li>
                         {% endif %}
 
+                        {% if user.sales is not empty %}
                         <li role="presentation">
                             <a href="#promotions" aria-controls="promotions" role="tab" data-toggle="tab">Promotions</a>
                         </li>
+                        {% endif %}
+
                         <li role="presentation">
                             <a href="#commentaires" aria-controls="commentaires" role="tab" data-toggle="tab">Commentaires</a>
                         </li>
@@ -93,9 +95,11 @@
                         </div>
                         {% endif %}
 
+                        {% if user.sales is not empty %}
                         <div role="tabpanel" class="tab-pane" id="promotions">
-                            <h1>Promotions</h1>
+                            {% include 'ProUser/partials/_sales.html.twig' %}
                         </div>
+                        {% endif %}
 
                         <div role="tabpanel" class="tab-pane" id="commentaires">
                             <h1>Commentaires</h1>
@@ -106,7 +110,6 @@
                             <div id="map" class="col-lg-6 map"></div>
                         </div>
                     </div>
-
                 </div>
             </div> <!-- tabs end -->
 

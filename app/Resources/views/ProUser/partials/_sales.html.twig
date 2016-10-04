@@ -1,0 +1,12 @@
+<h1>Promotions</h1>
+{% for sale in user.sales %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="lead">{{ sale.name }}</span>
+            <span class="pull-right"><a href="{{ path('pro_user_sale_pdf', {'sale': sale.id}) }}">PDF</a></span>
+        </div>
+        <div class="panel-body">
+            {{ sale.description }}
+        </div>
+    </div>
+{% endfor %}

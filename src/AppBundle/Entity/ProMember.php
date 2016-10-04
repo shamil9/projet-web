@@ -57,6 +57,11 @@ class ProMember extends User
     protected $categories;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Sale", mappedBy="user")
+     */
+    protected $sales;
+
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Workshop", mappedBy="user")
      */
     protected $workshops;
@@ -67,6 +72,7 @@ class ProMember extends User
         $this->userType = User::TYPE_PRO_USER;
         $this->categories = new ArrayCollection();
         $this->workshops = new ArrayCollection();
+        $this->sales = new ArrayCollection();
     }
     /**
      * @return mixed
@@ -226,6 +232,22 @@ class ProMember extends User
     public function setWorkshops($workshops)
     {
         $this->workshops = $workshops;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSales()
+    {
+        return $this->sales;
+    }
+
+    /**
+     * @param mixed $sales
+     */
+    public function setSales($sales)
+    {
+        $this->sales = $sales;
     }
     
 }

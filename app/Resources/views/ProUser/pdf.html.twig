@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ sale.name }}</title>
+</head>
+<body>
+<h1>{{ sale.name }}</h1>
+<p>{{ sale.description }}</p>
+<p>Début: {{ sale.start|date("d m-Y") }} / Fin: {{ sale.end|date("d m-Y") }}</p>
+</body>
+</html>

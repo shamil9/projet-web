@@ -2,7 +2,7 @@
 {% for cat in user.categories %}
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2 class="panel-title">{{ cat.name }}</h2>
+            <span class="lead">{{ cat.name }}</span>
         </div>
         <div class="panel-body">
             {{ cat.description }}

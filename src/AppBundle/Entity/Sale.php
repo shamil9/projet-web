@@ -36,13 +36,6 @@ class Sale
     private $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="document", type="string", length=255)
-     */
-    private $document;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="start", type="datetime")
@@ -55,6 +48,11 @@ class Sale
      * @ORM\Column(name="end", type="datetime")
      */
     private $end;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="sales")
+     */
+    protected $user;
 
 
     /**
@@ -116,30 +114,6 @@ class Sale
     }
 
     /**
-     * Set document
-     *
-     * @param string $document
-     *
-     * @return Sale
-     */
-    public function setDocument($document)
-    {
-        $this->document = $document;
-
-        return $this;
-    }
-
-    /**
-     * Get document
-     *
-     * @return string
-     */
-    public function getDocument()
-    {
-        return $this->document;
-    }
-
-    /**
      * Set start
      *
      * @param \DateTime $start
@@ -186,5 +160,22 @@ class Sale
     {
         return $this->end;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+    
 }
 
