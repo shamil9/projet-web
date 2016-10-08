@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorMap({"member"="Member", "pro_member"="ProMember", "user"="User"});
  *
  */
-class User 
+class User
 {
     const TYPE_MEMBER = 'member';
     const TYPE_PRO_USER = 'pro_member';
@@ -34,6 +34,24 @@ class User
      * @ORM\Column(type="datetime")
      */
     protected $registrationDate;
+
+    /**
+     * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     */
+    protected $email;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    protected $password;
 
     protected $userType;
 
@@ -58,23 +76,6 @@ class User
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param mixed $username
-     * @return $this|void|static
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
     }
 
     /**
@@ -159,4 +160,19 @@ class User
         $this->registrationDate = new \DateTime('now');
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+    }
 }

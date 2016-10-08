@@ -3,7 +3,7 @@
 security:
 
     encoders:
-        AppBundle\Entity\User:
+        AppBundle\Entity\Member:
                     algorithm: bcrypt
 
     role_hierarchy:

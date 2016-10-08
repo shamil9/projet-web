@@ -2,7 +2,7 @@
     {% for user in users %}
         <li class="list-group-item">
             <span class="badge">{{ user.city }}</span>
-            <a href="{{ path('pro_user_profile', { 'user': user.id }) }}">{{ user.name }}</a>
+            <a href="{{ path('pro_user_profile', {'slug': user.slug }) }}">{{ user.name }}</a>
         </li>
     {% endfor %}
 </ul>
