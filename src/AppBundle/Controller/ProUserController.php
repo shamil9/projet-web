@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 class ProUserController extends BaseController
 {
     /**
-     * @Route("/prestataire/{user}", name="pro_user_profile")
+     * @Route("/prestataire/{slug}", name="pro_user_profile")
      * @param Request $request
-     * @param User $user
+     * @param ProMember|User $user
      * @return string
      */
     public function showAction(Request $request, ProMember $user)

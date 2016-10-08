@@ -11,7 +11,7 @@
                         <div class="media">
                             <div class="media-body">
                                 <h4 class="media-heading">
-                                    <a href="{{ path('service_show', {'category': category.id}) }}">{{ category.name }}</a>
+                                    <a href="{{ path('service_show', {'slug': category.slug}) }}">{{ category.name }}</a>
                                 </h4>
                                 <p>{{ category.description }}</p>
                             </div>

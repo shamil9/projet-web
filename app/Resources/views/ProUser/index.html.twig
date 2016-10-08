@@ -11,13 +11,13 @@
                 <div class="panel-body">
                     <div class="media">
                         <div class="media-left media-top">
-                            <a href="{{ path("pro_user_profile", {'user': user.id}) }}">
+                            <a href="{{ path("pro_user_profile", {'slug': user.slug}) }}">
                                 <img class="media-object pro_avatar--size" src="{{ asset("assets/img/icons/user.svg") }}" alt="">
                             </a>
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">
-                                <a href="{{ path("pro_user_profile", {'user': user.id}) }}">{{ user.name }}</a>
+                                <a href="{{ path('pro_user_profile', {'slug': user.slug}) }}">{{ user.name }}</a>
                             </h4>
                             <p>{{ user.description }}</p>
                             <small class="glyphicon glyphicon-map-marker" aria-hidden="true"></small> {{ user.city }}
