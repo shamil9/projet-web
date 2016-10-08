@@ -30,6 +30,9 @@ class DefaultController extends BaseController
         ]);
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function navigationRenderAction()
     {
         $regions = $this->getRepository('AppBundle:ProMember')->findCitiesWithProUsers();
@@ -37,5 +40,21 @@ class DefaultController extends BaseController
         return $this->render('partials/_header.html.twig', [
             'regions' => $regions
         ]);
+    }
+
+    /**
+     * @Route("/about", name="about")
+     */
+    public function aboutAction()
+    {
+        return $this->render('default/about.html.twig');
+    }    
+    
+    /**
+     * @Route("/contact", name="contact")
+     */
+    public function contactAction()
+    {
+        return $this->render('default/contact.html.twig');
     }
 }

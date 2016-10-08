@@ -66,6 +66,11 @@ class ProMember extends User
      */
     protected $workshops;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="proMember")
+     */
+    protected $comments;
+
     public function __construct()
     {
         parent::__construct();
@@ -73,7 +78,9 @@ class ProMember extends User
         $this->categories = new ArrayCollection();
         $this->workshops = new ArrayCollection();
         $this->sales = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
+    
     /**
      * @return mixed
      */
@@ -249,5 +256,20 @@ class ProMember extends User
     {
         $this->sales = $sales;
     }
-    
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
 }

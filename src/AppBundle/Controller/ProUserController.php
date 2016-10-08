@@ -71,7 +71,7 @@ class ProUserController extends BaseController
             200,
             array(
                 'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'attachment; filename="promotion_bien_etre.pdf"'
+                'Content-Disposition'   => "attachment; filename='{$sale->getName()}.pdf'"
             )
         );
     }

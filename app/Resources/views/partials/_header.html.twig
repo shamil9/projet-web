@@ -4,8 +4,8 @@
             <nav>
                 <ul class="nav navbar-nav">
                     <li><a href="/">Accueil</a></li>
-                    <li><a href="/">À propos</a></li>
-                    <li><a href="{{ path("pro_users_index") }}">Partenaire</a></li>
+                    <li><a href="{{ path('about') }}">À propos</a></li>
+                    <li><a href="{{ path("pro_users_index") }}">Partenaires</a></li>
                     <li><a href="/" class="dropdown-toggle"
                            data-toggle="dropdown"
                            role="button"
@@ -19,8 +19,10 @@
                             {% endfor %}
                         </ul>
                     </li>
+                    <li><a href="{{ path('service_list') }}">Services</a></li>
                     <li><a href="/">Stages</a></li>
-                    <li><a href="/">Contact</a></li>
+                    <li><a href="/">Newsletters</a></li>
+                    <li><a href="{{ path('contact') }}">Contact</a></li>
                 </ul>
             </nav>
 
