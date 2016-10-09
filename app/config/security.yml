@@ -14,8 +14,14 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        orm:
-            entity: { class: AppBundle\Entity\User, property: username }
+        in_memory:
+            memory:
+                users:
+                    bar:
+                        password: foo
+                        roles: 'ROLE_USER'
+#        orm:
+#            entity: { class: AppBundle\Entity\User, property: username }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -26,13 +32,13 @@ security:
         main:
             pattern: ^/
             form_login:
-                provider: orm
+                provider: in_memory
                 csrf_token_generator: security.csrf.token_manager
             logout: true
             anonymous: true
             form_login:
-                login_path: connexion
-                check_path: connexion
+                login_path: /connexion
+                check_path: /connexion
             # activate different ways to authenticate
 
             # http_basic: ~
