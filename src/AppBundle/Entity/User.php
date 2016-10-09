@@ -53,6 +53,10 @@ class User
      */
     protected $password;
 
+    /**
+     * @ORM\Column(type="string", length=25, unique=true)
+     */
+    protected $username;
     protected $userType;
 
     public function __construct()
@@ -174,5 +178,21 @@ class User
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
     }
 }

@@ -23,11 +23,9 @@ class ProMemberRegistrationController extends BaseController
      */
     public function registerAction(Request $request)
     {
-        // 1) build the form
         $user = new ProMember();
         $form = $this->createForm(ProMemberRegistrationType::class, $user);
 
-        // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -39,10 +37,7 @@ class ProMemberRegistrationController extends BaseController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
-
+            
             return $this->redirectToRoute('homepage');
         }
         

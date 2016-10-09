@@ -10,12 +10,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Member extends User implements \Serializable, UserInterface
 {
-
-    /**
-     * @ORM\Column(type="string", length=25, unique=true)
-     */
-    protected $username;
-
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="member")
      */
@@ -53,7 +47,7 @@ class Member extends User implements \Serializable, UserInterface
      */
     public function serialize()
     {
-        return $this->serialize([
+        return serialize([
             $this->id,
             $this->username,
             $this->password,
@@ -119,23 +113,5 @@ class Member extends User implements \Serializable, UserInterface
      */
     public function eraseCredentials()
     {
-    }
-
-    /**
-     * Returns the username used to authenticate the user.
-     *
-     * @return string The username
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param mixed $username
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
     }
 }

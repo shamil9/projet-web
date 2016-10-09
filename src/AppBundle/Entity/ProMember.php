@@ -306,7 +306,7 @@ class ProMember extends User implements  UserInterface, \Serializable
      */
     public function serialize()
     {
-        return $this->serialize([
+        return serialize([
             $this->id,
             $this->password,
         ]);
@@ -326,7 +326,7 @@ class ProMember extends User implements  UserInterface, \Serializable
         list(
             $this->id,
             $this->password,
-            ) = $this->unserialize($serialized);
+            ) = unserialize($serialized);
     }
 
     /**
@@ -360,15 +360,6 @@ class ProMember extends User implements  UserInterface, \Serializable
     public function getSalt()
     {
         return null;
-    }
-
-    /**
-     * Returns the username used to authenticate the user.
-     *
-     * @return string The username
-     */
-    public function getUsername()
-    {
     }
 
     /**
