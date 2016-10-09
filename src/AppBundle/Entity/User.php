@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="users")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="user_type", type="string")
@@ -57,6 +57,7 @@ class User
      * @ORM\Column(type="string", length=25, unique=true)
      */
     protected $username;
+
     protected $userType;
 
     public function __construct()

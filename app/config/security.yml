@@ -7,21 +7,21 @@ security:
         AppBundle\Entity\ProMember:
                     algorithm: bcrypt
 
-    role_hierarchy:
-        ROLE_USER: ROLE_USER
-        ROLE_PRO_USER: ROLE_PRO_USER
-        ROLE_ADMIN: ROLE_ADMIN
+#    role_hierarchy:
+#        ROLE_USER: ROLE_USER
+#        ROLE_PRO_USER: ROLE_PRO_USER
+#        ROLE_ADMIN: ROLE_ADMIN
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory:
-                users:
-                    bar:
-                        password: foo
-                        roles: 'ROLE_USER'
-#        orm:
-#            entity: { class: AppBundle\Entity\User, property: username }
+#        in_memory:
+#            memory:
+#                users:
+#                    bar:
+#                        password: foo
+#                        roles: 'ROLE_ADMIN'
+        orm:
+            entity: { class: AppBundle\Entity\User }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -31,21 +31,19 @@ security:
 
         main:
             pattern: ^/
-            form_login:
-                provider: in_memory
-                csrf_token_generator: security.csrf.token_manager
             logout: true
             anonymous: true
+#            http_basic: ~
             form_login:
-                login_path: /connexion
-                check_path: /connexion
-            # activate different ways to authenticate
+                provider: orm
+                csrf_token_generator: security.csrf.token_manager
+                login_path: login
+                check_path: login
 
-            # http_basic: ~
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
     access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connexion$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/$, role: ROLE_ADMIN }

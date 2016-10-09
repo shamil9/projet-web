@@ -1,9 +1,10 @@
 <?php
 
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Member;
 
 
+use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Member;
 use AppBundle\Form\MemberRegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

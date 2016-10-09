@@ -1,7 +1,8 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\ProMember;
 
+use AppBundle\Controller\BaseController;
 use AppBundle\Entity\ProMember;
 use AppBundle\Entity\Sale;
 use AppBundle\Entity\User;
@@ -9,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProUserController extends BaseController
+class ProMemberController extends BaseController
 {
     /**
      * @Route("/prestataire/{slug}", name="pro_user_profile")
@@ -19,7 +20,7 @@ class ProUserController extends BaseController
      */
     public function showAction(Request $request, ProMember $user)
     {
-        return $this->render('ProUser/show.html.twig', [
+        return $this->render('pro_member/show.html.twig', [
             'user' => $user
         ]);
     }
@@ -32,7 +33,7 @@ class ProUserController extends BaseController
     {
         $users = $this->getRepository('AppBundle:ProMember')->findAll();
 
-        return $this->render('ProUser/index.html.twig', ['users' => $users]);
+        return $this->render('pro_member/index.html.twig', ['users' => $users]);
     }
 
     /**
@@ -62,7 +63,7 @@ class ProUserController extends BaseController
      */
     public function generateSalePdf(Sale $sale)
     {
-        $html = $this->renderView(':ProUser:pdf.html.twig', array(
+        $html = $this->renderView(':pro_member:pdf.html.twig', array(
             'sale'  => $sale
         ));
 

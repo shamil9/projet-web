@@ -10,14 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 class SecurityController extends BaseController
 {
     /**
-     * @Route("/connexion", name="login_page")
+     * @Route("/connexion", name="login")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function loginAction(Request $request)
     {
         $authenticationUtils = $this->get('security.authentication_utils');
-        dump($request);
+
 
         //récupération de l'erreur si existe
         $error = $authenticationUtils->getLastAuthenticationError();
