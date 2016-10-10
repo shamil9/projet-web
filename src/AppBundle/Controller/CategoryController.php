@@ -21,7 +21,7 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("/service/{slug}", name="service_show")
+     * @Route("/services/{slug}", name="service_show")
      * @param Category $category
      * @return \Symfony\Component\HttpFoundation\Response
      */

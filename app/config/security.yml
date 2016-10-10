@@ -39,6 +39,9 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 login_path: login
                 check_path: login
+            logout:
+                path:   /logout
+                target: /
 
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 

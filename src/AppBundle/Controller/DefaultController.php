@@ -35,9 +35,11 @@ class DefaultController extends BaseController
     public function navigationRenderAction()
     {
         $regions = $this->getRepository('AppBundle:ProMember')->findCitiesWithProUsers();
+        $user = $this->getUser();
 
         return $this->render('partials/_header.html.twig', [
-            'regions' => $regions
+            'regions' => $regions,
+            'user' => $user,
         ]);
     }
 

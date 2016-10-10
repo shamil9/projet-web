@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ProMemberController extends BaseController
 {
     /**
-     * @Route("/prestataire/{slug}", name="pro_user_profile")
+     * @Route("/prestataires/{slug}", name="pro_user_profile")
      * @param Request $request
      * @param ProMember|User $user
      * @return string

@@ -5,8 +5,8 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/">Accueil</a></li>
                     <li><a href="{{ path('about') }}">À propos</a></li>
-                    <li><a href="{{ path("pro_users_index") }}">Partenaires</a></li>
-                    <li><a href="/" class="dropdown-toggle"
+                    <li><a href="{{ path("pro_users_index") }}">Prestataires</a></li>
+                    <li><a href="#" class="dropdown-toggle"
                            data-toggle="dropdown"
                            role="button"
                            aria-haspopup="true"
@@ -26,9 +26,22 @@
                 </ul>
             </nav>
 
-            <p class="navbar-right navbar-btn">
-                <a href="{{ path('login_page') }}" class="btn btn-success">Connexion</a>
-            </p>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    {% if user %}
+                        <a class="dropdown-toggle" href=""
+                           data-toggle="dropdown" id="user"
+                           aria-haspopup="true"
+                           aria-expanded="true">{{ user.username }} <span class="caret"></span></a>
+                    {% else %}
+                        <a href="{{ path('login') }}">Connexion</a>
+                    {% endif %}
+                    <ul class="dropdown-menu" aria-labelledby="user">
+                        <li><a href="{{ path('user_profile') }}">Profil</a></li>
+                        <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 </header>

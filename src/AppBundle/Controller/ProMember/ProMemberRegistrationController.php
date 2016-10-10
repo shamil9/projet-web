@@ -18,7 +18,7 @@ class ProMemberRegistrationController extends BaseController
 {
 
     /**
-     * @Route("/prestataires/nouveau", name="pro_memer_registration")
+     * @Route("/prestataire/nouveau", name="pro_member_registration")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

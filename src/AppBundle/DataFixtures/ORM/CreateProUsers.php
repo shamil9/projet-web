@@ -25,8 +25,27 @@ class CreateProUsers implements FixtureInterface, ContainerAwareInterface
     {
         $faker = Factory::create('fr_BE');
         $em = $this->container->get('doctrine');
+        
         $categories = new Collection($em->getRepository('AppBundle:Category')->findAll());
-
+        
+        $customUser = new ProMember();
+        $customUser->setIsActive(1);
+        $customUser->setUsername('ProMembre');
+        $customUser->setEmail('membre@pro.com');
+        $encoder = $this->container->get('security.encoder_factory')->getEncoder($customUser);
+        $customUser->setPassword($encoder->encodePassword('promembre', $customUser->getSalt()));
+        $customUser->setDescription($faker->paragraph(3));
+        $customUser->setCity('Liège');
+        $customUser->setName('Pro Membre');
+        $customUser->setPhone($faker->phoneNumber);
+        $customUser->setStreet('Rue Natalis 22');
+        $customUser->setTva($faker->vat);
+        $customUser->setWebsite($faker->url);
+        $customUser->setZip('4020');
+        $customUser->setCategories($categories->random(3)->all());
+        $customUser->setRegistrationDate();
+        $manager->persist($customUser);
+        
         for ($i = 0; $i < 10; $i++) {
             $proUser = new ProMember();
             $proUser->setIsActive(1);
@@ -43,10 +62,10 @@ class CreateProUsers implements FixtureInterface, ContainerAwareInterface
             $proUser->setZip($faker->postcode);
             $proUser->setCategories($categories->random(3)->all());
             $proUser->setRegistrationDate();
-
             $manager->persist($proUser);
-            $manager->flush();
         }
+        
+        $manager->flush();
     }
 
     public function getOrder()
