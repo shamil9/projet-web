@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\ProMember;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,10 +21,10 @@ class SaleController extends BaseController
      *
      * @Route("/", name="sales_index")
      */
-    public function indexAction()
+    public function indexAction(ProMember $user)
     {
         return $this->render('sale/index.html.twig', array(
-            'user' => $this->getUser(),
+            'user' => $user,
         ));
     }
 

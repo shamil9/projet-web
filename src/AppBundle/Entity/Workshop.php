@@ -57,7 +57,7 @@ class Workshop
     private $end;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="workshops")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="workshops", fetch="LAZY")
      */
     private $user;
 

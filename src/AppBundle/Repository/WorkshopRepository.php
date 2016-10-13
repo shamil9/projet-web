@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class WorkshopRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAll()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $query = $qb->select('w')
+            ->from('AppBundle:Workshop', 'w')
+            ->join('w.user', 'u', 'WITH', 'u.id = w.user')
+            ->orderBy('w.start', 'DESC')
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

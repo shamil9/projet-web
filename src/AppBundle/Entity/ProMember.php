@@ -89,7 +89,7 @@ class ProMember extends User implements  UserInterface, \Serializable
         $this->comments = new ArrayCollection();
         $this->isActive = false;
     }
-    
+
     /**
      * @return mixed
      */
@@ -291,7 +291,7 @@ class ProMember extends User implements  UserInterface, \Serializable
     }
 
     /**
-     * @param mixed $slug
+     * @param string $slug
      */
     public function setSlug($slug)
     {

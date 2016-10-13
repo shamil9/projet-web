@@ -58,4 +58,19 @@ class DefaultController extends BaseController
     {
         return $this->render('default/contact.html.twig');
     }
+
+    /**
+     * Affiche la liste de tous les stages
+     *
+     * @Route("/stages", name="stages_list")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function workshopsAction()
+    {
+        $workshops = $this->em()->getRepository('AppBundle:Workshop')->getAll();
+
+        return $this->render('default/workshops.html.twig', [
+            'workshops' => $workshops,
+        ]);
+    }
 }

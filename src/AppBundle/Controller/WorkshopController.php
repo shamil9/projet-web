@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\ProMember;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,12 +20,13 @@ class WorkshopController extends BaseController
      * Affiche tous les stages
      *
      * @Route("/", name="stage_index")
-     * @Method("GET")
+     * @param ProMember $user
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(ProMember $user)
     {
         return $this->render('workshop/index.html.twig', array(
-            'user' => $this->getUser()
+            'user' => $user
         ));
     }
 
