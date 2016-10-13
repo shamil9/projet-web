@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Sale list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sale in sales %}
+            <tr>
+                <td><a href="{{ path('prestataires_show', { 'id': sale.id }) }}">{{ sale.id }}</a></td>
+                <td>{{ sale.name }}</td>
+                <td>{{ sale.description }}</td>
+                <td>{% if sale.start %}{{ sale.start|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if sale.end %}{{ sale.end|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('prestataires_show', { 'id': sale.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('prestataires_edit', { 'id': sale.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('prestataires_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

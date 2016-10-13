@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Workshop</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ workshop.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ workshop.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ workshop.description }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ workshop.price }}</td>
+            </tr>
+            <tr>
+                <th>Start</th>
+                <td>{% if workshop.start %}{{ workshop.start|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>End</th>
+                <td>{% if workshop.end %}{{ workshop.end|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('stage_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('stage_edit', { 'id': workshop.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

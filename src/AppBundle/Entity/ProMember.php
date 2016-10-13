@@ -308,6 +308,7 @@ class ProMember extends User implements  UserInterface, \Serializable
     {
         return serialize([
             $this->id,
+            $this->username,
             $this->password,
         ]);
     }
@@ -325,6 +326,7 @@ class ProMember extends User implements  UserInterface, \Serializable
     {
         list(
             $this->id,
+            $this->username,
             $this->password,
             ) = unserialize($serialized);
     }

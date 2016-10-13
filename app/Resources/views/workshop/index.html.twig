@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block tile %}Les stage de {{ user.name }}{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1>Stages</h1>
+        <div class="row">
+            {% include ':pro_member/partials:_workshops.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

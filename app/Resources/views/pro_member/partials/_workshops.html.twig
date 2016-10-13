@@ -1,18 +1,19 @@
-<h1>Stages</h1>
 {% for stage in user.workshops %}
     <div class="col-lg-6">
         <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading">
-                <span class="lead">{{ stage.name }}</span>
-                <span class="pull-right">${{ stage.price }}</span>
+                <span class="lead">
+                    <a href="{{ path('stage_edit', {'slug': user.slug, 'id': stage.id}) }}">{{ stage.name }}</a>
+                </span>
+                <span class="pull-right">{{ stage.price }}€</span>
             </div>
             <div class="panel-body">
                 <p>{{ stage.description }}</p>
             </div>
             <div class="panel-footer">
-                <span class="small">Début: {{ stage.start|date("m/d/Y") }}</span>
-                <span class="pull-right small">Fin: {{ stage.end|date("m/d/Y") }}</span>
+                <span class="small">Début: {{ stage.start|date("m/d/Y à h:m") }}</span>
+                <span class="pull-right small">Fin: {{ stage.end|date("m/d/Y à h:m") }}</span>
             </div>
         </div>
     </div>

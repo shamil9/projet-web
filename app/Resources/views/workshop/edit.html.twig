@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title 'Éditer un stage' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            {{ form_start(delete_form, {'slug': user.slug}) }}
+            <input type="submit" class="btn btn-danger pull-right" value="Delete">
+            {{ form_end(delete_form) }}
+            <h1>Éditer un stage</h1>
+            {{ form_start(form) }}
+            {% include 'partials/pro_member/partials/_workshop_new.html.twig' %}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

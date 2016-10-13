@@ -1,19 +1,19 @@
 {% extends 'base.html.twig' %}
-{% block title %}Page de profile - {{ user.username }}{% endblock %}
+{% block title %}Éditer votre profil - {{ user.username }}{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="row main">
             <p class="text-right"><a href="{{ path('user_delete') }}" class="btn btn-danger">Supprimer</a></p>
             <div class="main-login main-center">
-                <form class="form-horizontal" method="post" action="{{ path('user_profile') }}">
+                <form class="form-horizontal" method="post" action="{{ path('user_edit') }}">
 
                     <div class="form-group">
-                        <label for="name" class="cols-sm-2 control-label">Nom d'utilisateur</label>
+                        <label for="username" class="cols-sm-2 control-label">Nom d'utilisateur</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="name" id="name"
+                                <input type="text" class="form-control" name="username" id="username"
                                        value="{{ user.username }}"/>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="form-group ">
-                        <button type="button" class="btn btn-primary btn-lg btn-block login-button">Enregistrer</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Enregistrer</button>
                     </div>
                 </form>
             </div>

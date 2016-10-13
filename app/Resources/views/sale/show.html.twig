@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Sale</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sale.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ sale.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ sale.description }}</td>
+            </tr>
+            <tr>
+                <th>Start</th>
+                <td>{% if sale.start %}{{ sale.start|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>End</th>
+                <td>{% if sale.end %}{{ sale.end|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('prestataires_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('prestataires_edit', { 'id': sale.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
