@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Sale;
@@ -16,34 +15,22 @@ use AppBundle\Form\SaleType;
  */
 class SaleController extends BaseController
 {
-    private $user;
-
-    public function __construct()
-    {
-        $this->user = $this->getUser();
-    }
-    
     /**
      * Affiche toutes les promotions
      *
-     * @Route("/", name="prestataires_index")
-     * @Method("GET")
+     * @Route("/", name="sales_index")
      */
     public function indexAction()
     {
-        $sales = $this->em()->getRepository('AppBundle:Sale')->findAll();
-
         return $this->render('sale/index.html.twig', array(
-            'sales' => $sales,
-            'user' => $this->user,
+            'user' => $this->getUser(),
         ));
     }
 
     /**
      * Creates a new Sale entity.
      *
-     * @Route("/new", name="prestataires_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="sales_new")
      */
     public function newAction(Request $request)
     {
@@ -52,15 +39,18 @@ class SaleController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($sale);
-            $em->flush();
+            $sale->setUser($this->getUser());
+            $this->em()->persist($sale);
+            $this->em()->flush();
 
-            return $this->redirectToRoute('prestataires_show', array('id' => $sale->getId()));
+            return $this->redirectToRoute('sales_index', array(
+                'id' => $sale->getId(),
+                'slug' => $this->getUser()->getSlug(),
+            ));
         }
 
         return $this->render('sale/new.html.twig', array(
-            'sale' => $sale,
+            'user' => $this->getUser(),
             'form' => $form->createView(),
         ));
     }
@@ -82,10 +72,9 @@ class SaleController extends BaseController
     }
 
     /**
-     * Displays a form to edit an existing Sale entity.
+     * Affiche le formulaire d'edition d'une promotion
      *
-     * @Route("/{id}/edit", name="prestataires_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="sale_edit")
      */
     public function editAction(Request $request, Sale $sale)
     {
@@ -98,21 +87,25 @@ class SaleController extends BaseController
             $em->persist($sale);
             $em->flush();
 
-            return $this->redirectToRoute('prestataires_edit', array('id' => $sale->getId()));
+            return $this->redirectToRoute('sale_edit', array(
+                'id' => $sale->getId(),
+                'slug' => $this->getUser()->getSlug(),
+                ));
         }
 
         return $this->render('sale/edit.html.twig', array(
-            'sale' => $sale,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Deletes a Sale entity.
+     * Supprime une promotion
      *
-     * @Route("/{id}", name="prestataires_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="sale_delete")
+     * @param Request $request
+     * @param Sale $sale
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Sale $sale)
     {
@@ -125,11 +118,13 @@ class SaleController extends BaseController
             $em->flush();
         }
 
-        return $this->redirectToRoute('prestataires_index');
+        return $this->redirectToRoute('pro_user_profile', [
+            'slug' => $this->getUser()->getSlug(),
+        ]);
     }
 
     /**
-     * Creates a form to delete a Sale entity.
+     * Formulaire de suppression d'une promotion
      *
      * @param Sale $sale The Sale entity
      *
@@ -138,7 +133,11 @@ class SaleController extends BaseController
     private function createDeleteForm(Sale $sale)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('prestataires_delete', array('id' => $sale->getId())))
+            ->setAction($this->generateUrl('sale_delete', array(
+                'id' => $sale->getId(),
+                'slug' => $this->getUser()->getSlug(),
+                )
+            ))
             ->setMethod('DELETE')
             ->getForm()
         ;

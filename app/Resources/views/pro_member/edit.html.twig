@@ -173,13 +173,15 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" style="position: relative;">
                             <h3 class="panel-title">Promotions</h3>
-                            <a href="" class="btn btn-success"
+                            <a href="{{ path('sales_new', {'slug': user.slug}) }}" class="btn btn-success"
                                style="position: absolute; right: -10px; top: -10px;">+</a>
                         </div>
                         <ul class="list-group">
-                            <li class="list-group-item">Promotion 1</li>
+                            {% for sale in user.sales %}
+                                <li class="list-group-item">{{ sale.name }}</li>
+                            {% endfor %}
                         </ul>
-                        <div class="panel-footer"><a href="">Plus...</a></div>
+                        <div class="panel-footer"><a href="{{ path('sales_index', {'slug': user.slug}) }}">Plus...</a></div>
                     </div>
                 </div>
             </div>

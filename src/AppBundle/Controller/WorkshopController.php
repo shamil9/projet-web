@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Workshop;
@@ -49,7 +48,6 @@ class WorkshopController extends BaseController
         }
 
         return $this->render('workshop/new.html.twig', array(
-            'workshop' => $workshop,
             'form' => $form->createView(),
             'user' => $this->getUser(),
         ));

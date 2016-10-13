@@ -7,7 +7,7 @@
             {{ form_errors(form) }}
             <div class="col-lg-8">
                 <form method="post" class="form" action="{{ path('stage_new', {'slug': user.slug}) }}">
-                    {% include 'partials/pro_member/partials/_workshop_new.html.twig' %}
+                    {% include 'workshop/partials/_form.html.twig' %}
                     {{ form_end(form) }}
             </div>
         </div>
