@@ -22,8 +22,8 @@ class CreateCategories implements FixtureInterface
             $category->setDescription($faker->paragraph(3));
 
             $manager->persist($category);
-            $manager->flush();
         }
+        $manager->flush();
     }
 
     public function getOrder()

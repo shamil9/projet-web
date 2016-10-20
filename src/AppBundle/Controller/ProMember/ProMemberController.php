@@ -3,9 +3,12 @@
 namespace AppBundle\Controller\ProMember;
 
 use AppBundle\Controller\BaseController;
+use AppBundle\Entity\Favorite;
+use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
 use AppBundle\Entity\Sale;
 use AppBundle\Entity\User;
+use AppBundle\Repository\ProMemberRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,8 +23,22 @@ class ProMemberController extends BaseController
      */
     public function showAction(Request $request, ProMember $user)
     {
+        $favorites = [];
+        if ($this->getUser() instanceof Member) {
+            //Tableau avec les favoris
+            $favorites = $this->getUser() ? $this->getUser()->getFavorites()->toArray() : [];
+        }
+
         return $this->render('pro_member/show.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'favorite' => array_reduce($favorites, function($carry, Favorite $key) use ($user) {
+
+                //Contrôle si le prestataire est déjà dans les favoris
+                if ($key->getProMember() == $user->getId()) {
+                    return $key->getProMember();
+                }
+                return 0;
+            })
         ]);
     }
 
@@ -45,7 +62,7 @@ class ProMemberController extends BaseController
     {
         $query = $this->getRepository('AppBundle:ProMember')->findProUserSuggestions($user);
         $suggestions = $this->collection($query)
-            ->map(function (User $item, $key) {
+            ->map(function (ProMember $item, $key) {
             return [
                 'name' => $item->getName(),
                 'id' => $item->getId(),

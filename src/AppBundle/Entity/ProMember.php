@@ -87,6 +87,7 @@ class ProMember extends User implements  UserInterface, \Serializable
         $this->workshops = new ArrayCollection();
         $this->sales = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->favoredBy = new ArrayCollection();
         $this->isActive = false;
     }
 

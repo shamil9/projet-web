@@ -35,8 +35,8 @@ class CreateWorkshops implements FixtureInterface, ContainerAwareInterface
             $workshop->setUser($users->random());
 
             $manager->persist($workshop);
-            $manager->flush();
         }
+        $manager->flush();
     }
 
     public function getOrder()

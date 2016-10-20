@@ -14,12 +14,18 @@ class Member extends User implements \Serializable, UserInterface
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="member")
      */
     protected $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Favorite", mappedBy="member")
+     */
+    protected $favorites;
     
     public function __construct()
     {
         parent::__construct();
         $this->userType = User::TYPE_MEMBER;
         $this->comments = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
         $this->isActive = true;
     }
 
@@ -113,5 +119,21 @@ class Member extends User implements \Serializable, UserInterface
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFavorites()
+    {
+        return $this->favorites;
+    }
+
+    /**
+     * @param mixed $favorites
+     */
+    public function setFavorites($favorites)
+    {
+        $this->favorites = $favorites;
     }
 }

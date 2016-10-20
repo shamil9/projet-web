@@ -44,7 +44,27 @@
                 <div class="pro_avatar pull-left">
                     <img src="{{ asset('assets/img/icons/user.svg') }}" alt="Avatar" class="pro_avatar--size thumbnail">
                 </div>
-                <span class="pro_user-info">{{ user.name }}</span>
+                <span class="pro_user-info">{{ user.name }} </span>
+
+                {#Button de favoris#}
+                {% if app.user %}
+                    {% if app.user is instanceof('Member') %}
+                        <p>foo</p>
+                    {% endif %}
+                    {% if favorite %}
+                        <button class="btn btn-xs btn-danger" id="remove-favorite" data-toggle="tooltip"
+                                data-placement="right" title="Supprimer le favori">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    {% else %}
+                        <button class="btn btn-xs btn-success" id="add-favorite" data-toggle="tooltip"
+                                data-placement="right" title="Ajouter aux favoris">
+                            <span class="glyphicon glyphicon-bookmark"></span>
+                        </button>
+                    {% endif %}
+                {% endif %}
+
+                {#Social media#}
                 <span class="pull-right">
                     <a href="#"><img class="pro_social-icons" src="{{ asset('assets/img/icons/twitter.svg') }}" alt=""></a>
                     <a href="#"><img class="pro_social-icons" src="{{ asset('assets/img/icons/facebook.svg') }}" alt=""></a>
@@ -52,6 +72,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="pro-tabs">
@@ -63,21 +84,26 @@
                             <a href="#categories" aria-controls="categories" role="tab" data-toggle="tab">Catégories</a>
                         </li>
 
+                        {#Stages#}
                         {% if user.workshops is not empty %}
                         <li role="presentation">
                             <a href="#stages" aria-controls="stages" role="tab" data-toggle="tab">Stages</a>
                         </li>
                         {% endif %}
 
+                        {#Promotions#}
                         {% if user.sales is not empty %}
                         <li role="presentation">
                             <a href="#promotions" aria-controls="promotions" role="tab" data-toggle="tab">Promotions</a>
                         </li>
                         {% endif %}
 
+                        {#Commentaire#}
                         <li role="presentation">
                             <a href="#commentaires" aria-controls="commentaires" role="tab" data-toggle="tab">Commentaires</a>
                         </li>
+
+                        {#La carte#}
                         <li role="presentation">
                             <a href="#localisation" aria-controls="localisation" role="tab" data-toggle="tab">Localisation</a>
                         </li>
@@ -123,6 +149,7 @@
                     </div>
                 </div>
             </div> <!-- suggestion end -->
+
         </div>
     </div>
 </div>
@@ -130,53 +157,24 @@
 {% block javascripts %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt6NP5o5G-VPddw-tdyZ7I-N41_l04Sic"></script>
     <script src="{{ asset('assets/js/gmaps.js') }}"></script>
-    {#TODO Déplacer dans un fichier JS#}
+    <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
-
-        //Affichage de la carte GMAPS
-        var map;
-        $(document).ready(function () {
-            map = new GMaps({
-                el: '#map',
-                lat: -12.043333,
-                lng: -77.028333
-            });
-            GMaps.geocode({
-                address: '{{ user.city }} Belgique',
-                callback: function (results, status) {
-                    if (status == 'OK') {
-                        var latlng = results[0].geometry.location;
-                        map.setCenter(latlng.lat(), latlng.lng());
-                        map.addMarker({
-                            lat: latlng.lat(),
-                            lng: latlng.lng()
-                        });
-                    }
-                }
-            });
+        {% if app.user %}
+        $('#add-favorite').on('click', function (e) {
+            e.preventDefault();
+            console.log('called');
+            addFavorite('{{ path('members_add_favorite', {'proMember': user.id}) }}', this);
         });
 
-        //Recuperation du json avec les suggestions
-        $.getJSON('{{ path("pro_users_suggestions", {'user': user.id}) }}', function (data) {
-            if (data.length < 1)
-                    return showSuggestions('<h3 class="text-center">Aucun résultat trouvé</h3>');
-            var html = '';
-
-            //Construction du HTML
-            for (var key in data) {
-                html += "<div class='col-lg-3'>" +
-                            "<a href='" + data[key].id + "' class='thumbnail'>" +
-                                "<img class='pro_avatar--size' src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE3MSAxODAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MTgwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTU3M2VhYjVjNTUgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNTczZWFiNWM1NSI+PHJlY3Qgd2lkdGg9IjE3MSIgaGVpZ2h0PSIxODAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI1OS41NTQ2ODc1IiB5PSI5NC41Ij4xNzF4MTgwPC90ZXh0PjwvZz48L2c+PC9zdmc+'>" +
-                            "<h4 class='text-center'>" + data[key].name + "</h4>" +
-                            "</a>" +
-                        "</div>";
-            }
-            function showSuggestions(html) {
-                setTimeout(function () {
-                    $('#suggestions').html(html);
-                }, 2000);
-            }
-            showSuggestions(html);
+        $('#remove-favorite').on('click', function (e) {
+            e.preventDefault();
+            removeFavorite('{{ path('members_remove_favorite', {'proMember': user.id}) }}', this);
         });
+        {% endif %}
+
+        var address = '{{ user.street }}, {{ user.city }}';
+        showGoogleMap(address);
+
+        getSuggestions('{{ path('pro_users_suggestions', {'user': user.id}) }}');
     </script>
 {% endblock %}

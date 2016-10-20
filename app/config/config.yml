@@ -37,6 +37,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        favorite_manager: "@app.favorites_manager"
 
 # Doctrine Configuration
 doctrine:

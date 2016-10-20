@@ -23,7 +23,6 @@ class CreateMembers implements FixtureInterface, ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_BE');
-        $em = $this->container->get('doctrine');
         
         $customUser = new Member();
         $customUser->setIsActive(1);
