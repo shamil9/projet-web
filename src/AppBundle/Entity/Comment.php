@@ -26,7 +26,12 @@ class Comment
      *
      * @ORM\Column(name="description", type="text")
      */
-    private $description;
+    private $comment;
+
+    /**
+     * @ORM\Column(name="rating", type="integer")
+     */
+    private $rating;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Member", inversedBy="comments")
@@ -52,13 +57,13 @@ class Comment
     /**
      * Set description
      *
-     * @param string $description
+     * @param string $comment
      *
      * @return Comments
      */
-    public function setDescription($description)
+    public function setComment($comment)
     {
-        $this->description = $description;
+        $this->comment = $comment;
 
         return $this;
     }
@@ -68,9 +73,57 @@ class Comment
      *
      * @return string
      */
-    public function getDescription()
+    public function getComment()
     {
-        return $this->description;
+        return $this->comment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * @param mixed $rating
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMember()
+    {
+        return $this->member;
+    }
+
+    /**
+     * @param mixed $member
+     */
+    public function setMember($member)
+    {
+        $this->member = $member;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProMember()
+    {
+        return $this->proMember;
+    }
+
+    /**
+     * @param mixed $proMember
+     */
+    public function setProMember($proMember)
+    {
+        $this->proMember = $proMember;
     }
 }
 

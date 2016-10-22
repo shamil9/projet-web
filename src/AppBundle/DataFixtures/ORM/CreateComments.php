@@ -1,7 +1,7 @@
 <?php namespace AppBundle\DataFixtures\ORM;
 
 
-use AppBundle\Entity\Sale;
+use AppBundle\Entity\Comment;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class CreateSales extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class CreateComments extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var $container ContainerInterface
@@ -21,27 +21,24 @@ class CreateSales extends AbstractFixture implements OrderedFixtureInterface, Co
     {
         $faker = Factory::create('fr_BE');
         $em = $this->container->get('doctrine');
-        $users = new Collection($em->getRepository('AppBundle:ProMember')->findAll());
+        $proMembers = new Collection($em->getRepository('AppBundle:ProMember')->findAll());
+        $members = new Collection($em->getRepository('AppBundle:Member')->findAll());
 
         for ($i = 0; $i < 5; $i++) {
-            $sale = new Sale();
-            $sale->setName(array_reduce($faker->words(2), function($carry, $item) {
-                $carry = $carry . ' ' . $item;
-                return $carry;
-            }));
-            $sale->setDescription($faker->paragraph(3));
-            $sale->setStart($faker->dateTime);
-            $sale->setEnd($faker->dateTimeThisYear);
-            $sale->setUser($users->random());
+            $comment = new Comment();
+            $comment->setComment($faker->paragraph(3));
+            $comment->setMember($members->random());
+            $comment->setProMember($proMembers->random());
+            $comment->setRating($faker->numberBetween(0, 5));
 
-            $manager->persist($sale);
-            $manager->flush();
+            $manager->persist($comment);
         }
+        $manager->flush();
     }
 
     public function getOrder()
     {
-        return 4;
+        return 6;
     }
 
     /**

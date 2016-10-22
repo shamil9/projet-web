@@ -6,6 +6,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\ProMember;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class FavoritesController extends BaseController
 {
@@ -17,9 +18,15 @@ class FavoritesController extends BaseController
      */
     public function addFavoriteAction(ProMember $proMember)
     {
-        $favoriteManager = $this->get('app.favorites_manager');
+        try {
+            $favoriteManager = $this->get('app.favorites_manager');
 
-        return $favoriteManager->addFavoriteProMember($this->getUser(), $proMember->getId());
+            $favoriteManager->addFavoriteProMember($this->getUser(), $proMember);
+
+            return JsonResponse::create(null, 200);
+        } catch (\Exception $e) {
+            return JsonResponse::create($e, 500);
+        }
     }
 
     /**
@@ -29,8 +36,14 @@ class FavoritesController extends BaseController
      */
     public function removeFavoriteAction(ProMember $proMember)
     {
-        $favoriteManager = $this->get('app.favorites_manager');
+        try {
+            $favoriteManager = $this->get('app.favorites_manager');
 
-        return $favoriteManager->removeFavorite($this->getUser(), $proMember->getId());
+            $favoriteManager->removeFavorite($this->getUser(), $proMember);
+
+            return JsonResponse::create(null, 200);
+        } catch (\Exception $e) {
+            return JsonResponse::create($e, 500);
+        }
     }
 }

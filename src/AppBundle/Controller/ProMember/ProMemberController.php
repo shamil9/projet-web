@@ -3,11 +3,13 @@
 namespace AppBundle\Controller\ProMember;
 
 use AppBundle\Controller\BaseController;
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\Favorite;
 use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
 use AppBundle\Entity\Sale;
 use AppBundle\Entity\User;
+use AppBundle\Form\CommentType;
 use AppBundle\Repository\ProMemberRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,34 +18,31 @@ use Symfony\Component\HttpFoundation\Response;
 class ProMemberController extends BaseController
 {
     /**
-     * @Route("/prestataires/{slug}", name="pro_user_profile")
+     * @Route("/prestataires/{slug}", name="pro_member_profile")
      * @param Request $request
      * @param ProMember|User $user
      * @return string
      */
     public function showAction(Request $request, ProMember $user)
     {
-        $favorites = [];
         if ($this->getUser() instanceof Member) {
-            //Tableau avec les favoris
-            $favorites = $this->getUser() ? $this->getUser()->getFavorites()->toArray() : [];
+            $repo = $this->em()->getRepository('AppBundle:Favorite');
+
+            //Recherche de prestataire dans le favoris
+            $favorite = $repo->findOneBy([
+                'proMember' => $user->getId(),
+                'member' => $this->getUser()->getId(),
+            ]);
         }
 
         return $this->render('pro_member/show.html.twig', [
             'user' => $user,
-            'favorite' => array_reduce($favorites, function($carry, Favorite $key) use ($user) {
-
-                //Contrôle si le prestataire est déjà dans les favoris
-                if ($key->getProMember() == $user->getId()) {
-                    return $key->getProMember();
-                }
-                return 0;
-            })
+            'favorite' => isset($favorite) ?: null,
         ]);
     }
 
     /**
-     * @Route("/prestataires", name="pro_users_index")
+     * @Route("/prestataires", name="pro_member_index")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction()
@@ -54,7 +53,7 @@ class ProMemberController extends BaseController
     }
 
     /**
-     * @Route("/suggestions/{user}", name="pro_users_suggestions")
+     * @Route("/suggestions/{user}", name="pro_member_suggestions")
      * @param User $user
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -74,7 +73,7 @@ class ProMemberController extends BaseController
     }
 
     /**
-     * @Route("/sale/{sale}/pdf", name="pro_user_sale_pdf")
+     * @Route("/sale/{sale}/pdf", name="pro_member_sale_pdf")
      * @param Sale $sale
      * @return Response
      */

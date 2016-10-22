@@ -1,0 +1,25 @@
+<div class="col-lg-4">
+    {{ form_start(commentForm, {
+        'attr': {'class': 'form-group'},
+        'action': path('pro_member_comments_new', {'slug': proMember.slug})
+    }) }}
+    <div class="form-group">
+        <label for="comment">Commentaire</label>
+        {{ form_errors(commentForm.comment) }}
+        {{ form_widget(commentForm.comment, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="comment">Note</label>
+                {{ form_errors(commentForm.rating) }}
+                {{ form_widget(commentForm.rating, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <button type="submit" class="btn btn-info pull-right">Ajouter</button>
+        </div>
+    </div>
+    {{ form_end(commentForm) }}
+</div>

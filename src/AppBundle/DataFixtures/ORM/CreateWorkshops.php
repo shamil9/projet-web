@@ -2,14 +2,15 @@
 
 
 use AppBundle\Entity\Workshop;
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 use Illuminate\Support\Collection;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class CreateWorkshops implements FixtureInterface, ContainerAwareInterface
+class CreateWorkshops extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var $container ContainerInterface
@@ -41,7 +42,7 @@ class CreateWorkshops implements FixtureInterface, ContainerAwareInterface
 
     public function getOrder()
     {
-        return 3;
+        return 5;
     }
 
     /**

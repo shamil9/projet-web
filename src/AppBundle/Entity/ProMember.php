@@ -79,6 +79,12 @@ class ProMember extends User implements  UserInterface, \Serializable
      */
     protected $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Favorite", mappedBy="proMember")
+     * @var ArrayCollection
+     */
+    protected $favoredBy;
+
     public function __construct()
     {
         parent::__construct();
@@ -373,5 +379,21 @@ class ProMember extends User implements  UserInterface, \Serializable
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFavoredBy()
+    {
+        return $this->favoredBy;
+    }
+
+    /**
+     * @param ArrayCollection $favoredBy
+     */
+    public function setFavoredBy($favoredBy)
+    {
+        $this->favoredBy = $favoredBy;
     }
 }

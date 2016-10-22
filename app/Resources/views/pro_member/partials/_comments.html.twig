@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-lg-8">
+        {% if user.comments is empty %}
+            <h3>Ajouter un commentaire</h3>
+        {% endif %}
+        {% for comment in user.comments %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="lead">{{ comment.member.username }}</span>
+            <span class="pull-right">
+                {{ comment.rating }}
+            </span>
+                </div>
+                <div class="panel-body">
+                    {{ comment.comment }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% if app.user %}
+    {{ render(controller('AppBundle:Comments:new', {'slug': user.slug})) }}
+    {% endif %}
+</div>

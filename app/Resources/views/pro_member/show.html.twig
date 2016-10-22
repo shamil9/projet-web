@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ user.name }}{% endblock %}
-
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-stars.css') }}">
+{% endblock %}
 {% block body %}
 <div class="container">
     <div class="row">
@@ -87,20 +88,29 @@
                         {#Stages#}
                         {% if user.workshops is not empty %}
                         <li role="presentation">
-                            <a href="#stages" aria-controls="stages" role="tab" data-toggle="tab">Stages</a>
+                            <a href="#stages" aria-controls="stages" role="tab" data-toggle="tab">
+                                Stages
+                                <span class="badge">{{ user.workshops|length }}</span>
+                            </a>
                         </li>
                         {% endif %}
 
                         {#Promotions#}
                         {% if user.sales is not empty %}
                         <li role="presentation">
-                            <a href="#promotions" aria-controls="promotions" role="tab" data-toggle="tab">Promotions</a>
+                            <a href="#promotions" aria-controls="promotions" role="tab" data-toggle="tab">
+                                Promotions
+                                <span class="badge">{{ user.sales|length }}</span>
+                            </a>
                         </li>
                         {% endif %}
 
                         {#Commentaire#}
                         <li role="presentation">
-                            <a href="#commentaires" aria-controls="commentaires" role="tab" data-toggle="tab">Commentaires</a>
+                            <a href="#commentaires" aria-controls="commentaires" role="tab" data-toggle="tab">
+                                Commentaires
+                                <span class="badge">{{ user.comments|length }}</span>
+                            </a>
                         </li>
 
                         {#La carte#}
@@ -131,6 +141,7 @@
 
                         <div role="tabpanel" class="tab-pane" id="commentaires">
                             <h1>Commentaires</h1>
+                            {% include'pro_member/partials/_comments.html.twig' %}
                         </div>
 
                         <div role="tabpanel" class="tab-pane" id="localisation">
@@ -141,6 +152,7 @@
                 </div>
             </div> <!-- tabs end -->
 
+            <hr>
             <div class="row">
                 <div class="col-lg-12">
                     <h3>Prestataires similaires</h3>
@@ -157,12 +169,12 @@
 {% block javascripts %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt6NP5o5G-VPddw-tdyZ7I-N41_l04Sic"></script>
     <script src="{{ asset('assets/js/gmaps.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
         {% if app.user %}
         $('#add-favorite').on('click', function (e) {
             e.preventDefault();
-            console.log('called');
             addFavorite('{{ path('members_add_favorite', {'proMember': user.id}) }}', this);
         });
 
@@ -172,9 +184,13 @@
         });
         {% endif %}
 
+        $('#comment_rating').barrating({
+            theme: 'bootstrap-stars'
+        });
+
         var address = '{{ user.street }}, {{ user.city }}';
         showGoogleMap(address);
 
-        getSuggestions('{{ path('pro_users_suggestions', {'user': user.id}) }}');
+        getSuggestions('{{ path('pro_member_suggestions', {'user': user.id}) }}');
     </script>
 {% endblock %}

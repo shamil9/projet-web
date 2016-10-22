@@ -27,7 +27,7 @@ class Favorite
     protected $member;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="favoredBy")
      */
     protected $proMember;
 
