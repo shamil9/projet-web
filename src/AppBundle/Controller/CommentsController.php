@@ -9,6 +9,7 @@ use AppBundle\Entity\ProMember;
 use AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CommentsController extends BaseController
@@ -26,15 +27,13 @@ class CommentsController extends BaseController
         $commentForm = $this->createForm(CommentType::class, $comment);
         $commentForm->handleRequest($request);
 
-        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+        if ($commentForm->isValid()) {
             $comment->setMember($this->getUser());
             $comment->setProMember($proMember);
             $this->em()->persist($comment);
             $this->em()->flush();
 
-            return $this->redirectToRoute('pro_member_profile', array(
-                'slug' => $proMember->getSlug()
-            ));
+            return JsonResponse::create($request->get('comment'), 200);
         }
 
         return $this->render(':pro_member/partials:_comments-form.html.twig', [

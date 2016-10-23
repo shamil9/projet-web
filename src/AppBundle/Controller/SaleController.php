@@ -119,7 +119,7 @@ class SaleController extends BaseController
             $em->flush();
         }
 
-        return $this->redirectToRoute('pro_user_profile', [
+        return $this->redirectToRoute('pro_member_profile', [
             'slug' => $this->getUser()->getSlug(),
         ]);
     }

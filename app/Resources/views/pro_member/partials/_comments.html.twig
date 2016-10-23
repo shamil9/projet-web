@@ -3,19 +3,20 @@
         {% if user.comments is empty %}
             <h3>Ajouter un commentaire</h3>
         {% endif %}
-        {% for comment in user.comments %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="lead">{{ comment.member.username }}</span>
-            <span class="pull-right">
-                {{ comment.rating }}
-            </span>
+        <div id="comments-list">
+            {% for comment in user.comments %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="lead">{{ comment.member.username }}</span>
+            <span class="pull-right rating"
+                  style="width: calc(20px * {{ comment.rating }});"></span>
+                    </div>
+                    <div class="panel-body">
+                        {{ comment.comment }}
+                    </div>
                 </div>
-                <div class="panel-body">
-                    {{ comment.comment }}
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
     {% if app.user %}
     {{ render(controller('AppBundle:Comments:new', {'slug': user.slug})) }}

@@ -12,6 +12,7 @@ class Member extends User implements \Serializable, UserInterface
 {
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="member")
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $comments;
 

@@ -1,7 +1,6 @@
 <div class="col-lg-4">
     {{ form_start(commentForm, {
-        'attr': {'class': 'form-group'},
-        'action': path('pro_member_comments_new', {'slug': proMember.slug})
+        'attr': {'class': 'form-group', 'id': 'comments'}
     }) }}
     <div class="form-group">
         <label for="comment">Commentaire</label>

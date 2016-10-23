@@ -182,6 +182,12 @@
             e.preventDefault();
             removeFavorite('{{ path('members_remove_favorite', {'proMember': user.id}) }}', this);
         });
+
+        $('#comments').on('submit', function (e) {
+            e.preventDefault();
+
+           postComment('{{ path('pro_member_comments_new', {'slug': user.slug}) }}', '{{ app.user.username }}', this)
+        });
         {% endif %}
 
         $('#comment_rating').barrating({

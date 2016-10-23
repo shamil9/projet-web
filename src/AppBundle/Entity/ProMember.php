@@ -60,16 +60,19 @@ class ProMember extends User implements  UserInterface, \Serializable
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Sale", mappedBy="user")
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $sales;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Workshop", mappedBy="user")
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $workshops;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="proMember")
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $comments;
 

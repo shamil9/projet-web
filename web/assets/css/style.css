@@ -44,3 +44,20 @@
     width: 100% !important;
     height: 500px !important;
 }
+
+.comment-animate {
+    animation: show-comment 2s;
+}
+
+@keyframes show-comment {
+   from {
+       opacity: 0;
+       background-color: yellow;
+   }
+}
+
+.rating {
+    background: url("/assets/img/icons/star.svg") space;
+    background-size: 20px;
+    height: 20px;
+}

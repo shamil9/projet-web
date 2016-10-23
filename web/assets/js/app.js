@@ -33,8 +33,8 @@ var removeFavorite = function (url, self) {
         });
 };
 
+//Affichage de la carte GMAPS
 var showGoogleMap = function (address) {
-    //Affichage de la carte GMAPS
     var map;
     map = new GMaps({
         el: '#map',
@@ -56,6 +56,7 @@ var showGoogleMap = function (address) {
     });
 };
 
+//Affichage des suggestions de prestataire
 var getSuggestions = function (url) {
 
     //Recuperation du json avec les suggestions
@@ -82,4 +83,38 @@ var getSuggestions = function (url) {
             showSuggestions(html);
         }
     );
+};
+
+//Enregistrement et affichage d'un nouveau commentaire
+var postComment = function (url, userName, self) {
+    var options = {
+        url: url,
+        method: 'POST',
+        data: $(self).serialize(),
+        context: self
+    };
+
+    $.ajax(options)
+        .done(function (data) {
+            var comment =
+                "<div class='panel panel-default comment-animate'>" +
+                    "<div class='panel-heading'>" +
+                    "<span class='lead'>" + userName + "</span>" +
+                    "<span class='pull-right rating' style='width: calc(20px * " + data.rating + ");'></span>" +
+                "</div>" +
+                    "<div class='panel-body'>" +
+                        data.comment +
+                    "</div>" +
+                "</div>";
+            $(self)
+                .find('.btn')
+                .html('')
+                .attr('disabled', 'true')
+                .addClass('glyphicon glyphicon-ok')
+                .end()
+                .find('#comment_comment')
+                .attr('disabled', 'true');
+
+            $(comment).prependTo('#comments-list');
+        });
 };
