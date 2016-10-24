@@ -49,19 +49,18 @@
 
                 {#Button de favoris#}
                 {% if app.user %}
-                    {% if app.user is instanceof('Member') %}
-                        <p>foo</p>
-                    {% endif %}
                     {% if favorite %}
-                        <button class="btn btn-xs btn-danger" id="remove-favorite" data-toggle="tooltip"
-                                data-placement="right" title="Supprimer le favori">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
+                        <a href="" class="glyphicon glyphicon-bookmark favorite favorite__active"
+                                id="remove-favorite"
+                                title="Supprimer le favori">
+                            {#<span class="glyphicon glyphicon-remove"></span>#}
+                        </a>
                     {% else %}
-                        <button class="btn btn-xs btn-success" id="add-favorite" data-toggle="tooltip"
-                                data-placement="right" title="Ajouter aux favoris">
-                            <span class="glyphicon glyphicon-bookmark"></span>
-                        </button>
+                        <a href="" class="glyphicon glyphicon-bookmark favorite"
+                                id="add-favorite"
+                                title="Ajouter aux favoris">
+                            {#<span class="glyphicon glyphicon-bookmark"></span>#}
+                        </a>
                     {% endif %}
                 {% endif %}
 
@@ -69,6 +68,10 @@
                 <span class="pull-right">
                     <a href="#"><img class="pro_social-icons" src="{{ asset('assets/img/icons/twitter.svg') }}" alt=""></a>
                     <a href="#"><img class="pro_social-icons" src="{{ asset('assets/img/icons/facebook.svg') }}" alt=""></a>
+                    <a href="#" data-toggle="modal" data-target="#recommend-user-form">
+                        <img class="pro_social-icons" src="{{ asset('assets/img/icons/mail.svg') }}" alt="">
+                    </a>
+                    {% include'pro_member/partials/_recommend-form.html.twig' %}
                 </span>
             </div>
         </div>

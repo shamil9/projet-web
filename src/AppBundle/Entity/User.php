@@ -157,9 +157,6 @@ class User
         return $this->registrationDate;
     }
 
-    /**
-     * @internal param mixed $registrationDate
-     */
     public function setRegistrationDate()
     {
         $this->registrationDate = new \DateTime('now');

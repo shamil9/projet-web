@@ -61,3 +61,16 @@
     background-size: 20px;
     height: 20px;
 }
+
+.favorite {
+    color: #ccc;
+    font-size: 20px;
+}
+
+.favorite:hover, .favorite:link {
+    text-decoration: none;
+}
+
+.favorite__active {
+    color: #2a9fd6;
+}

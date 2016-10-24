@@ -1,0 +1,26 @@
+<div class="modal fade" id="recommend-user-form" tabindex="-1" role="dialog" aria-labelledby="recommendation">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="recommendation">Recommander un prestataire</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{{ path('pro_member_commend', {'slug': user.slug}) }}">
+                    <div class="form-group">
+                        <label for="name" class="control-label">Envoyer à:</label>
+                        <input required placeholder="Adresse mail" type="email" name="mail" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="control-label">Message:</label>
+                        <textarea placeholder="Message associé" required class="form-control" name="message" id="message"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

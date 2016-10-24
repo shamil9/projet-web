@@ -60,7 +60,7 @@ class CreateProUsers extends AbstractFixture implements OrderedFixtureInterface,
             $proUser->setStreet($faker->streetName);
             $proUser->setTva($faker->vat);
             $proUser->setWebsite($faker->url);
-            $proUser->setZip($faker->postcode);
+            $proUser->setZip(4000);
             $proUser->setCategories($categories->random(3)->all());
             $proUser->setRegistrationDate();
             $manager->persist($proUser);

@@ -10,9 +10,9 @@ var addFavorite = function (url, self) {
     $.ajax(options)
         .done(function () {
             $(this)
-                .html('')
-                .attr('disabled', 'true')
-                .addClass('glyphicon glyphicon-ok');
+                .removeAttr('id')
+                .attr('id', 'remove-favorite')
+                .toggleClass('favorite__active');
         });
 };
 
@@ -27,9 +27,9 @@ var removeFavorite = function (url, self) {
     $.ajax(options)
         .done(function () {
             $(this)
-                .html('')
-                .attr('disabled', 'true')
-                .addClass('glyphicon glyphicon-ok');
+                .removeAttr('id')
+                .attr('id', 'add-favorite')
+                .toggleClass('favorite__active');
         });
 };
 
@@ -61,26 +61,27 @@ var getSuggestions = function (url) {
 
     //Recuperation du json avec les suggestions
     $.getJSON(url, function (data) {
-            if (data.length < 1)
-                return showSuggestions('<h3 class="text-center">Aucun résultat trouvé</h3>');
-            var html = '';
+        if (data.length < 1)
+            return showSuggestions('<h3 class="text-center">Aucun résultat trouvé</h3>');
+        var html = '';
 
-            //Construction du HTML
-            for (var key in data) {
-                html += "<div class='col-lg-3'>" +
-                    "<a href='" + data[key].id + "' class='thumbnail'>" +
-                    "<img class='pro_avatar--size' src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE3MSAxODAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MTgwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTU3M2VhYjVjNTUgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNTczZWFiNWM1NSI+PHJlY3Qgd2lkdGg9IjE3MSIgaGVpZ2h0PSIxODAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI1OS41NTQ2ODc1IiB5PSI5NC41Ij4xNzF4MTgwPC90ZXh0PjwvZz48L2c+PC9zdmc+'>" +
-                    "<h4 class='text-center'>" + data[key].name + "</h4>" +
-                    "</a>" +
-                    "</div>";
-            }
-            function showSuggestions(html) {
-                setTimeout(function () {
-                    $('#suggestions').html(html);
-                }, 2000);
-            }
+        var result = data.slice(0,4);
 
-            showSuggestions(html);
+        //Construction du HTML
+        for (var key in result) {
+            html += "<div class='col-lg-3'>" +
+                "<a href='" + data[key].id + "' class='thumbnail'>" +
+                "<img class='pro_avatar--size' src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE3MSAxODAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MTgwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTU3M2VhYjVjNTUgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNTczZWFiNWM1NSI+PHJlY3Qgd2lkdGg9IjE3MSIgaGVpZ2h0PSIxODAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI1OS41NTQ2ODc1IiB5PSI5NC41Ij4xNzF4MTgwPC90ZXh0PjwvZz48L2c+PC9zdmc+'>" +
+                "<h4 class='text-center'>" + data[key].name + "</h4>" +
+                "</a>" +
+                "</div>";
+        }
+
+        function showSuggestions(html) {
+            $('#suggestions').html(html);
+        }
+
+        showSuggestions(html);
         }
     );
 };

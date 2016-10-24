@@ -3,14 +3,11 @@
 namespace AppBundle\Controller\ProMember;
 
 use AppBundle\Controller\BaseController;
-use AppBundle\Entity\Comment;
 use AppBundle\Entity\Favorite;
 use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
 use AppBundle\Entity\Sale;
 use AppBundle\Entity\User;
-use AppBundle\Form\CommentType;
-use AppBundle\Repository\ProMemberRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +40,6 @@ class ProMemberController extends BaseController
 
     /**
      * @Route("/prestataires", name="pro_member_index")
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction()
     {
@@ -91,5 +87,33 @@ class ProMemberController extends BaseController
                 'Content-Disposition'   => "attachment; filename='{$sale->getName()}.pdf'"
             )
         );
+    }
+
+    /**
+     * Envoie la recommandation d'un prestataire
+     *
+     * @Route("/prestataires/{slug}/commend", name="pro_member_commend")
+     * @param Request $request
+     * @param ProMember $proMember
+     * @return Response|static
+     */
+    public function recommendAction(Request $request, ProMember $proMember)
+    {
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Recommendation de prestataire')
+            ->setFrom('noreply@bien-etre.com')
+            ->setTo($request->get('mail'))
+            ->setBody(
+                $this->render('emails/commend-pro-user.html.twig', [
+                    'message' => $request->get('message'),
+                    'user' => $proMember,
+                ]), 'text/html'
+            );
+
+        $this->get('mailer')->send($message);
+
+        return $this->redirectToRoute('pro_member_profile', [
+            'slug' => $proMember->getSlug()
+        ]);
     }
 }
