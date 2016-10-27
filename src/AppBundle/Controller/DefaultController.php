@@ -12,6 +12,7 @@ class DefaultController extends BaseController
      */
     public function indexAction(Request $request)
     {
+        $im = $this->get('app.media_manager');
 
         return $this->render('default/index.html.twig', [
         ]);

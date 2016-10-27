@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\ProMember;
 
 use AppBundle\Entity\ProMember;
+use AppBundle\Controller\BaseController;
+use AppBundle\Form\WorkshopType;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Workshop;
-use AppBundle\Form\WorkshopType;
 
 /**
  * Workshop controller.
@@ -38,7 +38,7 @@ class WorkshopController extends BaseController
     public function newAction(Request $request)
     {
         $workshop = new Workshop();
-        $form = $this->createForm('AppBundle\Form\WorkshopType', $workshop);
+        $form = $this->createForm(WorkshopType::class, $workshop);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

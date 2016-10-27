@@ -1,10 +1,11 @@
 <?php
 
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Member;
 
 
 use AppBundle\Entity\Comment;
+use AppBundle\Controller\BaseController;
 use AppBundle\Entity\ProMember;
 use AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CommentsController extends BaseController
 {
     /**
-     * @Route("/prestataires/{slug}/commentaires", name="pro_member_comments_new")
+     * @Route("/prestataires/{slug}/commentaires/nouveau", name="pro_member_comments_new")
      * @param Request $request
      * @param ProMember $proMember
      * @return \Symfony\Component\HttpFoundation\Response

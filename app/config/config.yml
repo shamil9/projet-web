@@ -7,6 +7,8 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    image_driver: gd
+    assets_root: "%kernel.root_dir%/../web/assets"
 
 framework:
     #esi:             ~
@@ -88,3 +90,4 @@ stof_doctrine_extensions:
     orm:
         default:
             sluggable: true
+

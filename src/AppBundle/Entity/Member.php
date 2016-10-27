@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -20,6 +21,11 @@ class Member extends User implements \Serializable, UserInterface
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Favorite", mappedBy="member")
      */
     protected $favorites;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Image", inversedBy="member", cascade={"persist"})
+     */
+    protected $avatar;
     
     public function __construct()
     {
@@ -136,5 +142,21 @@ class Member extends User implements \Serializable, UserInterface
     public function setFavorites($favorites)
     {
         $this->favorites = $favorites;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar( $avatar )
+    {
+        $this->avatar = $avatar;
     }
 }

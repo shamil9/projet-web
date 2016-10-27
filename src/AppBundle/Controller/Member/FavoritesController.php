@@ -1,9 +1,9 @@
 <?php
 
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Member;
 
-
+use AppBundle\Controller\BaseController;
 use AppBundle\Entity\ProMember;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;

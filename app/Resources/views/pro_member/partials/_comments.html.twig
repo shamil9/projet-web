@@ -19,6 +19,6 @@
         </div>
     </div>
     {% if app.user %}
-    {{ render(controller('AppBundle:Comments:new', {'slug': user.slug})) }}
+    {{ render(controller('AppBundle:Member/Comments:new', {'slug': user.slug})) }}
     {% endif %}
 </div>

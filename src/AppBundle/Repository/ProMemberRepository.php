@@ -4,22 +4,23 @@
 namespace AppBundle\Repository;
 
 
-use AppBundle\Entity\User;
-use Doctrine\ORM\EntityRepository; 
+use AppBundle\Entity\ProMember;
+use Doctrine\ORM\EntityRepository;
 
 class ProMemberRepository extends EntityRepository
 {
     /**
-     * @param $user User
+     * @param ProMember $user
      * @return \Doctrine\ORM\Query
      */
-    public function findProUserSuggestions(User $user)
+    public function findProUserSuggestions(ProMember $user)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         return $qb->select('user')
             ->from('AppBundle:ProMember', 'user')
-            ->leftJoin('user.categories', 'cat', 'WITH', 'cat.id IN (:category)')
+            ->innerJoin('user.categories', 'cat', 'WITH', 'cat.id IN (:category)')
+            ->setMaxResults(4)
             ->where('user.zip = :zip')
             ->andWhere('user.id != :id')
             ->setParameters([

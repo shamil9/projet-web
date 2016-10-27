@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Image
@@ -22,16 +23,17 @@ class Image
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="sort", type="integer")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Member", mappedBy="avatar")
      */
-    private $sort;
+    private $member;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="path", type="string", length=255)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\ProMember", mappedBy="picture")
+     */
+    private $proMember;
+
+    /**
+     * @ORM\Column(type="string", length=255)
      */
     private $path;
 
@@ -47,51 +49,51 @@ class Image
     }
 
     /**
-     * Set sort
-     *
-     * @param integer $sort
-     *
-     * @return Image
+     * @return mixed
      */
-    public function setSort($sort)
+    public function getMember()
     {
-        $this->sort = $sort;
-
-        return $this;
+        return $this->member;
     }
 
     /**
-     * Get sort
-     *
-     * @return int
+     * @param mixed $member
      */
-    public function getSort()
+    public function setMember( $member )
     {
-        return $this->sort;
+        $this->member = $member;
     }
 
     /**
-     * Set path
-     *
-     * @param string $path
-     *
-     * @return Image
+     * @return mixed
      */
-    public function setPath($path)
+    public function getProMember()
     {
-        $this->path = $path;
-
-        return $this;
+        return $this->proMember;
     }
 
     /**
-     * Get path
-     *
-     * @return string
+     * @param mixed $proMember
+     */
+    public function setProMember( $proMember )
+    {
+        $this->proMember = $proMember;
+    }
+
+    /**
+     * @return mixed
      */
     public function getPath()
     {
         return $this->path;
+    }
+
+    /**
+     * @param mixed $path
+     */
+    public function setPath( $path )
+    {
+        $this->path = $path;
     }
 }
 

@@ -1,10 +1,9 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\ProMember;
 
-use AppBundle\Entity\Category;
+use AppBundle\Controller\BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 class NewsletterController extends BaseController
 {

@@ -1,13 +1,14 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\ProMember;
 
 use AppBundle\Entity\ProMember;
+use AppBundle\Controller\BaseController;
+use AppBundle\Form\SaleType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Sale;
-use AppBundle\Form\SaleType;
 
 /**
  * Sale controller.
@@ -20,6 +21,8 @@ class SaleController extends BaseController
      * Affiche toutes les promotions
      *
      * @Route("/", name="sales_index")
+     * @param ProMember $user
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(ProMember $user)
     {
@@ -36,7 +39,7 @@ class SaleController extends BaseController
     public function newAction(Request $request)
     {
         $sale = new Sale();
-        $form = $this->createForm('AppBundle\Form\SaleType', $sale);
+        $form = $this->createForm(SaleType::class, $sale);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

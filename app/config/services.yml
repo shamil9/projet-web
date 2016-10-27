@@ -16,3 +16,7 @@ services:
     app.favorites_manager:
         class: AppBundle\Managers\FavoritesManager
         arguments: ["@doctrine.orm.entity_manager"]
+
+    app.media_manager:
+        class: AppBundle\Managers\ImageManager
+        arguments: ["%assets_root%"]
