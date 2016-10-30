@@ -23,16 +23,6 @@ class Image
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Member", mappedBy="avatar")
-     */
-    private $member;
-
-    /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\ProMember", mappedBy="picture")
-     */
-    private $proMember;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $path;
@@ -46,38 +36,6 @@ class Image
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMember()
-    {
-        return $this->member;
-    }
-
-    /**
-     * @param mixed $member
-     */
-    public function setMember( $member )
-    {
-        $this->member = $member;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProMember()
-    {
-        return $this->proMember;
-    }
-
-    /**
-     * @param mixed $proMember
-     */
-    public function setProMember( $proMember )
-    {
-        $this->proMember = $proMember;
     }
 
     /**

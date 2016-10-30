@@ -22,11 +22,6 @@ class Member extends User implements \Serializable, UserInterface
      */
     protected $favorites;
 
-    /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Image", inversedBy="member", cascade={"persist"})
-     */
-    protected $avatar;
-    
     public function __construct()
     {
         parent::__construct();

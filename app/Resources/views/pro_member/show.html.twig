@@ -43,12 +43,12 @@
             </div>
             <div class="pro_userbar col-lg-12">
                 <div class="pro_avatar pull-left">
-                    <img src="{{ asset('assets/img/icons/user.svg') }}" alt="Avatar" class="pro_avatar--size thumbnail">
+                    <img src="{{ asset('assets/img/uploads/avatars/user.svg') }}" alt="Avatar" class="pro_avatar img--100x100 thumbnail">
                 </div>
                 <span class="pro_user-info">{{ user.name }} </span>
 
                 {#Button de favoris#}
-                {% if app.user %}
+                {% if user is member %}
                     {% if favorite %}
                         <a href="" class="glyphicon glyphicon-bookmark favorite favorite__active"
                                 id="remove-favorite"
@@ -175,7 +175,7 @@
     <script src="{{ asset('assets/js/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
-        {% if app.user %}
+        {% if user %}
         $('#add-favorite').on('click', function (e) {
             e.preventDefault();
             addFavorite('{{ path('members_add_favorite', {'proMember': user.id}) }}', this);
@@ -189,7 +189,12 @@
         $('#comments').on('submit', function (e) {
             e.preventDefault();
 
-           postComment('{{ path('pro_member_comments_new', {'slug': user.slug}) }}', '{{ app.user.username }}', this)
+            postcomment({
+                url: '{{ path('pro_member_comments_new', {'slug': user.slug}) }}',
+                user: '{{ user.username }}',
+                picture: '{{ user.picture }}',
+                self: this
+            });
         });
         {% endif %}
 
@@ -197,8 +202,7 @@
             theme: 'bootstrap-stars'
         });
 
-        var address = '{{ user.street }}, {{ user.city }}';
-        showGoogleMap(address);
+        showGoogleMap('{{ user.street }}, {{ user.city }}');
 
         getSuggestions('{{ path('pro_member_suggestions', {'user': user.id}) }}');
     </script>

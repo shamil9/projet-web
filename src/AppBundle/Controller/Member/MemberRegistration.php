@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MemberRegistration extends BaseController
 {
     /**
-     * @Route("membre/nouveau", name="member_registration")
+     * @Route("membre/inscription", name="member_registration")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */

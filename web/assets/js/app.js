@@ -85,12 +85,12 @@ var getSuggestions = function (url) {
 };
 
 //Enregistrement et affichage d'un nouveau commentaire
-var postComment = function (url, userName, self) {
+var postComment = function (comment) {
     var options = {
-        url: url,
+        url: comment.url,
         method: 'POST',
         data: $(self).serialize(),
-        context: self
+        context: comment.self
     };
 
     $.ajax(options)
@@ -98,9 +98,10 @@ var postComment = function (url, userName, self) {
             var comment =
                 "<div class='panel panel-default comment-animate'>" +
                     "<div class='panel-heading'>" +
-                    "<span class='lead'>" + userName + "</span>" +
-                    "<span class='pull-right rating' style='width: calc(20px * " + data.rating + ");'></span>" +
-                "</div>" +
+                        "<img src='/assets/img/uploads/avatars'" + comment.picture +"</img>" +
+                        "<span class='lead'>" + comment.user + "</span>" +
+                        "<span class='pull-right rating' style='width: calc(20px * " + data.rating + ");'></span>" +
+                    "</div>" +
                     "<div class='panel-body'>" +
                         data.comment +
                     "</div>" +

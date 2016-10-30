@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block title 'Inscription sur Bien-Être' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h3>Membre</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur dicta ex iste magni quaerat quidem reprehenderit tempora? Laborum odio officia repellendus. Ad animi deserunt labore nihil non quas quasi voluptates!</p>
+                    <p><a href="{{ path('member_registration') }}" class="btn btn-primary" role="button">Inscription</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h3>Prestataire</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur dicta ex iste magni quaerat quidem reprehenderit tempora? Laborum odio officia repellendus. Ad animi deserunt labore nihil non quas quasi voluptates!</p>
+                    <p><a href="{{ path('pro_member_registration') }}" class="btn btn-primary" role="button">Inscription</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

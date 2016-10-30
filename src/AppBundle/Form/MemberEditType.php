@@ -22,13 +22,12 @@ class MemberEditType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('username', TextType::class)
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Répétez le mot de passe']
             ])
-            ->add('avatar', FileType::class, [
+            ->add('picture', FileType::class, [
                 'data_class' => null
             ]);
     }

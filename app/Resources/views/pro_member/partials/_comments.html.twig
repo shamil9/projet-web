@@ -7,6 +7,7 @@
             {% for comment in user.comments %}
                 <div class="panel panel-default">
                     <div class="panel-heading">
+                        <img src="/assets/img/uploads/avatars/{{ comment.member.picture }}" class="img--30x30" alt="{{ comment.member.username }}">
                         <span class="lead">{{ comment.member.username }}</span>
             <span class="pull-right rating"
                   style="width: calc(20px * {{ comment.rating }});"></span>
@@ -18,7 +19,7 @@
             {% endfor %}
         </div>
     </div>
-    {% if app.user %}
+    {% if user is member %}
     {{ render(controller('AppBundle:Member/Comments:new', {'slug': user.slug})) }}
     {% endif %}
 </div>

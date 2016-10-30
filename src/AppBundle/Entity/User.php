@@ -44,7 +44,14 @@ class User
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Length(max=4096)
+     * @Assert\Length(
+     *     max=4096,
+     *     min=7,
+     *     minMessage="Le mot de pass est trop court.",
+     *     maxMessage="Le mot de pass est trop long."
+     * )
+     * @Assert\Regex("/[\x21-\x7E]+/",
+     *     message="Le mot de passe doit contenir 7 caractères avec au moins 1 caractère alphabétique sans accents et au moins 1 chiffre.")
      */
     private $plainPassword;
 
@@ -58,13 +65,17 @@ class User
      */
     protected $username;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png", "image/svg+xml" })
+     */
+    protected $picture = __DIR__ . '/../../../web/assets/img/icons/user.svg';
+
     protected $userType;
 
     public function __construct()
     {
         $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
     }
     
     /**
@@ -192,5 +203,21 @@ class User
     public function setUsername($username)
     {
         $this->username = $username;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $picture
+     */
+    public function setPicture( $picture )
+    {
+        $this->picture = $picture;
     }
 }

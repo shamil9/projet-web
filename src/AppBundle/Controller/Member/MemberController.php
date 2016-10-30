@@ -17,7 +17,7 @@ class MemberController extends BaseController
     /**
      * Met à jour les données d'utilisateur
      *
-     * @Route("/editer/{user}", name="member_edit")
+     * @Route("/editer", name="member_edit")
      * @param Request $request
      * @param Member $user
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -30,20 +30,15 @@ class MemberController extends BaseController
         if ( $form->isSubmitted() && $form->isValid()) {
 
             /** @var UploadedFile $file */
-            $file = $user->getAvatar();
+            $file = $user->getPicture();
             $fileName = $user->getUsername().'.'.$file->guessExtension();
             $folder = $this->getParameter('assets_root') . '/img/uploads/avatars/';
 
             $file->move( $folder, $fileName );
 
             $this->resizeImage($folder . $fileName);
+            $user->setPicture($fileName);
 
-            //pas sûr de ce code
-            $image = new Image();
-            $image->setMember($user);
-            $image->setPath($folder . $fileName);
-
-            $user->setAvatar($image);
             $this->em()->persist($user);
             $this->em()->flush();
 
@@ -57,8 +52,7 @@ class MemberController extends BaseController
      */
     private function resizeImage( string $file )
     {
-        $image = $this->get('app.media_manager')->make($file);
-        $image->resize(50, 50)->save($file);
-
+        $image = $this->get('app.image_manager')->make($file);
+        $image->createAvatar();
     }
 }

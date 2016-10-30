@@ -30,7 +30,11 @@
                     <div class="form-group">
                         {{ form_label(form.plainPassword.first, 'Mot de passe') }}
                         {{ form_errors(form.plainPassword.first) }}
-                        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_widget(form.plainPassword.first, {'attr': {
+                            'class': 'form-control',
+                            'pattern': '[\x21-\x7E].{7,}',
+                            'title': 'Le mot de passe doit contenir 7 caractères avec au moins 1 caractère alphabétique sans accents et au moins 1 chiffre.'
+                        }}) }}
                     </div>
 
                     <div class="form-group">

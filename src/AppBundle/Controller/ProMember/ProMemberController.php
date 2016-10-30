@@ -17,23 +17,24 @@ class ProMemberController extends BaseController
     /**
      * @Route("/prestataires/{slug}", name="pro_member_profile")
      * @param Request $request
-     * @param ProMember|User $user
+     * @param ProMember $proMember
      * @return string
+     * @internal param ProMember|User $user
      */
-    public function showAction(Request $request, ProMember $user)
+    public function showAction(Request $request, ProMember $proMember)
     {
         if ($this->getUser() instanceof Member) {
             $repo = $this->em()->getRepository('AppBundle:Favorite');
 
             //Recherche de prestataire dans le favoris
             $favorite = $repo->findOneBy([
-                'proMember' => $user->getId(),
+                'proMember' => $proMember->getId(),
                 'member' => $this->getUser()->getId(),
             ]);
         }
 
         return $this->render('pro_member/show.html.twig', [
-            'user' => $user,
+            'user' => $proMember,
             'favorite' => isset($favorite) ?: null,
         ]);
     }

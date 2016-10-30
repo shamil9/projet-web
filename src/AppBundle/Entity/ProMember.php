@@ -48,12 +48,6 @@ class ProMember extends User implements  UserInterface, \Serializable
     protected $website;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Image", inversedBy="proMember")
-     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
-     */
-    protected $picture;
-
-    /**
      * @ORM\Column(type="string", nullable=false)
      */
     protected $tva;

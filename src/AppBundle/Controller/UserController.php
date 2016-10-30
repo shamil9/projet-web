@@ -20,9 +20,13 @@ class UserController extends BaseController
      * @var User $user
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction(Request $request)
+    public function editAction(Request $request)
     {
-        //utilisateur courant
+        /**
+         * Utilisateur courant
+         *
+         * @var Member $user
+         */
         $user = $this->getUser();
 
         if ($user instanceof Member) {

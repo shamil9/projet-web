@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,8 +13,6 @@ class DefaultController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        $im = $this->get('app.media_manager');
-
         return $this->render('default/index.html.twig', [
         ]);
     }
@@ -42,6 +41,16 @@ class DefaultController extends BaseController
             'regions' => $regions,
             'user' => $user,
         ]);
+    }
+
+    /**
+     * Affichage du choix entre enregistrement comme utilisateur ou prestataire
+     *
+     * @Route("/inscription", name="register")
+     */
+    public function registerAction()
+    {
+        return $this->render('default/register.html.twig');
     }
 
     /**
