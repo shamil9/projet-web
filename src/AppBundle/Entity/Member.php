@@ -12,13 +12,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Member extends User implements \Serializable, UserInterface
 {
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="member")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="member", cascade={"remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Favorite", mappedBy="member")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Favorite", mappedBy="member", cascade={"remove"}, orphanRemoval=true)
      */
     protected $favorites;
 
@@ -48,39 +48,6 @@ class Member extends User implements \Serializable, UserInterface
     }
 
     /**
-     * String representation of object
-     * @link http://php.net/manual/en/serializable.serialize.php
-     * @return string the string representation of the object or null
-     * @since 5.1.0
-     */
-    public function serialize()
-    {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-        ]);
-    }
-
-    /**
-     * Constructs the object
-     * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
-     * The string representation of the object.
-     * </p>
-     * @return void
-     * @since 5.1.0
-     */
-    public function unserialize($serialized)
-    {
-        list(
-            $this->id,
-            $this->username,
-            $this->password,
-            ) = unserialize($serialized);
-    }
-
-    /**
      * Returns the roles granted to the user.
      *
      * <code>
@@ -102,28 +69,6 @@ class Member extends User implements \Serializable, UserInterface
     }
 
     /**
-     * Returns the salt that was originally used to encode the password.
-     *
-     * This can return null if the password was not encoded using a salt.
-     *
-     * @return string|null The salt
-     */
-    public function getSalt()
-    {
-        return null;
-    }
-
-    /**
-     * Removes sensitive data from the user.
-     *
-     * This is important if, at any given point, sensitive information like
-     * the plain-text password is stored on this object.
-     */
-    public function eraseCredentials()
-    {
-    }
-
-    /**
      * @return mixed
      */
     public function getFavorites()
@@ -137,21 +82,5 @@ class Member extends User implements \Serializable, UserInterface
     public function setFavorites($favorites)
     {
         $this->favorites = $favorites;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
-
-    /**
-     * @param mixed $avatar
-     */
-    public function setAvatar( $avatar )
-    {
-        $this->avatar = $avatar;
     }
 }

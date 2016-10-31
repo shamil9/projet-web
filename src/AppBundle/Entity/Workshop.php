@@ -57,7 +57,8 @@ class Workshop
     private $end;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="workshops", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="workshops", fetch="LAZY", cascade={"persist"})
+     * @ORM\JoinColumn(name="user_id",referencedColumnName="id", onDelete="CASCADE")
      */
     private $user;
 

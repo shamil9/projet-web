@@ -15,7 +15,6 @@
 
                 <div style="padding-top:30px" class="panel-body">
                     <form action="{{ path('login') }}" method="post" class="form-horizontal" role="form">
-                        {#<input type="hidden" name="_target_path" value="/account" />#}
                         <input type="hidden" name="_csrf_token"
                                value="{{ csrf_token('authenticate') }}">
                         <div style="margin-bottom: 25px" class="input-group">

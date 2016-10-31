@@ -34,12 +34,14 @@ class Comment
     private $rating;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Member", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Member", inversedBy="comments", cascade={"persist"})
+     * @ORM\JoinColumn(name="comments_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $member;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="comments", cascade={"persist"})
+     * @ORM\JoinColumn(name="comments_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $proMember;
 

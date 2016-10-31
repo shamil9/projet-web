@@ -50,7 +50,8 @@ class Sale
     private $end;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="sales")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="sales", cascade={"persist"})
+     * @ORM\JoinColumn(name="user_id",referencedColumnName="id", onDelete="CASCADE")
      */
     protected $user;
 

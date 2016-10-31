@@ -43,23 +43,21 @@
             </div>
             <div class="pro_userbar col-lg-12">
                 <div class="pro_avatar pull-left">
-                    <img src="{{ asset('assets/img/uploads/avatars/user.svg') }}" alt="Avatar" class="pro_avatar img--100x100 thumbnail">
+                    <img src="{{ avatars ~ user.picture }}" alt="Avatar" class="pro_avatar img--100x100 thumbnail">
                 </div>
                 <span class="pro_user-info">{{ user.name }} </span>
 
                 {#Button de favoris#}
-                {% if user is member %}
+                {% if app.user is member %}
                     {% if favorite %}
                         <a href="" class="glyphicon glyphicon-bookmark favorite favorite__active"
                                 id="remove-favorite"
                                 title="Supprimer le favori">
-                            {#<span class="glyphicon glyphicon-remove"></span>#}
                         </a>
                     {% else %}
                         <a href="" class="glyphicon glyphicon-bookmark favorite"
                                 id="add-favorite"
                                 title="Ajouter aux favoris">
-                            {#<span class="glyphicon glyphicon-bookmark"></span>#}
                         </a>
                     {% endif %}
                 {% endif %}
@@ -138,7 +136,7 @@
                         {% if user.sales is not empty %}
                         <div role="tabpanel" class="tab-pane" id="promotions">
                             <h1>Promotions</h1>
-                            {% include 'pro_member/partials/_sales.html.twig' %}
+                            {% include ':sale/partials:_list.html.twig' %}
                         </div>
                         {% endif %}
 
@@ -175,7 +173,7 @@
     <script src="{{ asset('assets/js/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
-        {% if user %}
+        {% if app.user %}
         $('#add-favorite').on('click', function (e) {
             e.preventDefault();
             addFavorite('{{ path('members_add_favorite', {'proMember': user.id}) }}', this);

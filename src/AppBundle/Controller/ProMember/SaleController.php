@@ -79,6 +79,9 @@ class SaleController extends BaseController
      * Affiche le formulaire d'edition d'une promotion
      *
      * @Route("/{id}/edit", name="sale_edit")
+     * @param Request $request
+     * @param Sale $sale
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Sale $sale)
     {

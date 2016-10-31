@@ -59,19 +59,19 @@ class ProMember extends User implements  UserInterface, \Serializable
     protected $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Sale", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Sale", mappedBy="user", cascade={"remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $sales;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Workshop", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Workshop", mappedBy="user", cascade={"remove"})
      * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $workshops;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="proMember")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="proMember", cascade={"remove"})
      * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $comments;
@@ -84,9 +84,14 @@ class ProMember extends User implements  UserInterface, \Serializable
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Favorite", mappedBy="proMember")
-     * @var ArrayCollection
      */
     protected $favoredBy;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Newsletter", mappedBy="user", cascade={"remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "DESC"})
+     */
+    protected $newsletters;
 
     public function __construct()
     {
@@ -97,6 +102,7 @@ class ProMember extends User implements  UserInterface, \Serializable
         $this->sales = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->favoredBy = new ArrayCollection();
+        $this->newsletters = new ArrayCollection();
         $this->isActive = false;
     }
 
@@ -309,39 +315,6 @@ class ProMember extends User implements  UserInterface, \Serializable
     }
 
     /**
-     * String representation of object
-     * @link http://php.net/manual/en/serializable.serialize.php
-     * @return string the string representation of the object or null
-     * @since 5.1.0
-     */
-    public function serialize()
-    {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-        ]);
-    }
-
-    /**
-     * Constructs the object
-     * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
-     * The string representation of the object.
-     * </p>
-     * @return void
-     * @since 5.1.0
-     */
-    public function unserialize($serialized)
-    {
-        list(
-            $this->id,
-            $this->username,
-            $this->password,
-            ) = unserialize($serialized);
-    }
-
-    /**
      * Returns the roles granted to the user.
      *
      * <code>
@@ -363,28 +336,6 @@ class ProMember extends User implements  UserInterface, \Serializable
     }
 
     /**
-     * Returns the salt that was originally used to encode the password.
-     *
-     * This can return null if the password was not encoded using a salt.
-     *
-     * @return string|null The salt
-     */
-    public function getSalt()
-    {
-        return null;
-    }
-
-    /**
-     * Removes sensitive data from the user.
-     *
-     * This is important if, at any given point, sensitive information like
-     * the plain-text password is stored on this object.
-     */
-    public function eraseCredentials()
-    {
-    }
-
-    /**
      * @return ArrayCollection
      */
     public function getFavoredBy()
@@ -398,5 +349,21 @@ class ProMember extends User implements  UserInterface, \Serializable
     public function setFavoredBy($favoredBy)
     {
         $this->favoredBy = $favoredBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNewsletters()
+    {
+        return $this->newsletters;
+    }
+
+    /**
+     * @param mixed $newsletters
+     */
+    public function setNewsletters( $newsletters )
+    {
+        $this->newsletters = $newsletters;
     }
 }

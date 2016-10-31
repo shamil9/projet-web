@@ -1,0 +1,11 @@
+{% for sale in user.sales %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="lead"><a href="{{ path('sale_edit', { 'slug': user.slug, 'id': sale.id }) }}">{{ sale.name }}</a></span>
+            <span class="pull-right"><a href="{{ path('pro_member_sale_pdf', { 'sale': sale.id }) }}">PDF</a></span>
+        </div>
+        <div class="panel-body">
+            {{ sale.description }}
+        </div>
+    </div>
+{% endfor %}

@@ -19,25 +19,32 @@ class MemberController extends BaseController
      *
      * @Route("/editer", name="member_edit")
      * @param Request $request
-     * @param Member $user
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function updateAction(Request $request, Member $user)
+    public function updateAction(Request $request)
     {
-        $form = $this->createForm(MemberEditType::class, $user);
+        $form = $this->createForm(MemberEditType::class, $user = $this->getUser());
         $form->handleRequest($request);
 
         if ( $form->isSubmitted() && $form->isValid()) {
 
-            /** @var UploadedFile $file */
-            $file = $user->getPicture();
-            $fileName = $user->getUsername().'.'.$file->guessExtension();
-            $folder = $this->getParameter('assets_root') . '/img/uploads/avatars/';
+            //Changement de mot de passe
+            $password = $this->get('security.password_encoder')
+                             ->encodePassword($user, $request->get('plainPassword'));
+            $user->setPassword($password);
 
-            $file->move( $folder, $fileName );
+            //Gestion d'avatar
+            if ( $request->get('picture') ) {
+                /** @var UploadedFile $file */
+                $file = $user->getPicture();
+                $fileName = $user->getUsername().'.'.$file->guessExtension();
+                $folder = $this->getParameter('assets_root') . '/img/uploads/avatars/';
 
-            $this->resizeImage($folder . $fileName);
-            $user->setPicture($fileName);
+                $file->move( $folder, $fileName );
+
+                $this->resizeImage($folder . $fileName);
+                $user->setPicture($fileName);
+            }
 
             $this->em()->persist($user);
             $this->em()->flush();

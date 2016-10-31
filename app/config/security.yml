@@ -4,8 +4,10 @@ security:
     encoders:
         AppBundle\Entity\Member:
                     algorithm: bcrypt
+                    cost: 12
         AppBundle\Entity\ProMember:
                     algorithm: bcrypt
+                    cost: 12
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_PRO_USER
