@@ -22,6 +22,11 @@ class Member extends User implements \Serializable, UserInterface
      */
     protected $favorites;
 
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\NewsletterSubscriber", mappedBy="user", cascade={"remove"}, orphanRemoval=true)
+     */
+    protected $subscribed;
+
     public function __construct()
     {
         parent::__construct();
@@ -82,5 +87,13 @@ class Member extends User implements \Serializable, UserInterface
     public function setFavorites($favorites)
     {
         $this->favorites = $favorites;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubscribed()
+    {
+        return $this->subscribed;
     }
 }

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block title 'Liste de toutes les newsletters' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        {% include ':newsletter/partials:_list.html.twig' %}
+    </div>
+</div>
+{% endblock %}

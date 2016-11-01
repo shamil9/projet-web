@@ -42,7 +42,7 @@ class ProMemberController extends BaseController
     /**
      * @Route("/prestataires", name="pro_member_index")
      */
-    public function listAction()
+    public function indexAction()
     {
         $users = $this->getRepository('AppBundle:ProMember')->findAll();
 

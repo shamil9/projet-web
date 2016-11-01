@@ -64,6 +64,8 @@ class SaleController extends BaseController
      *
      * @Route("/{id}", name="prestataires_show")
      * @Method("GET")
+     * @param Sale $sale
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Sale $sale)
     {
@@ -90,9 +92,8 @@ class SaleController extends BaseController
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($sale);
-            $em->flush();
+            $this->em()->persist($sale);
+            $this->em()->flush();
 
             return $this->redirectToRoute('sale_edit', array(
                 'id' => $sale->getId(),
@@ -120,9 +121,8 @@ class SaleController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($sale);
-            $em->flush();
+            $this->em()->remove($sale);
+            $this->em()->flush();
         }
 
         return $this->redirectToRoute('pro_member_profile', [

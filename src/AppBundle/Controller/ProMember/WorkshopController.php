@@ -34,6 +34,8 @@ class WorkshopController extends BaseController
      * Ajout d'un stage
      *
      * @Route("/new", name="stage_new")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -60,6 +62,9 @@ class WorkshopController extends BaseController
      * Mise à jour d'un stage
      *
      * @Route("/{id}/edit", name="stage_edit")
+     * @param Request $request
+     * @param Workshop $workshop
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Workshop $workshop)
     {
@@ -89,6 +94,9 @@ class WorkshopController extends BaseController
      * Supprime un stage
      *
      * @Route("/{id}", name="stage_delete")
+     * @param Request $request
+     * @param Workshop $workshop
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Workshop $workshop)
     {

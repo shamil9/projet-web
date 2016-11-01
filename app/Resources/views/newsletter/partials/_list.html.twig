@@ -1,0 +1,10 @@
+{% for newsletter in newsletters %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="lead"><a href="">{{ newsletter.title }}</a></span>
+        </div>
+        <div class="panel-body">
+            {{ newsletter.user }}
+        </div>
+    </div>
+{% endfor %}

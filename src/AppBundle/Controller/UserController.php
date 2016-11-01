@@ -45,20 +45,16 @@ class UserController extends BaseController
      * Supprime un utilisateur
      *
      * @Route("/supprimer", name="user_delete")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function destroyAction(Request $request)
     {
-        //utilisateur courant
         $user = $this->getUser();
 
-        //suppression d'utilistateur
-        $this->em()->remove($user);
-        $this->em()->flush();
+        //suppression de l'utilisateur
+        $this->deleteUser( $request, $user );
 
-        //suppression de la session
-        $this->get('security.token_storage')->setToken(null);
-        $request->getSession()->invalidate();
 
         return $this->redirectToRoute('homepage');
     }

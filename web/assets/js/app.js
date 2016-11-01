@@ -118,3 +118,49 @@ var postComment = function (comment) {
             $(comment).prependTo('#comments-list');
         });
 };
+
+// Inscription à la newsletter
+var addNewsletterSubscriber = function (url, user, self) {
+    $(self).on('click', function (e) {
+        e.preventDefault();
+
+        var options = {
+            url: url,
+            method: 'POST',
+            context: self
+        };
+
+        $.ajax(options)
+            .done(function () {
+                $(this)
+                    .removeAttr('id')
+                    .attr('id', 'unsubscribe')
+                    .attr('disabled', 'true')
+                    .toggleClass('btn-success')
+                    .html('Succès');
+            });
+    });
+};
+
+// Désinscription de la newsletter
+var removeNewsletterSubscriber = function (url, user, self) {
+    $(self).on('click', function (e) {
+        e.preventDefault();
+
+        var options = {
+            url: url,
+            method: 'POST',
+            context: self
+        };
+
+        $.ajax(options)
+            .done(function () {
+                $(this)
+                    .removeAttr('id')
+                    .attr('id', 'unsubscribe')
+                    .attr('disabled', 'true')
+                    .toggleClass('btn-success')
+                    .html('Succès');
+            });
+    });
+};
