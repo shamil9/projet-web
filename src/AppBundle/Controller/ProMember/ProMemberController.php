@@ -3,50 +3,138 @@
 namespace AppBundle\Controller\ProMember;
 
 use AppBundle\Controller\BaseController;
+use AppBundle\Controller\CrudInterface;
 use AppBundle\Entity\Favorite;
 use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
 use AppBundle\Entity\Sale;
 use AppBundle\Entity\User;
+use AppBundle\Form\ProMemberEditType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProMemberController extends BaseController
+class ProMemberController extends BaseController implements CrudInterface
 {
     /**
-     * @Route("/prestataires/{slug}", name="pro_member_profile")
+     * @Route("/prestataires", name="pro_member_index")
+     */
+    public function indexAction()
+    {
+        $users = $this->getRepository( 'AppBundle:ProMember' )->findAll();
+
+        return $this->render( 'pro_member/index.html.twig', [ 'users' => $users ] );
+    }
+
+    /**
+     * Nouveau enregistrement
      * @param Request $request
-     * @param ProMember $proMember
+     */
+    public function newAction( Request $request )
+    {
+        // TODO: Implement newAction() method.
+    }
+
+    /**
+     * @Route("/prestataires/{slug}", name="user_profile")
+     * @ParamConverter("user", class="AppBundle:ProMember")
+     * @param ProMember $user
      * @return string
+     * @internal param Request $request
+     * @internal param ProMember $proMember
      * @internal param ProMember|User $user
      */
-    public function showAction(Request $request, ProMember $proMember)
+    public function showAction( $user )
     {
         if ($this->getUser() instanceof Member) {
             $repo = $this->em()->getRepository('AppBundle:Favorite');
 
             //Recherche de prestataire dans le favoris
             $favorite = $repo->findOneBy([
-                'proMember' => $proMember->getId(),
+                'proMember' => $user->getId(),
                 'member' => $this->getUser()->getId(),
             ]);
         }
 
         return $this->render('pro_member/show.html.twig', [
-            'user' => $proMember,
-            'favorite' => isset($favorite) ?: null,
+            'user' => $user,
+            'favorite' => $favorite ?? null,
         ]);
     }
 
     /**
-     * @Route("/prestataires", name="pro_member_index")
+     * Edition
+     *
+     * @Route("/profil", name="edit_profile")
      */
-    public function indexAction()
+    public function editAction()
     {
-        $users = $this->getRepository('AppBundle:ProMember')->findAll();
+        /** @var ProMember $user */
+        $user = $this->getUser();
 
-        return $this->render('pro_member/index.html.twig', ['users' => $users]);
+        $form = $this->createForm( ProMemberEditType::class );
+
+        return $this->render( 'pro_member/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ] );
+    }
+
+    /**
+     * @Route("/update", name="update_profile")
+     * @param Request $request
+     * @return mixed|void
+     */
+    public function updateAction( Request $request )
+    {
+        $form = $this->createForm( ProMemberEditType::class, $user = $this->getUser() );
+        $form->handleRequest( $request );
+
+        if ( $form->isSubmitted() && $form->isValid() ) {
+
+            //Changement de mot de passe
+            $password = $this->get( 'security.password_encoder' )
+                ->encodePassword( $user, $request->get( 'plainPassword' ) );
+            $user->setPassword( $password );
+
+            //Gestion d'avatar
+            if ( $request->get( 'picture' ) ) {
+                /** @var UploadedFile $file */
+                $file     = $user->getPicture();
+                $fileName = $user->getUsername() . '.' . $file->guessExtension();
+                $folder   = $this->getParameter( 'assets_root' ) . '/img/uploads/avatars/';
+
+                $file->move( $folder, $fileName );
+
+                $this->createAvatarImage( $folder . $fileName );
+                $user->setPicture( $fileName );
+            }
+
+            $this->em()->persist( $user );
+            $this->em()->flush();
+
+        }
+
+        return $this->redirectToRoute( 'user_profile' );
+    }
+
+    /**
+     * Suppression
+     *
+     * @Route("/destroy", name="user_delete")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function destroyAction( Request $request )
+    {
+        $user = $this->getUser();
+
+        //suppression de l'utilisateur
+        $this->deleteUser( $request, $user );
+
+        return $this->redirectToRoute( 'homepage' );
     }
 
     /**
@@ -89,7 +177,6 @@ class ProMemberController extends BaseController
             )
         );
     }
-
     /**
      * Envoie la recommandation d'un prestataire
      *
@@ -113,7 +200,7 @@ class ProMemberController extends BaseController
 
         $this->get('mailer')->send($message);
 
-        return $this->redirectToRoute('pro_member_profile', [
+        return $this->redirectToRoute( 'user_profile', [
             'slug' => $proMember->getSlug()
         ]);
     }

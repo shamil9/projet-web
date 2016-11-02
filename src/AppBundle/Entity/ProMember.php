@@ -3,20 +3,15 @@
 namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProMemberRepository")
  */
 class ProMember extends User implements  UserInterface, \Serializable
 {
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     */
-    protected $name;
-
     /**
      * @ORM\Column(type="string", nullable=false)
      */
@@ -93,33 +88,24 @@ class ProMember extends User implements  UserInterface, \Serializable
      */
     protected $newsletters;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="user", cascade={"remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "DESC"})
+     */
+    protected $images;
+
     public function __construct()
     {
         parent::__construct();
-        $this->userType = User::TYPE_PRO_USER;
-        $this->categories = new ArrayCollection();
-        $this->workshops = new ArrayCollection();
-        $this->sales = new ArrayCollection();
-        $this->comments = new ArrayCollection();
-        $this->favoredBy = new ArrayCollection();
+        $this->userType    = User::TYPE_PRO_USER;
+        $this->categories  = new ArrayCollection();
+        $this->workshops   = new ArrayCollection();
+        $this->sales       = new ArrayCollection();
+        $this->comments    = new ArrayCollection();
+        $this->favoredBy   = new ArrayCollection();
         $this->newsletters = new ArrayCollection();
-        $this->isActive = false;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName( $name )
-    {
-        $this->name = $name;
+        $this->images      = new ArrayCollection();
+        $this->isActive    = false;
     }
 
     /**
@@ -365,5 +351,21 @@ class ProMember extends User implements  UserInterface, \Serializable
     public function setNewsletters( $newsletters )
     {
         $this->newsletters = $newsletters;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param mixed $images
+     */
+    public function setImages( $images )
+    {
+        $this->images = $images;
     }
 }

@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 
+use Symfony\Component\HttpFoundation\Request;
+
 interface CrudInterface
 {
     /**
@@ -12,23 +14,35 @@ interface CrudInterface
 
     /**
      * Nouveau enregistrement
+     * @param Request $request
+     * @return
      */
-    public function newAction();
+    public function newAction( Request $request );
 
     /**
      * Affichage individuel
+     * @param $entity
+     * @return
      */
-    public function showAction();
+    public function showAction( $entity );
 
     /**
      * Edition
      */
     public function editAction();
 
-    public function updateAction();
+    /**
+     * Mise à jour
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function updateAction( Request $request );
 
     /**
      * Suppression
+     * @param Request $request
+     * @return
      */
-    public function destroyAction();
+    public function destroyAction( Request $request );
 }

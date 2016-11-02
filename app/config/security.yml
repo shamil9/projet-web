@@ -50,4 +50,9 @@ security:
         - { path: ^/connexion$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/profil$, role: ROLE_USER }
+        - { path: ^/edit$, role: ROLE_USER }
+        - { path: ./stages/ajouter$, role: ROLE_PRO_USER }
+        - { path: ./stages/ajouter$, role: ROLE_PRO_USER }
+        - { path: ^/destroy$, role: ROLE_ADMIN }
         - { path: ^/admin/$, role: ROLE_ADMIN }

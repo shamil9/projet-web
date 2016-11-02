@@ -28,6 +28,7 @@ class CreateMembers extends AbstractFixture implements OrderedFixtureInterface, 
         $customUser = new Member();
         $customUser->setIsActive(1);
         $customUser->setUsername('Membre');
+        $customUser->setName( 'Membre' );
         $customUser->setEmail('membre@simple.com');
         $encoder = $this->container->get('security.encoder_factory')->getEncoder($customUser);
         $customUser->setPassword($encoder->encodePassword('membre', $customUser->getSalt()));
@@ -36,6 +37,7 @@ class CreateMembers extends AbstractFixture implements OrderedFixtureInterface, 
         
         for ($i = 0; $i < 10; $i++) {
             $user = new Member();
+            $user->setName( $faker->name );
             $user->setIsActive(1);
             $user->setUsername($faker->userName);
             $user->setEmail($faker->email);

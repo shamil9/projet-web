@@ -2,12 +2,12 @@
 
 namespace AppBundle\Controller\ProMember;
 
-use AppBundle\Entity\ProMember;
 use AppBundle\Controller\BaseController;
-use AppBundle\Form\WorkshopType;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\ProMember;
 use AppBundle\Entity\Workshop;
+use AppBundle\Form\WorkshopType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Workshop controller.
@@ -33,7 +33,7 @@ class WorkshopController extends BaseController
     /**
      * Ajout d'un stage
      *
-     * @Route("/new", name="stage_new")
+     * @Route("/ajouter", name="stage_new")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -48,7 +48,7 @@ class WorkshopController extends BaseController
             $this->em()->persist($workshop);
             $this->em()->flush();
 
-            return $this->redirectToRoute('pro_member_profile', ['slug' => $this->getUser()->getSlug()]);
+            return $this->redirectToRoute( 'user_profile', [ 'slug' => $this->getUser()->getSlug() ] );
         }
 
         return $this->render('workshop/new.html.twig', array(
@@ -61,7 +61,7 @@ class WorkshopController extends BaseController
     /**
      * Mise à jour d'un stage
      *
-     * @Route("/{id}/edit", name="stage_edit")
+     * @Route("/{id}/editer", name="stage_edit")
      * @param Request $request
      * @param Workshop $workshop
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response

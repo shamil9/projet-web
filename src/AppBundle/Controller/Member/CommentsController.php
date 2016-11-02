@@ -4,12 +4,11 @@
 namespace AppBundle\Controller\Member;
 
 
-use AppBundle\Entity\Comment;
 use AppBundle\Controller\BaseController;
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\ProMember;
 use AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -41,9 +40,5 @@ class CommentsController extends BaseController
             'commentForm' => $commentForm->createView(),
             'proMember' => $proMember,
         ]);
-    }
-
-    public function createAction(Request $request, Form $form)
-    {
     }
 }

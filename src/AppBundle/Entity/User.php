@@ -26,6 +26,12 @@ class User
     protected $id;
 
     /**
+     * @Assert\NotBlank(message="Nom et Prénom sont requis")
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $name;
+
+    /**
      * @ORM\Column(name="is_active", type="boolean")
      */
     protected $isActive;
@@ -160,7 +166,6 @@ class User
 
     /**
      * @param mixed $password
-     * @return $this|void|static
      */
     public function setPassword($password)
     {
@@ -177,7 +182,6 @@ class User
 
     /**
      * @param mixed $email
-     * @return $this|void|static
      */
     public function setEmail($email)
     {
@@ -275,5 +279,21 @@ class User
     public function setPicture( $picture = null )
     {
         $this->picture = $picture;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName( $name )
+    {
+        $this->name = $name;
     }
 }

@@ -2,18 +2,18 @@
 
 namespace AppBundle\Controller\ProMember;
 
-use AppBundle\Entity\ProMember;
 use AppBundle\Controller\BaseController;
+use AppBundle\Entity\ProMember;
+use AppBundle\Entity\Sale;
 use AppBundle\Form\SaleType;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use AppBundle\Entity\Sale;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Sale controller.
  *
- * @Route("/prestataires/{slug}")
+ * @Route("/prestataires/{slug}/promotions")
  */
 class SaleController extends BaseController
 {
@@ -34,7 +34,7 @@ class SaleController extends BaseController
     /**
      * Creates a new Sale entity.
      *
-     * @Route("/new", name="sales_new")
+     * @Route("/ajouter", name="sales_new")
      */
     public function newAction(Request $request)
     {
@@ -80,7 +80,7 @@ class SaleController extends BaseController
     /**
      * Affiche le formulaire d'edition d'une promotion
      *
-     * @Route("/{id}/edit", name="sale_edit")
+     * @Route("/{id}/editer", name="sale_edit")
      * @param Request $request
      * @param Sale $sale
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -125,7 +125,7 @@ class SaleController extends BaseController
             $this->em()->flush();
         }
 
-        return $this->redirectToRoute('pro_member_profile', [
+        return $this->redirectToRoute( 'user_profile', [
             'slug' => $this->getUser()->getSlug(),
         ]);
     }

@@ -3,7 +3,7 @@
 }
 
 .address div:last-child {
-    padding-right: 0px;
+    padding-right: 0;
 }
 
 .pro_userbar {
@@ -79,4 +79,13 @@
 .img--100x100 {
     width: 100px;
     height: 100px;
+}
+
+.remove-button {
+    color: #c7254e;
+    position: absolute;
+    right: 0;
+    top: -5px;
+    font-size: 20px;
+    background-color: white;
 }

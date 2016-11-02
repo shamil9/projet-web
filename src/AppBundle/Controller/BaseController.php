@@ -4,12 +4,11 @@
 namespace AppBundle\Controller;
 
 
-use Doctrine\ORM\Mapping\Entity;
 use Illuminate\Support\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class BaseController extends Controller
+abstract class BaseController extends Controller
 {
     /**
      * @return \Doctrine\Common\Persistence\ObjectManager|object
@@ -52,5 +51,31 @@ class BaseController extends Controller
         //suppression de la session
         $this->get( 'security.token_storage' )->setToken( null );
         $request->getSession()->invalidate();
+    }
+
+
+    /**
+     * @param string $file
+     */
+    protected function createAvatarImage( string $file )
+    {
+        $image = $this->get( 'app.image_manager' )->make( $file );
+        $image->createAvatar();
+    }
+
+    /**
+     * @param string $file
+     */
+    protected function createSliderImage( string $file )
+    {
+        $image = $this->get( 'app.image_manager' )->make( $file );
+        $image->createSlide();
+    }
+
+    protected function userCheck()
+    {
+        if ( !$this->getUser() ) {
+            $this->createAccessDeniedException( 'Action non autorisée' );
+        }
     }
 }

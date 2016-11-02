@@ -23,6 +23,11 @@ class Image
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="images", cascade={"persist"})
+     */
+    private $user;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $path;
@@ -52,6 +57,22 @@ class Image
     public function setPath( $path )
     {
         $this->path = $path;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser( $user )
+    {
+        $this->user = $user;
     }
 }
 

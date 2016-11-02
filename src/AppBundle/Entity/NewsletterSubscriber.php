@@ -24,7 +24,7 @@ class NewsletterSubscriber
     /**
      * @var int
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Member", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Member", inversedBy="subscribed", cascade={"persist"})
      */
     private $user;
 

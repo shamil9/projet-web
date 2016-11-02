@@ -48,15 +48,19 @@ class ImageManager
     }
 
     /**
-     * Cree un slide 100x100
+     * Cree un slide
      *
      * @param int $width
      * @param int $height
      * @return $this
      */
-    public function createSlide( int $width = 100, int $height = 100 )
+    public function createSlide( int $width = 1440 )
     {
-        $this->image->resize( $width, $height )->save( $this->file );
+        $this->image
+            ->resize( $width, null, function ( $constraint ) {
+                $constraint->aspectRatio();
+            } )
+            ->save( $this->file );
 
         return $this;
     }

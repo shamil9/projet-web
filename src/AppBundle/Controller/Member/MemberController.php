@@ -5,19 +5,62 @@ namespace AppBundle\Controller\Member;
 
 
 use AppBundle\Controller\BaseController;
-use AppBundle\Entity\Image;
+use AppBundle\Controller\CrudInterface;
 use AppBundle\Entity\Member;
 use AppBundle\Form\MemberEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
-class MemberController extends BaseController
+class MemberController extends BaseController implements CrudInterface
 {
+    /**
+     * Affichage de la liste complète
+     */
+    public function indexAction()
+    {
+        // TODO: Implement indexAction() method.
+    }
+
+    /**
+     * Nouveau enregistrement
+     * @param Request $request
+     */
+    public function newAction( Request $request )
+    {
+        // TODO: Implement newAction() method.
+    }
+
+    /**
+     * Affichage individuel
+     * @param $entity
+     */
+    public function showAction( $entity )
+    {
+        // TODO: Implement showAction() method.
+    }
+
+    /**
+     * Edition
+     * @Route("/profil", name="edit_profile")
+     */
+    public function editAction()
+    {
+        /** @var Member $user */
+        $user = $this->getUser();
+
+        $form = $this->createForm( MemberEditType::class );
+
+        return $this->render( 'pro_member/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ] );
+    }
+
     /**
      * Met à jour les données d'utilisateur
      *
-     * @Route("/editer", name="member_edit")
+     * @Route("/update", name="member_update")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -34,7 +77,7 @@ class MemberController extends BaseController
             $user->setPassword($password);
 
             //Gestion d'avatar
-            if ( $request->get('picture') ) {
+            if ( $request->files->has( 'picture' ) ) {
                 /** @var UploadedFile $file */
                 $file = $user->getPicture();
                 $fileName = $user->getUsername().'.'.$file->guessExtension();
@@ -42,7 +85,7 @@ class MemberController extends BaseController
 
                 $file->move( $folder, $fileName );
 
-                $this->resizeImage($folder . $fileName);
+                $this->createAvatarImage( $folder . $fileName );
                 $user->setPicture($fileName);
             }
 
@@ -55,11 +98,20 @@ class MemberController extends BaseController
     }
 
     /**
-     * @param string $file
+     * Suppression
+     *
+     * @Route("/destroy", name="user_delete")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function resizeImage( string $file )
+    public function destroyAction( Request $request )
     {
-        $image = $this->get('app.image_manager')->make($file);
-        $image->createAvatar();
+        $user = $this->getUser();
+
+        //suppression de l'utilisateur
+        $this->deleteUser( $request, $user );
+
+        return $this->redirectToRoute( 'homepage' );
     }
+
 }

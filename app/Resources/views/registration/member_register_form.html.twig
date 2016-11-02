@@ -16,6 +16,12 @@
                     {{ form_errors(form) }}
 
                     <div class="form-group">
+                        {{ form_label(form.name, "Nom et Prénom") }}
+                        {{ form_errors(form.name) }}
+                        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
                         {{ form_label(form.username, "Nom d'utilisateur") }}
                         {{ form_errors(form.username) }}
                         {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}

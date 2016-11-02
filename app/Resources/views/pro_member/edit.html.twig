@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block title %}Éditer votre profil - {{ user.username }}{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/dropzone.min.css') }}">
+{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row main">
@@ -8,7 +11,7 @@
             <div class="col-lg-8">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form class="form-vertical" method="post" action="{{ path('member_edit') }}" role="form">
+                        <form class="form-vertical" method="post" action="{{ path('update_profile') }}" role="form">
 
                             <div class="form-group">
                                 <label for="email" class="cols-sm-2 control-label">Adresse Email</label>
@@ -54,6 +57,14 @@
                                         <textarea class="form-control" name="description" id="description">{{ user.description }}</textarea>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_label(form.picture, 'Avatar') }}
+                                <img src="/assets/img/uploads/avatars/{{ user.picture }}" alt="{{ user.username }}"
+                                     class="pull-right img-circle img--100x100">
+                                {{ form_widget(form.picture) }}
+                                <p class="help-block">Choisissez votre avatar (au format jpg ou png)</p>
                             </div>
 
                             <h2>Coordonnées</h2>
@@ -171,8 +182,42 @@
                         </ul>
                         <div class="panel-footer"><a href="{{ path('sales_index', {'slug': user.slug}) }}">Plus...</a></div>
                     </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Images</h3>
+                        </div>
+                        <div class="panel-body">
+                            {{ render(controller('AppBundle:ProMember/Slider:index')) }}
+                            {{ render(controller('AppBundle:ProMember/Slider:new')) }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/dropzone.js') }}"></script>
+    <script>
+        Dropzone.options.sliderImages = {
+            paramName: 'images',
+            url: '{{ path('slider_new') }}',
+            dictDefaultMessage: 'Glissez vos images ici'
+        };
+        $('.slider-image').on('click', function (e) {
+            e.preventDefault();
+            var id = $(this).attr('id');
+            var url = '/slider/' + id + '/destroy';
+            var self = $(this);
+            $.ajax(url)
+                    .done(function () {
+                        self.animate({
+                            opacity: 0
+                        }, 300, function () {
+                            self.remove();
+                        });
+                    });
+        })
+    </script>
 {% endblock %}

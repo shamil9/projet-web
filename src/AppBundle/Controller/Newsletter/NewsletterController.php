@@ -4,7 +4,9 @@ namespace AppBundle\Controller\Newsletter;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Controller\CrudInterface;
+use AppBundle\Entity\Newsletter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class NewsletterController extends BaseController implements CrudInterface
 {
@@ -22,18 +24,20 @@ class NewsletterController extends BaseController implements CrudInterface
 
     /**
      * Nouveau enregistrement
+     * @param Request $request
      */
-    public function newAction()
+    public function newAction( Request $request )
     {
         // TODO: Implement newAction() method.
     }
 
     /**
      * Affichage individuel
+     * @param $newsletter Newsletter
      */
-    public function showAction()
+    public function showAction( $newsletter )
     {
-        // TODO: Implement showAction() method.
+
     }
 
     /**
@@ -44,15 +48,16 @@ class NewsletterController extends BaseController implements CrudInterface
         // TODO: Implement editAction() method.
     }
 
-    public function updateAction()
+    public function updateAction( Request $request )
     {
         // TODO: Implement updateAction() method.
     }
 
     /**
      * Suppression
+     * @param Request $request
      */
-    public function destroyAction()
+    public function destroyAction( Request $request )
     {
         // TODO: Implement destroyAction() method.
     }
