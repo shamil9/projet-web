@@ -4,7 +4,11 @@
             <!-- Default panel contents -->
             <div class="panel-heading">
                 <span class="lead">
+                {% if app.user == user %}
                     <a href="{{ path('stage_edit', {'slug': user.slug, 'id': stage.id}) }}">{{ stage.name }}</a>
+                {% else %}
+                    {{ stage.name }}
+                {% endif %}
                 </span>
                 <span class="pull-right">{{ stage.price }}€</span>
             </div>

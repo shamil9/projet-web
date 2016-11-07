@@ -20,3 +20,13 @@ services:
     app.image_manager:
         class: AppBundle\Managers\ImageManager
         arguments: ["%assets_root%"]
+
+    app.form_manager:
+        class: AppBundle\Managers\FormManager
+
+#    app.avatar_upload_listener:
+#        class: AppBundle\EventListener\AvatarUploadListener
+#        arguments: ["@app.image_manager"]
+#        tags:
+#            - { name: doctrine.event_listener, event: postRemove }
+

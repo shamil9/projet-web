@@ -4,10 +4,10 @@
 {% block body %}
     <div class="container">
         <div class="row">
+            {% if errors %}{{ dump(errors) }}{% endif %}
             <p class="text-right"><a href="{{ path('user_delete') }}" class="btn btn-danger">Supprimer</a></p>
             <div class="col-lg-8">
                 {{ form_start(form, {'attr': {'action': path('member_update'), 'class': 'form-horizontal'}}) }}
-
                     <div class="form-group">
                         {{ form_label(form.name, "Nom prénom") }}
                         <div class="cols-sm-10">
@@ -24,25 +24,27 @@
                     </div>
 
                 <div class="form-group">
-                        {{ form_label(form.email, "Adresse Email") }}
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
-                                </span>
-                                {{ form_widget(form.email, {'attr': {
-                                    'class': 'form-control',
-                                    'value': user.email
-                                }}) }}
+                    {{ form_label(form.email, "Adresse Email") }}
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
+                                    </span>
+                            {{ form_widget(form.email, {'attr': {
+                                'class': 'form-control',
+                                'value': user.email
+                            }}) }}
+                        </div>
                             </div>
                         </div>
-                    </div>
 
                     <div class="form-group">
                         {{ form_label(form.picture, 'Avatar') }}
                         <img src="/assets/img/uploads/avatars/{{ user.picture }}" alt="{{ user.username }}"
                              class="pull-right img-circle img--100x100">
-                        {{ form_widget(form.picture) }}
+                        {{ form_widget(form.picture, {'attr': {
+                            'value': avatars ~ user.picture}
+                        }) }}
                         <p class="help-block">Choisissez votre avatar (au format jpg ou png)</p>
                     </div>
 
@@ -59,24 +61,24 @@
                     {#</div>#}
 
                     <div class="form-group">
-                        {{ form_label(form.plainPassword.first, 'Nouveau mot de passe') }}
+                        {{ form_errors(form.password.first) }}
+                        {{ form_label(form.password.first, 'Nouveau mot de passe') }}
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
-                                {{ form_errors(form.plainPassword.first) }}
-                                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        {{ form_label(form.plainPassword.second, 'Confirmez le mot de passe') }}
+                        {{ form_label(form.password.second, 'Confirmez le mot de passe') }}
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
-                                {{ form_errors(form.plainPassword.second) }}
-                                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.password.second) }}
+                                {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
                             </div>
                         </div>
                     </div>
@@ -86,6 +88,7 @@
                     </div>
                 {{ form_end(form) }}
             </div>
+
             <div class="col-lg-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Newsletter</div>

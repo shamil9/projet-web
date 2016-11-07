@@ -29,6 +29,7 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
      */
     private $path;
 
@@ -54,7 +55,7 @@ class Image
     /**
      * @param mixed $path
      */
-    public function setPath( $path )
+    public function setPath($path)
     {
         $this->path = $path;
     }
@@ -70,9 +71,25 @@ class Image
     /**
      * @param mixed $user
      */
-    public function setUser( $user )
+    public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserPicture()
+    {
+        return $this->userPicture;
+    }
+
+    /**
+     * @param mixed $userPicture
+     */
+    public function setUserPicture($userPicture)
+    {
+        $this->userPicture = $userPicture;
     }
 }
 

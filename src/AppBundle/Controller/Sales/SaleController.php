@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\ProMember;
+namespace AppBundle\Controller\Sales;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\ProMember;
@@ -9,6 +9,7 @@ use AppBundle\Form\SaleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Sale controller.
@@ -98,7 +99,7 @@ class SaleController extends BaseController
             return $this->redirectToRoute('sale_edit', array(
                 'id' => $sale->getId(),
                 'slug' => $this->getUser()->getSlug(),
-                ));
+            ));
         }
 
         return $this->render('sale/edit.html.twig', array(
@@ -125,7 +126,7 @@ class SaleController extends BaseController
             $this->em()->flush();
         }
 
-        return $this->redirectToRoute( 'user_profile', [
+        return $this->redirectToRoute('user_profile', [
             'slug' => $this->getUser()->getSlug(),
         ]);
     }
@@ -141,12 +142,32 @@ class SaleController extends BaseController
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('sale_delete', array(
-                'id' => $sale->getId(),
-                'slug' => $this->getUser()->getSlug(),
+                    'id'   => $sale->getId(),
+                    'slug' => $this->getUser()->getSlug(),
                 )
             ))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
+    }
+
+    /**
+     * @Route("/{sale}/pdf", name="sales_generate_pdf")
+     * @param Sale $sale
+     * @return Response
+     */
+    public function generateSalePdf(Sale $sale)
+    {
+        $html = $this->renderView(':pro_member:pdf.html.twig', [
+            'sale' => $sale,
+        ]);
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            [
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => "attachment; filename='{$sale->getName()}.pdf'",
+            ]
+        );
     }
 }

@@ -59,7 +59,7 @@ class DefaultController extends BaseController
     public function aboutAction()
     {
         return $this->render('default/about.html.twig');
-    }    
+    }
     
     /**
      * @Route("/contact", name="contact")

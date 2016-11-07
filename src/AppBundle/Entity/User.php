@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -47,9 +48,23 @@ class User
      * @Assert\Email()
      */
     protected $email;
-
     /**
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=64)
+     */
+    protected $password;
+    /**
+     * @ORM\Column(type="string", length=25, unique=true)
+     */
+    protected $username;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png", "image/svg+xml" })
+     */
+    protected $picture;
+
+    protected $userType;
+    /**
+     * @Assert\NotBlank(message="Indiquez votre mot de passe")
      * @Assert\Length(
      *     max=4096,
      *     min=7,
@@ -60,24 +75,6 @@ class User
      *     message="Le mot de passe doit contenir 7 caractères avec au moins 1 caractère alphabétique sans accents et au moins 1 chiffre.")
      */
     private $plainPassword;
-
-    /**
-     * @ORM\Column(type="string", length=64)
-     */
-    protected $password;
-
-    /**
-     * @ORM\Column(type="string", length=25, unique=true)
-     */
-    protected $username;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File(mimeTypes={ "image/jpeg", "image/png", "image/svg+xml" })
-     */
-    protected $picture;
-
-    protected $userType;
 
     public function __construct()
     {
@@ -276,9 +273,11 @@ class User
     /**
      * @param mixed $picture
      */
-    public function setPicture( $picture = null )
+    public function setPicture($picture)
     {
-        $this->picture = $picture;
+        if (!is_null($picture)) {
+            $this->picture = $picture;
+        }
     }
 
     /**
@@ -292,7 +291,7 @@ class User
     /**
      * @param mixed $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
         $this->name = $name;
     }

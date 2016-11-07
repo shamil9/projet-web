@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -9,8 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProMemberRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
-class ProMember extends User implements  UserInterface, \Serializable
+class ProMember extends User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -46,7 +48,7 @@ class ProMember extends User implements  UserInterface, \Serializable
      * @ORM\Column(type="string", nullable=false)
      */
     protected $tva;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Category", inversedBy="user")
      * @ORM\JoinTable(name="categories_users")
@@ -83,7 +85,8 @@ class ProMember extends User implements  UserInterface, \Serializable
     protected $favoredBy;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Newsletter", mappedBy="user", cascade={"remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Newsletter",
+     *     mappedBy="user", cascade={"remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $newsletters;
@@ -97,15 +100,15 @@ class ProMember extends User implements  UserInterface, \Serializable
     public function __construct()
     {
         parent::__construct();
-        $this->userType    = User::TYPE_PRO_USER;
-        $this->categories  = new ArrayCollection();
-        $this->workshops   = new ArrayCollection();
-        $this->sales       = new ArrayCollection();
-        $this->comments    = new ArrayCollection();
-        $this->favoredBy   = new ArrayCollection();
+        $this->userType = User::TYPE_PRO_USER;
+        $this->categories = new ArrayCollection();
+        $this->workshops = new ArrayCollection();
+        $this->sales = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->favoredBy = new ArrayCollection();
         $this->newsletters = new ArrayCollection();
-        $this->images      = new ArrayCollection();
-        $this->isActive    = false;
+        $this->images = new ArrayCollection();
+        $this->isActive = false;
     }
 
     /**
@@ -119,7 +122,7 @@ class ProMember extends User implements  UserInterface, \Serializable
     /**
      * @param mixed $phone
      */
-    public function setPhone( $phone )
+    public function setPhone($phone)
     {
         $this->phone = $phone;
     }
@@ -135,7 +138,7 @@ class ProMember extends User implements  UserInterface, \Serializable
     /**
      * @param mixed $description
      */
-    public function setDescription( $description )
+    public function setDescription($description)
     {
         $this->description = $description;
     }
@@ -151,7 +154,7 @@ class ProMember extends User implements  UserInterface, \Serializable
     /**
      * @param mixed $website
      */
-    public function setWebsite( $website )
+    public function setWebsite($website)
     {
         $this->website = $website;
     }
@@ -167,7 +170,7 @@ class ProMember extends User implements  UserInterface, \Serializable
     /**
      * @param mixed $tva
      */
-    public function setTva( $tva )
+    public function setTva($tva)
     {
         $this->tva = $tva;
     }
@@ -183,7 +186,7 @@ class ProMember extends User implements  UserInterface, \Serializable
     /**
      * @param mixed $city
      */
-    public function setCity( $city )
+    public function setCity($city)
     {
         $this->city = $city;
     }
@@ -199,7 +202,7 @@ class ProMember extends User implements  UserInterface, \Serializable
     /**
      * @param mixed $street
      */
-    public function setStreet( $street )
+    public function setStreet($street)
     {
         $this->street = $street;
     }
@@ -215,7 +218,7 @@ class ProMember extends User implements  UserInterface, \Serializable
     /**
      * @param mixed $zip
      */
-    public function setZip( $zip )
+    public function setZip($zip)
     {
         $this->zip = $zip;
     }
@@ -348,7 +351,7 @@ class ProMember extends User implements  UserInterface, \Serializable
     /**
      * @param mixed $newsletters
      */
-    public function setNewsletters( $newsletters )
+    public function setNewsletters($newsletters)
     {
         $this->newsletters = $newsletters;
     }
@@ -364,8 +367,16 @@ class ProMember extends User implements  UserInterface, \Serializable
     /**
      * @param mixed $images
      */
-    public function setImages( $images )
+    public function setImages($images)
     {
         $this->images = $images;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removePicture()
+    {
+        unlink(__DIR__ . '/../../../web/assets/img/uploads/avatars/' . $this->getPicture());
     }
 }

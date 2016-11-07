@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Workshop
@@ -58,9 +59,15 @@ class Workshop
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="workshops", fetch="LAZY", cascade={"persist"})
-     * @ORM\JoinColumn(name="user_id",referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="user_id",referencedColumnName="id", onDelete="NO ACTION")
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png", "image/svg+xml" })
+     */
+    private $image;
 
     /**
      * Get id
@@ -198,6 +205,31 @@ class Workshop
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * Gets the value of image.
+     *
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Sets the value of image.
+     *
+     * @param mixed $image the image
+     *
+     * @return self
+     */
+    public function setImage($image)
+    {
+        if (!is_null($image)) {
+            $this->image = $image;
+        }
+        return $this;
     }
 }
 

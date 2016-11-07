@@ -35,13 +35,13 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Member", inversedBy="comments", cascade={"persist"})
-     * @ORM\JoinColumn(name="comments_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id", onDelete="NO ACTION")
      */
     protected $member;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="comments", cascade={"persist"})
-     * @ORM\JoinColumn(name="comments_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="pro_member_id", referencedColumnName="id", onDelete="NO ACTION")
      */
     protected $proMember;
 

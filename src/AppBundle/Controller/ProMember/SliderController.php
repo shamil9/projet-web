@@ -24,11 +24,11 @@ class SliderController extends BaseController implements CrudInterface
     public function indexAction()
     {
         /** @var Image $images */
-        $images = $this->getRepository( 'AppBundle:Image' )->findBy( [ 'user' => $this->getUser() ], [ 'id' => 'DESC' ] );
+        $images = $this->getRepository('AppBundle:Image')->findBy(['user' => $this->getUser()], ['id' => 'DESC']);
 
-        return $this->render( ':pro_member/partials:_slider-images-list.html.twig', [
+        return $this->render(':pro_member/partials:_slider-images-list.html.twig', [
             'images' => $images,
-        ] );
+        ]);
     }
 
     /**
@@ -38,45 +38,45 @@ class SliderController extends BaseController implements CrudInterface
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction( Request $request )
+    public function newAction(Request $request)
     {
         $this->userCheck();
 
         $form = $this->createFormBuilder()->getForm();
-        $form->handleRequest( $request );
+        $form->handleRequest($request);
 
-        if ( $form->isValid() && $request->files->has( 'images' ) ) {
+        if ($form->isValid() && $request->files->has('images')) {
             /** @var ProMember $user */
-            $user  = $this->getUser();
+            $user = $this->getUser();
             $image = new Image();
 
             /** @var UploadedFile $file */
-            $file     = $request->files->get( 'images' );
-            $fileName = random_int( 0, 99999 ) . '.' . $file->guessExtension();
-            $folder   = $this->getParameter( 'assets_root' ) . '/img/uploads/slider/';
+            $file = $request->files->get('images');
+            $fileName = $user->getName() . '_' . random_int(0, 99999) . '.' . $file->guessExtension();
+            $folder = $this->getParameter('assets_root') . '/img/uploads/slider/';
 
-            $file->move( $folder, $fileName );
-            $this->createSliderImage( $folder . $fileName );
+            $file->move($folder, $fileName);
+            $this->createSliderImage($folder . $fileName);
 
-            $image->setUser( $user );
-            $image->setPath( $fileName );
+            $image->setUser($user);
+            $image->setPath($fileName);
 
-            $this->em()->persist( $image );
+            $this->em()->persist($image);
             $this->em()->flush();
 
             return Response::create();
         }
 
-        return $this->render( 'pro_member/partials/_slider-form.html.twig', [
-            'form' => $form->createView()
-        ] );
+        return $this->render('pro_member/partials/_slider-form.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
      * Affichage individuel
      * @param $entity
      */
-    public function showAction( $entity )
+    public function showAction($entity)
     {
         // TODO: Implement showAction() method.
     }
@@ -95,7 +95,7 @@ class SliderController extends BaseController implements CrudInterface
      * @param Request $request
      * @return mixed
      */
-    public function updateAction( Request $request )
+    public function updateAction(Request $request)
     {
         // TODO: Implement updateAction() method.
     }
@@ -106,22 +106,22 @@ class SliderController extends BaseController implements CrudInterface
      * @param Request $request
      * @return SliderController|JsonResponse|Response
      */
-    public function destroyAction( Request $request )
+    public function destroyAction(Request $request)
     {
         try {
             /** @var Image $image */
-            $image = $this->getRepository( 'AppBundle:Image' )->findOneBy( [ 'id' => $request->get( 'slider' ) ] );
+            $image = $this->getRepository('AppBundle:Image')->findOneBy(['id' => $request->get('slider')]);
 
-            if ( $this->getUser() != $image->getUser() ) {
-                $this->createAccessDeniedException( 'Action non autorisée' );
+            if ($this->getUser() != $image->getUser()) {
+                $this->createAccessDeniedException('Action non autorisée');
             }
 
-            $this->em()->remove( $image );
+            $this->em()->remove($image);
             $this->em()->flush();
 
             return JsonResponse::create();
-        } catch ( Exception $e ) {
-            return JsonResponse::create( $e, 500 );
+        } catch (Exception $e) {
+            return JsonResponse::create($e, 500);
         }
     }
 }

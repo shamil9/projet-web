@@ -3,15 +3,14 @@
 
 namespace AppBundle\Managers;
 
-
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager as InterventionImage;
 
 class ImageManager
 {
-    protected $im;
     /** @var Image $ image */
     public $image;
+    protected $im;
     private $file;
     private $assets;
 
@@ -25,7 +24,7 @@ class ImageManager
         $this->assets = $assets;
     }
 
-    public function make( $image )
+    public function make($image)
     {
         $this->file = $image;
         $this->image = $this->im->make($image);
@@ -40,9 +39,9 @@ class ImageManager
      * @param int $height
      * @return $this
      */
-    public function createAvatar( int $width = 100, int $height = 100 )
+    public function createAvatar(int $width = 100, int $height = 100)
     {
-        $this->image->resize( $width, $height )->save( $this->file );
+        $this->image->resize($width, $height)->save($this->file);
 
         return $this;
     }
@@ -51,16 +50,15 @@ class ImageManager
      * Cree un slide
      *
      * @param int $width
-     * @param int $height
      * @return $this
      */
-    public function createSlide( int $width = 1440 )
+    public function createSlide(int $width = 1440)
     {
         $this->image
-            ->resize( $width, null, function ( $constraint ) {
+            ->resize($width, null, function ($constraint) {
                 $constraint->aspectRatio();
-            } )
-            ->save( $this->file );
+            })
+            ->save($this->file);
 
         return $this;
     }

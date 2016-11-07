@@ -7,7 +7,8 @@
             {% for comment in user.comments %}
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <img src="{{ avatars ~ comment.member.picture }}" class="img--30x30" alt="{{ comment.member.username }}">
+                        <img src="{{ avatars ~ comment.member.picture }}" class="img-circle img--30x30"
+                             alt="{{ comment.member.username }}">
                         <span class="lead" style="vertical-align: middle;">{{ comment.member.username }}</span>
             <span class="pull-right rating"
                   style="width: calc(20px * {{ comment.rating }});"></span>
