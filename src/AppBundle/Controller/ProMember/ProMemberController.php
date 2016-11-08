@@ -8,6 +8,7 @@ use AppBundle\Entity\Favorite;
 use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
 use AppBundle\Entity\User;
+use AppBundle\Form\ContactFormType;
 use AppBundle\Form\ProMemberEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,7 +19,7 @@ class ProMemberController extends BaseController implements CrudInterface
 {
     /**
      * Affichage de la liste
-     * 
+     *
      * @Route("/prestataires", name="pro_member_index")
      */
     public function indexAction()
@@ -38,7 +39,7 @@ class ProMemberController extends BaseController implements CrudInterface
 
     /**
      * Affichage du profil
-     * 
+     *
      * @Route("/prestataires/{slug}", name="user_profile")
      * @ParamConverter("user", class="AppBundle:ProMember")
      * @param ProMember $user
@@ -160,6 +161,44 @@ class ProMemberController extends BaseController implements CrudInterface
 
         return $this->redirectToRoute('user_profile', [
             'slug' => $proMember->getSlug(),
+        ]);
+    }
+
+    /**
+     * Contacter le prestataire
+     *
+     * @Route("/contact/{id}", name="user_contact")
+     * @param ProMember $user
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function contactAction(ProMember $user, Request $request)
+    {
+        $form = $this->createForm(ContactFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message = \Swift_Message::newInstance()
+                ->setSubject($form->getData()['message'])
+                ->setFrom($form->getData()['from'])
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->render('emails/contact-pro-user.html.twig', [
+                        'user'    => $user,
+                        'message' => $form->getData()['message'],
+                        'from'    => $form->getData()['from'],
+                    ]),
+                    'text/html'
+                );
+
+            $this->get('mailer')->send($message);
+
+            return $this->redirect('/');
+        }
+
+        return $this->render('pro_member/partials/_contact-form.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
         ]);
     }
 }

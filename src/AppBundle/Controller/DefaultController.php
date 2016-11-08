@@ -2,7 +2,8 @@
 
 namespace AppBundle\Controller;
 
-use Gedmo\Mapping\Annotation as Gedmo;
+use AppBundle\Form\ContactFormType;
+use AppBundle\Form\ContactType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -60,13 +61,36 @@ class DefaultController extends BaseController
     {
         return $this->render('default/about.html.twig');
     }
-    
+
     /**
      * @Route("/contact", name="contact")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function contactAction()
+    public function contactAction(Request $request)
     {
-        return $this->render('default/contact.html.twig');
+        $form = $this->createForm(ContactFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message = \Swift_Message::newInstance()
+                ->setSubject($form->getData()['message'])
+                ->setFrom($form->getData()['from'])
+                ->setTo('contact@bien-etre.com')
+                ->setBody(
+                    $this->render('emails/contact.html.twig', [
+                        'message' => $form->getData()['message'],
+                        'from' => $form->getData()['from'],
+                    ]),
+                    'text/html'
+                );
+
+            $this->get('mailer')->send($message);
+
+            return $this->redirect('/');
+        }
+
+        return $this->render('default/contact.html.twig', ['form' => $form->createView()]);
     }
 
     /**

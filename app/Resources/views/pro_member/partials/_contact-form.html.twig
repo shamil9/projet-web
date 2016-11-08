@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        {{ form_start(form, {'action': path('user_contact', {'id': user.id}) }) }}
+            <fieldset>
+                <!-- Text input-->
+                <div class="form-group">
+                    {{ form_label(form.from, "Votre email") }}
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        {{ form_widget(form.from, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+
+
+                <!-- Text area -->
+                <div class="form-group">
+                    {{ form_label(form.message) }}
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        {{ form_widget(form.message, {'attr': {
+                            'class': 'form-control',
+                            'rows': 10
+                        }})
+                        }}
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label"></label>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-warning">Envoyer <span
+                                    class="glyphicon glyphicon-send"></span></button>
+                    </div>
+                </div>
+            </fieldset>
+            {{ form_end(form) }}
+    </div>
+</div>

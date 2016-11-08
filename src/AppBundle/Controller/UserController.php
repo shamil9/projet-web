@@ -46,7 +46,7 @@ class UserController extends BaseController
     /**
      * Supprime un utilisateur
      *
-     * @Route("/supprimer/{id}", name="user_delete")
+     * @Route("/supprimer", name="user_delete")
      * @param User $id
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse

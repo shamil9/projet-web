@@ -3,106 +3,48 @@
 
 {% block body %}
     <div class="container">
+        <div class="row well">
+            <div class="col-md-6 col-md-offset-3">
+                {{ form_start(form, {'action': path('contact')}) }}
+                    <fieldset>
+                        <!-- Form Name -->
+                        <legend>Nous contacter</legend>
 
-        <form class="well form-horizontal" action=" " method="post" id="contact_form">
-            <fieldset>
-
-                <!-- Form Name -->
-                <legend>Nous contacter</legend>
-
-                <!-- Text input-->
-
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Nom</label>
-                    <div class="col-md-4 inputGroupContainer">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input name="first_name" class="form-control" type="text">
+                        <!-- Text input-->
+                        <div class="form-group">
+                            {{ form_label(form.from, "Votre email") }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                {{ form_widget(form.from, {'attr': {'class': 'form-control'}}) }}
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Text input-->
 
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Prénom</label>
-                    <div class="col-md-4 inputGroupContainer">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input name="last_name" class="form-control" type="text">
+                        <!-- Text area -->
+                        <div class="form-group">
+                            {{ form_label(form.message) }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                {{ form_widget(form.message, {'attr': {
+                                        'class': 'form-control',
+                                        'rows': 10
+                                    }})
+                                }}
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label">E-Mail</label>
-                    <div class="col-md-4 inputGroupContainer">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                            <input name="email" class="form-control" type="text">
+                        <!-- Button -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label"></label>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-warning">Envoyer <span
+                                            class="glyphicon glyphicon-send"></span></button>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-
-                <!-- Text input-->
-
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Numéro de tel.</label>
-                    <div class="col-md-4 inputGroupContainer">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                            <input name="phone" class="form-control" type="text">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Ville</label>
-                    <div class="col-md-4 inputGroupContainer">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                            <input name="city" class="form-control" type="text">
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Code postal</label>
-                    <div class="col-md-4 inputGroupContainer">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                            <input name="zip" class="form-control" type="text">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Text area -->
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Message</label>
-                    <div class="col-md-4 inputGroupContainer">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                            <textarea class="form-control" name="comment"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Button -->
-                <div class="form-group">
-                    <label class="col-md-4 control-label"></label>
-                    <div class="col-md-4">
-                        <button type="submit" class="btn btn-warning">Envoyer <span
-                                    class="glyphicon glyphicon-send"></span></button>
-                    </div>
-                </div>
-
-            </fieldset>
-        </form>
+                    </fieldset>
+                {{ form_end(form) }}
+            </div>
+        </div>
     </div>
 {% endblock %}
 
