@@ -50,10 +50,35 @@ class ProMemberRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        return $qb->select(['user.city', $qb->expr()->count('user.id')])
+        return $qb->select(['user.city', $qb->expr()->count('user.id') . ' as totalUsers'])
             ->from('AppBundle:ProMember', 'user')
             ->groupBy('user.city')
             ->getQuery()
             ->getResult();
+    }
+
+    public function search($userName, $city, $id)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('users')
+            ->from('AppBundle:ProMember', 'users')
+            ->innerJoin('users.categories', 'cat')
+            ->addSelect('cat');
+
+            if ($userName) {
+                $qb->andWhere('users.name = :name');
+                $qb->setParameter('name', $userName);
+            }
+
+            if ($city) {
+                $qb->andWhere('users.city = :city');
+                $qb->setParameter('city', $city);
+            }
+            if ($id) {
+                $qb->andWhere('cat.id = :id');
+                $qb->setParameter('id', $id);
+            }
+            return $qb->getQuery()->getResult();
     }
 }

@@ -14,7 +14,7 @@ class CategoryController extends BaseController
     public function indexAction(Request $request)
     {
         $categories = $this->getRepository('AppBundle:Category')->findAll();
-        
+
         return $this->render('services/index.html.twig', [
             'categories' => $categories
         ]);

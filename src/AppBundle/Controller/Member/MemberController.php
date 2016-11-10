@@ -29,10 +29,14 @@ class MemberController extends BaseController implements CrudInterface
 
     /**
      * Affichage individuel
+     *
      * @param $entity
      */
     public function showAction($entity)
     {
+        $user = $this->getUser();
+
+        return $this->render('member/partials/_blocks.html.twig', ['user' => $user]);
     }
 
     /**

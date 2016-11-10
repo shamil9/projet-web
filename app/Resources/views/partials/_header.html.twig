@@ -12,9 +12,9 @@
                            aria-haspopup="true"
                            aria-expanded="false">Par région <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            {% for ville in regions %}
+                            {% for region in regions %}
                                 <li>
-                                    <a href="#">{{ ville.city }} <span class="badge pull-right">{{ ville.1 }}</span></a>
+                                    <a href="#">{{ region.city }} <span class="badge pull-right">{{ region.totalUsers }}</span></a>
                                 </li>
                             {% endfor %}
                         </ul>

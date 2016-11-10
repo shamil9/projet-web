@@ -114,7 +114,7 @@
 
                         {#La carte#}
                         <li role="presentation">
-                            <a href="#localisation" aria-controls="localisation" role="tab" data-toggle="tab">Localisation</a>
+                            <a id="location" href="#localisation" aria-controls="localisation" role="tab" data-toggle="tab">Localisation</a>
                         </li>
 
                         {#Formulaire de contact#}
@@ -177,7 +177,7 @@
 </div>
 {% endblock %}
 {% block javascripts %}
-    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ gmaps_api_key }}"></script>
     <script src="{{ asset('assets/js/gmaps.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
@@ -213,7 +213,9 @@
             theme: 'bootstrap-stars'
         });
 
-        // showGoogleMap('{{ user.street }}, {{ user.city }}');
+        $('#location').on('show.bs.tab', function (e) {
+            showGoogleMap('{{ user.street }}, {{ user.city }}');
+        });
 
         getSuggestions('{{ path('pro_member_suggestions', {'user': user.id}) }}');
     </script>

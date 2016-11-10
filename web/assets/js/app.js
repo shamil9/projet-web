@@ -44,8 +44,10 @@ var showGoogleMap = function (address) {
     GMaps.geocode({
         address: address,
         callback: function (results, status) {
+            console.log(results);
             if (status == 'OK') {
                 var latlng = results[0].geometry.location;
+
                 map.setCenter(latlng.lat(), latlng.lng());
                 map.addMarker({
                     lat: latlng.lat(),
@@ -63,7 +65,6 @@ var getSuggestions = function (url) {
     $.getJSON(url, function (data) {
         if (data.length < 1)
             return showSuggestions('<h3 class="text-center">Aucun résultat trouvé</h3>');
-        console.log( data );
         var html = '';
 
         //Construction du HTML

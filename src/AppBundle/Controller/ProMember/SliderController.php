@@ -115,6 +115,8 @@ class SliderController extends BaseController implements CrudInterface
             if ($this->getUser() != $image->getUser()) {
                 $this->createAccessDeniedException('Action non autorisée');
             }
+            
+            unlink($this->getParameter('assets_root') . '/img/uploads/slider/' . $image->getPath());
 
             $this->em()->remove($image);
             $this->em()->flush();

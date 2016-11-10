@@ -1,16 +1,23 @@
-<form>
+<form action="{{ path('search') }}">
     <div class="form-group">
         <label for="name" class="sr-only">Prestataire</label>
-        <input placeholder="Prestataire" type="text" class="form-control input-lg" id="name">
+        <input placeholder="Prestataire" value="" name="prestataire" type="text" class="form-control input-lg" id="name">
     </div>
     <div class="form-group">
-        <select name="region" class="form-control input-lg" id="">
-            <option>Liège</option>
+        <select name="ville" class="form-control input-lg" id="">
+            <option value="" disabled selected>Sélectionnez la ville</option>
+            {% for region in regions %}
+            <option value="{{ region.city }}">{{ region.city }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="form-group">
-        <select name="type" class="form-control input-lg" id="">
-            <option>Massage</option>
+        <select name="categorie" class="form-control input-lg" id="">
+            <option value="" disabled selected>Sélectionnez la catégorie</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>}
+                option
+            {% endfor %}
         </select>
     </div>
     <div class="form-group">

@@ -41,6 +41,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         favorite_manager: "@app.favorites_manager"
+        gmaps_api_key: "AIzaSyBt6NP5o5G-VPddw-tdyZ7I-N41_l04Sic"
 
 # Doctrine Configuration
 doctrine:

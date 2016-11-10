@@ -14,7 +14,12 @@ class DefaultController extends BaseController
      */
     public function indexAction(Request $request)
     {
+        $regions = $this->getRepository('AppBundle:ProMember')->findCitiesWithProUsers();
+        $categories = $this->getRepository('AppBundle:Category')->findAll();
+
         return $this->render('default/index.html.twig', [
+            'regions' => $regions,
+            'categories' => $categories,
         ]);
     }
 
@@ -105,6 +110,26 @@ class DefaultController extends BaseController
 
         return $this->render('default/workshops.html.twig', [
             'workshops' => $workshops,
+        ]);
+    }
+
+    /**
+     * Moteur de recherche
+     *
+     * @Route("/s", name="search")
+     * @param  Request $request
+     * @return \Symfony\Component\HttpFoundataion\Response
+     */
+    public function searchAction(Request $request)
+    {
+        $user = $request->get('prestataire');
+        $city = $request->get('ville');
+        $category = $request->get('categorie');
+
+        $results = $this->getRepository('AppBundle:ProMember')->search($user, $city, $category);
+        dump($results);
+        return $this->render('default/search.html.twig', [
+            'results' => $results,
         ]);
     }
 }

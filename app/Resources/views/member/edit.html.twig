@@ -5,7 +5,6 @@
     <div class="container">
         <div class="row">
             {% if errors %}{{ dump(errors) }}{% endif %}
-            <p class="text-right"><a href="{{ path('user_delete') }}" class="btn btn-danger">Supprimer</a></p>
             <div class="col-lg-8">
                 {{ form_start(form, {'attr': {'action': path('member_update'), 'class': 'form-horizontal'}}) }}
                     <div class="form-group">
@@ -90,16 +89,7 @@
             </div>
 
             <div class="col-lg-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Newsletter</div>
-                    <div class="panel-body">
-                        {% if user.subscribed %}
-                        <button class="btn btn-danger" id="unsubscribe">Se désinscrire</button>
-                        {% else %}
-                        <button class="btn btn-primary" id="subscribe">S'inscrire</button>
-                        {% endif %}
-                    </div>
-                </div>
+                {% include 'member/partials/_aside.html.twig' %}
             </div>
         </div>
     </div>

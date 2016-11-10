@@ -83,14 +83,7 @@ class ProMember extends User implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Favorite", mappedBy="proMember")
      */
     protected $favoredBy;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Newsletter",
-     *     mappedBy="user", cascade={"remove"}, orphanRemoval=true)
-     * @ORM\OrderBy({"id" = "DESC"})
-     */
-    protected $newsletters;
-
+    
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="user", cascade={"remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"id" = "DESC"})
@@ -106,7 +99,6 @@ class ProMember extends User implements UserInterface, \Serializable
         $this->sales = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->favoredBy = new ArrayCollection();
-        $this->newsletters = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->isActive = false;
     }
@@ -316,8 +308,7 @@ class ProMember extends User implements UserInterface, \Serializable
      * Alternatively, the roles might be stored on a ``roles`` property,
      * and populated in any number of different ways when the user object
      * is created.
-     *
-     * @return (Role|string)[] The user roles
+     * @return array (Role|string)[] The user roles
      */
     public function getRoles()
     {
@@ -338,22 +329,6 @@ class ProMember extends User implements UserInterface, \Serializable
     public function setFavoredBy($favoredBy)
     {
         $this->favoredBy = $favoredBy;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNewsletters()
-    {
-        return $this->newsletters;
-    }
-
-    /**
-     * @param mixed $newsletters
-     */
-    public function setNewsletters($newsletters)
-    {
-        $this->newsletters = $newsletters;
     }
 
     /**

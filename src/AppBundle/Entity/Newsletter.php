@@ -42,12 +42,6 @@ class Newsletter
      */
     private $document;
 
-   /**
-    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="newsletters", cascade={"persist"})
-    * @ORM\JoinColumn(name="newsletters_id",referencedColumnName="id", onDelete="CASCADE")
-    */
-    private $user;
-
     /**
      * Get id
      *
@@ -128,22 +122,6 @@ class Newsletter
     public function getDocument()
     {
         return $this->document;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param mixed $user
-     */
-    public function setUser( $user )
-    {
-        $this->user = $user;
     }
 }
 

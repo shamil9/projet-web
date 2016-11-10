@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Résultats de la recherche</h1>
+        {% for user in results %}
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="media">
+                        <div class="media-left media-top">
+                            <a href="{{ path("user_profile", {'slug': user.slug}) }}">
+                                <img class="media-object img--100x100 img-circle" src="{{ avatars ~ user.picture }}"
+                                     alt="">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <a href="{{ path('user_profile', {'slug': user.slug}) }}">{{ user.name }}</a>
+                            </h4>
+                            <p>{{ user.description }}</p>
+                            <small class="glyphicon glyphicon-map-marker" aria-hidden="true"></small> {{ user.city }}
+                            <span class="pull-right"><small class="glyphicon glyphicon-earphone
+" aria-hidden="true"></small> {{ user.phone }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
