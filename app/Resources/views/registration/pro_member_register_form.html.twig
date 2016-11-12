@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="{{ asset('assets/css/select2-bootstrap.min.css') }}">
+{% endblock %}
 {% block body %}
     <div class="container">
         {% for type, messages in app.session.flashBag.all %}
@@ -16,7 +19,7 @@
                     {{ form_errors(form) }}
 
                     <div class="form-group">
-                        {{ form_label(form.username, 'Adresse Email') }}
+                        {{ form_label(form.username, "Nom d'utilisateur") }}
                         {{ form_errors(form.username) }}
                         {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
                     </div>
@@ -104,4 +107,14 @@
         </div>
     </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        $( '#pro_member_registration_categories' ).select2( {
+            language: 'fr',
+            placeholder: 'Sélectionnez votre catégorie',
+            theme: 'bootstrap'
+        } );
+    </script>
 {% endblock %}

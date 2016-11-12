@@ -19,20 +19,22 @@
                             {% endfor %}
                         </ul>
                     </li>
-                    <li><a href="{{ path('service_list') }}">Services</a></li>
+                    <li><a href="{{ path('category_list') }}">Services</a></li>
                     <li><a href="{{ path('stages_list') }}">Stages</a></li>
                     <li><a href="{{ path('newsletters_index') }}">Newsletters</a></li>
                     <li><a href="{{ path('contact') }}">Contact</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-right">
                     <li>
                         {% if app.user %}
                             <a class="" href=""
                                data-toggle="dropdown" id="user"
                                aria-haspopup="true"
-                               aria-expanded="true"><img src="/assets/img/uploads/avatars/{{ user.picture }}" class="img--30x30 img-circle" alt="{{ user.username }}"></a>
+                               aria-expanded="true">
+                               <img src="/assets/img/uploads/avatars/{{ user.picture }}" class="img--30x30 img-circle" alt="{{ user.username }}">
+                            </a>
                         {% else %}
-                            <a href="{{ path('login') }}">Connexion</a>
+                            <a href="{{ path('login') }}" class="navbar-btn btn-success">Connexion</a>
                         {% endif %}
                         <ul class="dropdown-menu" aria-labelledby="user">
                             <li><a href="{{ path('edit_profile') }}">Profil</a></li>
@@ -41,7 +43,6 @@
                     </li>
                 </ul>
             </nav>
-
         </div>
     </div>
 </header>

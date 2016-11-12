@@ -25,6 +25,7 @@ class NewsletterSubscriber
      * @var int
      *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Member", inversedBy="subscribed", cascade={"persist"})
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="NO ACTION")
      */
     private $user;
 

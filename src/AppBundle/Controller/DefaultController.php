@@ -56,6 +56,9 @@ class DefaultController extends BaseController
      */
     public function registerAction()
     {
+        if ($this->getUser()) {
+            return $this->redirect('/');
+        }
         return $this->render('default/register.html.twig');
     }
 
@@ -122,12 +125,13 @@ class DefaultController extends BaseController
      */
     public function searchAction(Request $request)
     {
-        $user = $request->get('prestataire');
+        $userName = $request->get('prestataire');
         $city = $request->get('ville');
         $category = $request->get('categorie');
+        $results = $this->getRepository('AppBundle:ProMember')->search($userName, $city, $category);
 
-        $results = $this->getRepository('AppBundle:ProMember')->search($user, $city, $category);
-        dump($results);
+        dump('asdflkja');
+
         return $this->render('default/search.html.twig', [
             'results' => $results,
         ]);

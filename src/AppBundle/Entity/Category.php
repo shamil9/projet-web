@@ -45,7 +45,7 @@ class Category
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\ProMember", mappedBy="categories")
      */
-    private $user;
+    private $users;
 
     /**
      * @Gedmo\Slug(fields={"name"}, updatable=false)
@@ -59,23 +59,23 @@ class Category
      */
     public function __construct()
     {
-        $this->user = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getUsers()
     {
-        return $this->user;
+        return $this->users;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $users
      */
-    public function setUser($user)
+    public function setUsers($users)
     {
-        $this->user = $user;
+        $this->users = $users;
     }
 
 

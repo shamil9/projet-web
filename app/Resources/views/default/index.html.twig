@@ -29,6 +29,15 @@
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
+            var search = $('#search');
+            if (!search.val())
+                $('.search-btn').attr('disabled', true);
+
+            search.on('change', function() {
+                $('.search-btn').attr('disabled', false);
+                if (!$('#name').val() && !$('#city').val() && !$('#cat').val())
+                    $('.search-btn').attr('disabled', true);
+            });
         })
     </script>
 {% endblock %}

@@ -16,6 +16,10 @@ class SecurityController extends BaseController
      */
     public function loginAction(Request $request)
     {
+        if ($this->getUser()) {
+            return $this->redirect('/');
+        }
+
         $authenticationUtils = $this->get('security.authentication_utils');
 
 

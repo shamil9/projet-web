@@ -3,6 +3,9 @@
 <div class="container">
     <div class="row">
         <h1>Résultats de la recherche</h1>
+        {% if results is empty %}
+              <h2>Aucun résultat</h2>
+        {% endif %}
         {% for user in results %}
         <div class="col-lg-6">
             <div class="panel panel-default">

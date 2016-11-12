@@ -213,7 +213,7 @@
             theme: 'bootstrap-stars'
         });
 
-        $('#location').on('show.bs.tab', function (e) {
+        $('#location').on('shown.bs.tab', function (e) {
             showGoogleMap('{{ user.street }}, {{ user.city }}');
         });
 

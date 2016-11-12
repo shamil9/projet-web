@@ -2,7 +2,9 @@
 {% for cat in user.categories %}
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span class="lead">{{ cat.name }}</span>
+            <span class="lead">
+                <a href="{{ path('category_show', {'slug': cat.slug}) }}" title="{{ cat.name }}">{{ cat.name }}</a>
+            </span>
         </div>
         <div class="panel-body">
             {{ cat.description }}

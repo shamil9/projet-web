@@ -50,7 +50,7 @@ class ProMember extends User implements UserInterface, \Serializable
     protected $tva;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Category", inversedBy="user")
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="users")
      * @ORM\JoinTable(name="categories_users")
      */
     protected $categories;
@@ -83,7 +83,7 @@ class ProMember extends User implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Favorite", mappedBy="proMember")
      */
     protected $favoredBy;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="user", cascade={"remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"id" = "DESC"})

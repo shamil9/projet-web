@@ -9,25 +9,25 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoryController extends BaseController
 {
     /**
-     * @Route("/services", name="service_list")
+     * @Route("/services", name="category_list")
      */
     public function indexAction(Request $request)
     {
         $categories = $this->getRepository('AppBundle:Category')->findAll();
 
-        return $this->render('services/index.html.twig', [
+        return $this->render('category/index.html.twig', [
             'categories' => $categories
         ]);
     }
 
     /**
-     * @Route("/services/{slug}", name="service_show")
+     * @Route("/services/{slug}", name="category_show")
      * @param Category $category
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Category $category)
     {
-        return $this->render('services/show.html.twig', [
+        return $this->render('category/show.html.twig', [
             'category' => $category
         ]);
     }
