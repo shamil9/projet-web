@@ -16,8 +16,12 @@
                 <p>{{ stage.description }}</p>
             </div>
             <div class="panel-footer">
-                <span class="small">Début: {{ stage.start|date("m/d/Y à h:m") }}</span>
-                <span class="pull-right small">Fin: {{ stage.end|date("m/d/Y à h:m") }}</span>
+                {% if date(stage.displayFrom) <= date() and date(stage.displayUntil) >= date() %}
+                    <span class="small">Début: {{ stage.start|date("d/m/Y à h:m") }}</span>
+                    <span class="pull-right small">Fin: {{ stage.end|date("d/m/Y à h:m") }}</span>
+                {% else %}
+                    <span class="small btn-danger btn btn-xs">Términé</span>
+                {% endif %}
             </div>
         </div>
     </div>

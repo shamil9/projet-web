@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProMemberRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class ProMember extends User implements UserInterface, \Serializable
 {
@@ -345,13 +344,5 @@ class ProMember extends User implements UserInterface, \Serializable
     public function setImages($images)
     {
         $this->images = $images;
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removePicture()
-    {
-        unlink(__DIR__ . '/../../../web/assets/img/uploads/avatars/' . $this->getPicture());
     }
 }

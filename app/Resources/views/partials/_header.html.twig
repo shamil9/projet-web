@@ -10,11 +10,13 @@
                            data-toggle="dropdown"
                            role="button"
                            aria-haspopup="true"
-                           aria-expanded="false">Par région <span class="caret"></span></a>
+                           aria-expanded="false">Par ville <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             {% for region in regions %}
                                 <li>
-                                    <a href="#">{{ region.city }} <span class="badge pull-right">{{ region.totalUsers }}</span></a>
+                                    <a href="/s?ville={{ region.city }}">
+                                        {{ region.city }} <span class="badge pull-right">{{ region.totalUsers }}</span>
+                                    </a>
                                 </li>
                             {% endfor %}
                         </ul>

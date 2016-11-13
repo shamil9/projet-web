@@ -33,8 +33,9 @@ class CreateWorkshops extends AbstractFixture implements OrderedFixtureInterface
             $workshop->setPrice($faker->numberBetween(10, 100));
             $workshop->setStart($faker->dateTime);
             $workshop->setEnd($faker->dateTimeThisYear);
+            $workshop->setDisplayFrom($faker->dateTime);
+            $workshop->setDisplayUntil($faker->dateTimeThisYear);
             $workshop->setUser($users->random());
-            $workshop->setImage($faker->imageUrl());
 
             $manager->persist($workshop);
         }

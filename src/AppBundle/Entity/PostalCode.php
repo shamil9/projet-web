@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PostalCode
  *
- * @ORM\Table(name="postal_code")
+ * @ORM\Table(name="postal_codes")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostalCodeRepository")
  */
 class PostalCode

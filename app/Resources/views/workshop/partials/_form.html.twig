@@ -1,38 +1,51 @@
 <div class="form-group">
     <label for="name">Titre</label>
-    {{ form_errors(form.name) }}
     {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-    {#<input type="text" id="name" name="name" class="form-control">#}
+    {{ form_errors(form.name) }}
 </div>
 
 <div class="form-group">
     <label for="description">Description</label>
-    {{ form_errors(form.description) }}
     {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-    {#<textarea id="name" name="description" class="form-control"></textarea>#}
+    {{ form_errors(form.description) }}
 </div>
-
 <div class="row">
-    <div class="col-lg-4">
-        <div class="form-group">
-            <label for="start">Début</label>
-            {{ form_errors(form.start) }}
-            {{ form_widget(form.start, {'attr': {'class': 'form-control'}}) }}
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="form-group">
-            <label for="end">Fin</label>
-            {{ form_errors(form.end) }}
-            {{ form_widget(form.end, {'attr': {'class': 'form-control'}})}}
-        </div>
-    </div>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="form-group">
             <label for="price">Prix</label>
-            {{ form_errors(form.price) }}
             {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.price) }}
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <span class="lead">Dates de déroulement</span>
+        <div class="form-group">
+            <label for="start">Début</label>
+            {{ form_widget(form.start, {'attr': {'class': 'form-control', }}) }}
+            {{ form_errors(form.start) }}
+        </div>
+        <div class="form-group">
+            <label for="end">Fin</label>
+            {{ form_widget(form.end, {'attr': {'class': 'form-control'}})}}
+            {{ form_errors(form.end) }}
+        </div>
+
+    </div>
+    <div class="col-lg-6">
+        <span class="lead">Durée d'affichage</span>
+        <div class="form-group">
+            <label>Début</label>
+            {{ form_widget(form.displayFrom, {'attr': {'class': 'form-control', }}) }}
+            {{ form_errors(form.displayFrom) }}
+        </div>
+        <div class="form-group">
+            <label>Fin</label>
+            {{ form_widget(form.displayUntil, {'attr': {'class': 'form-control'}})}}
+            {{ form_errors(form.displayUntil) }}
+        </div>
+
     </div>
 </div>
 <div class="form-group ">

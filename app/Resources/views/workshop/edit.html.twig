@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block title 'Éditer un stage' %}
-
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}">
+{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row">
@@ -13,4 +15,42 @@
             {{ form_end(form) }}
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/moment-with-locales.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('#workshop_start, #workshop_displayFrom').datetimepicker({
+                locale: 'FR',
+                sideBySide: true
+            });
+            $('#workshop_end').datetimepicker({
+                useCurrent: false, //Important! See issue #1075
+                minDate: '{{ workshop.start|date("Y-m-d h:m") }}',
+                locale: 'FR',
+                sideBySide: true
+            });
+            $('#workshop_displayUntil').datetimepicker({
+                useCurrent: false, //Important! See issue #1075
+                minDate: '{{ workshop.displayFrom|date("Y-m-d h:m") }}',
+                locale: 'FR',
+                sideBySide: true
+            });
+
+            $("#workshop_start").on("dp.change", function (e) {
+                $('#workshop_end').data("DateTimePicker").minDate(e.date);
+            });
+            $("#workshop_end").on("dp.change", function (e) {
+                $('#workshop_start').data("DateTimePicker").maxDate(e.date);
+            });
+            $("#workshop_displayFrom").on("dp.change", function (e) {
+                $('#workshop_displayUntil').data("DateTimePicker").minDate(e.date);
+            });
+            $("#workshop_displayUntil").on("dp.change", function (e) {
+                $('#workshop_displayFrom').data("DateTimePicker").maxDate(e.date);
+            });
+
+        });
+    </script>
 {% endblock %}

@@ -84,6 +84,7 @@ class WorkshopController extends BaseController
         }
 
         return $this->render('workshop/edit.html.twig', array(
+            'workshop' => $workshop,
             'user' => $this->getUser(),
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

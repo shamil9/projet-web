@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="user_type", type="string")
  * @ORM\DiscriminatorMap({"member"="Member", "pro_member"="ProMember", "user"="User"});
- *
+ * @ORM\HasLifecycleCallbacks()
  */
 class User
 {
@@ -294,5 +294,13 @@ class User
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removePicture()
+    {
+        unlink(__DIR__ . '/../../../web/assets/img/uploads/avatars/' . $this->getPicture());
     }
 }

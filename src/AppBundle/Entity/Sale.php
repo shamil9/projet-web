@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Sale
  *
- * @ORM\Table(name="sale")
+ * @ORM\Table(name="sales")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SaleRepository")
  */
 class Sale
@@ -177,6 +177,6 @@ class Sale
     {
         $this->user = $user;
     }
-    
+
 }
 

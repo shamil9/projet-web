@@ -20,9 +20,10 @@ class ProMemberRepository extends EntityRepository
         return $qb->select('user')
             ->from('AppBundle:ProMember', 'user')
             ->innerJoin('user.categories', 'cat', 'WITH', 'cat.id IN (:category)')
-            ->setMaxResults(4)
-            ->where('user.zip = :zip')
+            ->addSelect('cat')
+            ->andWhere('user.zip = :zip')
             ->andWhere('user.id != :id')
+            ->setMaxResults(4)
             ->setParameters([
                 'zip' => $user->getZip(),
                 'id' => $user->getId(),

@@ -2,11 +2,12 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Component\Form\Extention\Core\Type\DateTimeType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,18 +22,27 @@ class WorkshopType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('price', MoneyType::class)
+            ->add('price', MoneyType::class, [
+                'invalid_message' => 'Ce format est invalide, entrez un nombre',
+            ])
             ->add('start', DateTimeType::class, [
-                'date_format' => 'd-M-y',
-                'widget' => 'single_text'
+                'format' => 'dd/MM/y HH:mm',
+                'widget' => 'single_text',
             ])
             ->add('end', DateTimeType::class, [
-                'date_format' => 'd-M-y',
+                'format' => 'dd/MM/y HH:mm',
                 'widget' => 'single_text'
             ])
-        ;
+            ->add('displayFrom', DateTimeType::class, [
+                'format' => 'dd/MM/y HH:mm',
+                'widget' => 'single_text'
+            ])
+            ->add('displayUntil', DateTimeType::class, [
+                'format' => 'dd/MM/y HH:mm',
+                'widget' => 'single_text',
+            ]);
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

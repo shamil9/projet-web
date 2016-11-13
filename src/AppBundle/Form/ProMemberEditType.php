@@ -24,7 +24,6 @@ class ProMemberEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('memberFields', MemberEditType::class)
             ->add('name', TextType::class)
             ->add('email', EmailType::class)
 //            ->add('currentPassword', PasswordType::class, [
@@ -46,9 +45,6 @@ class ProMemberEditType extends AbstractType
                 'class'        => 'AppBundle\Entity\Category',
                 'choice_label' => 'name',
                 'multiple'     => true,
-//                'choice_attr' => function($value, $key, $index) {
-//
-//                }
             ])
             ->add('description', TextareaType::class)
             ->add('phone', TextType::class)

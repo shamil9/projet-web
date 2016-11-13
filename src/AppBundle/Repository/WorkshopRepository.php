@@ -17,6 +17,7 @@ class WorkshopRepository extends \Doctrine\ORM\EntityRepository
         $query = $qb->select('w')
             ->from('AppBundle:Workshop', 'w')
             ->join('w.user', 'u', 'WITH', 'u.id = w.user')
+            ->addSelect('u')
             ->orderBy('w.start', 'DESC')
             ->getQuery();
 

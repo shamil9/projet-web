@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Workshop
  *
- * @ORM\Table(name="workshop")
+ * @ORM\Table(name="workshops")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\WorkshopRepository")
  */
 class Workshop
@@ -64,10 +64,14 @@ class Workshop
     private $user;
 
     /**
-     * @ORM\Column(type="string")
-     * @Assert\File(mimeTypes={ "image/jpeg", "image/png", "image/svg+xml" })
+     * @ORM\Column(type="datetime")
      */
-    private $image;
+    private $displayFrom;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $displayUntil;
 
     /**
      * Get id
@@ -208,28 +212,50 @@ class Workshop
     }
 
     /**
-     * Gets the value of image.
+     * Gets the value of displayFrom.
      *
      * @return mixed
      */
-    public function getImage()
+    public function getDisplayFrom()
     {
-        return $this->image;
+        return $this->displayFrom;
     }
 
     /**
-     * Sets the value of image.
+     * Sets the value of displayFrom.
      *
-     * @param mixed $image the image
+     * @param mixed $displayFrom the display from
      *
      * @return self
      */
-    public function setImage($image)
+    public function setDisplayFrom($displayFrom)
     {
-        if (!is_null($image)) {
-            $this->image = $image;
-        }
+        $this->displayFrom = $displayFrom;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of displayUntil.
+     *
+     * @return mixed
+     */
+    public function getDisplayUntil()
+    {
+        return $this->displayUntil;
+    }
+
+    /**
+     * Sets the value of displayUntil.
+     *
+     * @param mixed $displayUntil the display until
+     *
+     * @return self
+     */
+    public function setDisplayUntil($displayUntil)
+    {
+        $this->displayUntil = $displayUntil;
+
         return $this;
     }
 }
-

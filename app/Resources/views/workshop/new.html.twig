@@ -1,15 +1,49 @@
 {% extends 'base.html.twig' %}
 {% block title %}Ajouter un stage{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}">
+{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="row main">
             {{ form_errors(form) }}
             <div class="col-lg-8">
-                <form method="post" class="form" action="{{ path('stage_new', {'slug': user.slug}) }}">
+                <form method="post" class="form" class="well" action="{{ path('stage_new', {'slug': user.slug}) }}">
                     {% include 'workshop/partials/_form.html.twig' %}
                     {{ form_end(form) }}
             </div>
         </div>
     </div>
 {% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/moment-with-locales.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('#workshop_start, #workshop_displayFrom').datetimepicker({
+                locale: 'FR',
+                sideBySide: true
+            });
+            $('#workshop_end, #workshop_displayUntil').datetimepicker({
+                useCurrent: false, //Important! See issue #1075
+                locale: 'FR',
+                sideBySide: true
+            });
+            $("#workshop_start").on("dp.change", function (e) {
+                $('#workshop_end').data("DateTimePicker").minDate(e.date);
+            });
+            $("#workshop_end").on("dp.change", function (e) {
+                $('#workshop_start').data("DateTimePicker").maxDate(e.date);
+            });
+            $("#workshop_displayFrom").on("dp.change", function (e) {
+                $('#workshop_displayUntil').data("DateTimePicker").minDate(e.date);
+            });
+            $("#workshop_displayUntil").on("dp.change", function (e) {
+                $('#workshop_displayFrom').data("DateTimePicker").maxDate(e.date);
+            });
+
+        });
+    </script>
+{% endblock %}
+
