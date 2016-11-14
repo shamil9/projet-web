@@ -6,11 +6,14 @@ namespace AppBundle\Controller\Member;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Comment;
+use AppBundle\Entity\CommentReport;
 use AppBundle\Entity\ProMember;
+use AppBundle\Form\CommentReportType;
 use AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CommentsController extends BaseController
 {
@@ -39,6 +42,49 @@ class CommentsController extends BaseController
         return $this->render(':pro_member/partials:_comments-form.html.twig', [
             'commentForm' => $commentForm->createView(),
             'proMember' => $proMember,
+        ]);
+    }
+
+    /**
+     * Enregistre un commentaire signalé
+     *
+     * @Route("/comments/{id}/report", name="comments_report")
+     * @param  Comment $comment
+     * @return Response
+     */
+    public function reportAction(Request $request, Comment $id)
+    {
+        $this->userCheck();
+
+        $report = new CommentReport();
+        $form = $this->createForm(CommentReportType::class, $report);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $report->setDate(new \DateTime('now'));
+            $report->setComment($id);
+
+            //Envoi de message
+            $message = $this->sendEmail($this->getParameter('admin_mail'), 'system@bien-etre.com', $request->get('description'))
+                ->setBody(
+                    $this->render('emails/comment-report.html.twig', [
+                        'user' => $this->getUser()->getUsername(),
+                        'url' => $request->server->get('HTTP_REFERER'),
+                        'message' => $request->request->get('comment_report')['description'],
+                    ])
+                );
+            $this->get('mailer')->send($message);
+
+            //Enregistrement dans la db
+            $this->em()->persist($report);
+            $this->em()->flush();
+
+            return JsonResponse::create('ok', 200);
+        }
+
+        return $this->render('comments/report.html.twig', [
+            'form' => $form->createView(),
+            'comment' => $id,
         ]);
     }
 }

@@ -24,6 +24,7 @@ class Image
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="images", cascade={"persist"})
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $user;
 

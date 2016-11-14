@@ -26,7 +26,7 @@ var removeFavorite = function (url, self) {
 
     $.ajax(options)
         .done(function () {
-            $(this)
+            self
                 .removeAttr('id')
                 .attr('id', 'add-favorite')
                 .toggleClass('favorite__active');
@@ -164,5 +164,22 @@ var removeNewsletterSubscriber = function (url, user, self) {
                     .toggleClass('btn-success')
                     .html('Succès');
             });
+    });
+};
+
+//Signaler un commentaire
+var reportComment = function(url, id) {
+    var self = $('#comment-report-' + id);
+    self.on('submit', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: url,
+        method: 'post',
+        data: self.serialize(),
+        context: self
+    }).done(function () {
+            $('#reportComment-' + id).modal('hide');
+        });
     });
 };

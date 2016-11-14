@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,22 +30,31 @@ class Comment
     private $comment;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CommentReport", mappedBy="comment", cascade={"remove"}, orphanRemoval=true)
+     */
+    private $reports;
+
+    /**
      * @ORM\Column(name="rating", type="integer")
      */
     private $rating;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Member", inversedBy="comments", cascade={"persist"})
-     * @ORM\JoinColumn(name="member_id", referencedColumnName="id", onDelete="NO ACTION")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $member;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProMember", inversedBy="comments", cascade={"persist"})
-     * @ORM\JoinColumn(name="pro_member_id", referencedColumnName="id", onDelete="NO ACTION")
+     * @ORM\JoinColumn(name="pro_member_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $proMember;
 
+    public function __construct()
+    {
+        $this->reports = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -126,6 +136,30 @@ class Comment
     public function setProMember($proMember)
     {
         $this->proMember = $proMember;
+    }
+
+    /**
+     * Gets the value of reports.
+     *
+     * @return mixed
+     */
+    public function getReports()
+    {
+        return $this->reports;
+    }
+
+    /**
+     * Sets the value of reports.
+     *
+     * @param mixed $reports the reports
+     *
+     * @return self
+     */
+    public function setReports($reports)
+    {
+        $this->reports = $reports;
+
+        return $this;
     }
 }
 

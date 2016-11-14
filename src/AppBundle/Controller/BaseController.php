@@ -92,4 +92,12 @@ abstract class BaseController extends Controller
             $this->createAccessDeniedException('Action non autorisée');
         }
     }
+
+    protected function sendEmail($to, $from, $subject)
+    {
+        return \Swift_Message::newInstance()
+                ->setSubject($subject)
+                ->setFrom($from)
+                ->setTo($to);
+    }
 }

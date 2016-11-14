@@ -23,6 +23,7 @@ class Favorite
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Member", inversedBy="favorites")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $member;
 

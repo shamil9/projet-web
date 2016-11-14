@@ -9,6 +9,7 @@ parameters:
     locale: en
     image_driver: gd
     assets_root: "%kernel.root_dir%/../web/assets"
+    admin_mail: admin@bien-etre.com
 
 framework:
     #esi:             ~

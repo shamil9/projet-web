@@ -10,11 +10,17 @@
                         <img src="{{ avatars ~ comment.member.picture }}" class="img-circle img--30x30"
                              alt="{{ comment.member.username }}">
                         <span class="lead" style="vertical-align: middle;">{{ comment.member.username }}</span>
-            <span class="pull-right rating"
-                  style="width: calc(20px * {{ comment.rating }});"></span>
+                        <span class="pull-right rating" style="width: calc(20px * {{ comment.rating }});"></span>
                     </div>
                     <div class="panel-body">
                         {{ comment.comment }}
+                    </div>
+                    <div class="panel-footer">
+                        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#reportComment-{{ comment.id }}">Signaler</button>
+                        {% if app.user is member %}
+                            {{ render(controller('AppBundle:Member/Comments:report',
+                                {'id': comment.id })) }}
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
