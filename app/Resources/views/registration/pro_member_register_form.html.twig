@@ -20,83 +20,87 @@
 
                     <div class="form-group">
                         {{ form_label(form.username, "Nom d'utilisateur") }}
-                        {{ form_errors(form.username) }}
                         {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.username) }}
                     </div>
 
                     <div class="form-group">
                         {{ form_label(form.email, 'Adresse Email') }}
-                        {{ form_errors(form.email) }}
                         {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.email) }}
                     </div>
 
                     <div class="form-group">
                         {{ form_label(form.plainPassword.first, 'Mot de passe') }}
-                        {{ form_errors(form.plainPassword.first) }}
                         {{ form_widget(form.plainPassword.first, {'attr': {
                             'class': 'form-control',
                             'pattern': '[\x21-\x7E].{7,}',
                             'title': 'Le mot de passe doit contenir 7 caractères avec au moins 1 caractère alphabétique sans accents et au moins 1 chiffre.'
                         }}) }}
+                        {{ form_errors(form.plainPassword.first) }}
                     </div>
 
                     <div class="form-group">
                         {{ form_label(form.plainPassword.second, 'Confirmez le mot de passe') }}
-                        {{ form_errors(form.plainPassword.second) }}
                         {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.plainPassword.second) }}
                     </div>
 
                     <div class="form-group">
                         {{ form_label(form.name, 'Nom et Prénom') }}
-                        {{ form_errors(form.name) }}
                         {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.name) }}
                     </div>
 
                     <div class="form-group">
                         {{ form_label(form.street, 'Rue') }}
-                        {{ form_errors(form.street) }}
                         {{ form_widget(form.street, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.street) }}
                     </div>
 
-                    <div class="form-group address">
-                        {{ form_label(form.zip, 'Code Postal') }}
-                        {{ form_errors(form.zip) }}
-                        {{ form_widget(form.zip, {'attr': {'class': 'form-control'}}) }}
-
-                        {{ form_label(form.city, 'Ville') }}
-                        {{ form_errors(form.city) }}
-                        {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                    {{ form_label(form.zip, 'Code Postal') }}
+                                    {{ form_widget(form.zip, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.zip) }}
+                            </div>
+                            <div class="col-lg-6">
+                                    {{ form_label(form.city, 'Ville') }}
+                                    {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.city) }}
+                            </div>
+                        </div>
                     </div>
-                </div>
 
                 <div class="form-group">
                     {{ form_label(form.website, 'Site Web') }}
-                    {{ form_errors(form.website) }}
                     {{ form_widget(form.website, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.website) }}
                 </div>
 
                 <div class="form-group">
                     {{ form_label(form.phone, 'Numéro Tel') }}
-                    {{ form_errors(form.phone) }}
                     {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.phone) }}
                 </div>
 
                 <div class="form-group">
                     {{ form_label(form.tva, 'Numéro de TVA') }}
-                    {{ form_errors(form.tva) }}
                     {{ form_widget(form.tva, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.tva) }}
                 </div>
 
                 <div class="form-group">
                     {{ form_label(form.description, 'Déscription') }}
-                    {{ form_errors(form.description) }}
                     {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.description) }}
                 </div>
 
                 <div class="form-group">
                     {{ form_label(form.categories, 'Catégories') }}
-                    {{ form_errors(form.categories) }}
                     {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.categories) }}
                 </div>
 
                 <div>
@@ -116,5 +120,51 @@
             placeholder: 'Sélectionnez votre catégorie',
             theme: 'bootstrap'
         } );
+
+        var cities = [];
+        $.getJSON('{{ asset('assets/js/cities.json') }}')
+            .done(function(data) {
+                findCity(data)
+            });
+
+        //Recherche de la ville sur base de la valeur du champ "Ville"
+        var findCity = function(cities) {
+            var zipInput = $('#pro_member_registration_zip');
+            var cityInput = $('#pro_member_registration_city');
+            var options;
+            var zip = parseInt(zipInput.val());
+            var pattern = RegExp('^' + zip + '\d*', 'g');
+
+            //Inérsion du résultat après un rechargement de la page
+            if (zip) {
+                var results = cities.filter(function(key) {
+                    if (pattern.test(parseInt(key.zip)))
+                        return key.name;
+                });
+
+                results.forEach(function(key, index) {
+                    options += '<option value="' + key.name + '">'+ key.name +'</option>';
+                });
+
+                cityInput.html(options);
+            }
+
+            zipInput.on('change', function(e) {
+                var zip = parseInt(zipInput.val());
+                var pattern = RegExp('^' + zip + '\d*', 'g');
+
+                //Filtrage des ville par le code postal
+                var results = cities.filter(function(key) {
+                    if (pattern.test(parseInt(key.zip)))
+                        return key.name;
+                });
+
+                //Insértion des résultats dans le champ "ville"
+                results.forEach(function(key, index) {
+                    options += '<option value="' + key.name + '">'+ key.name +'</option>';
+                });
+                cityInput.html(options);
+            });
+        };
     </script>
 {% endblock %}

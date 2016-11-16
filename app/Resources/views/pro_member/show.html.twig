@@ -187,13 +187,13 @@
         //Ajout du favori
         $('#add-favorite').on('click', function (e) {
             e.preventDefault();
-            addFavorite('{{ path('members_add_favorite', {'proMember': user.id}) }}', this);
+            addFavorite('{{ path('members_add_favorite', {'proMember': user.id}) }}', $(this));
         });
 
         //Suppression du favori
         $('#remove-favorite').on('click', function (e) {
             e.preventDefault();
-            removeFavorite('{{ path('members_remove_favorite', {'proMember': user.id}) }}', this);
+            removeFavorite('{{ path('members_remove_favorite', {'proMember': user.id}) }}', $(this));
         });
 
         //Ajout de commentaire
@@ -201,7 +201,7 @@
             e.preventDefault();
 
             postComment( {
-                url: '{{ path('pro_member_comments_new', {'slug': user.slug}) }}',
+                url: '{{ path('comments_new', {'user': user.id}) }}',
                 user: '{{ app.user.username }}',
                 picture: '{{ app.user.picture }}',
                 self: this

@@ -10,7 +10,6 @@ var addFavorite = function (url, self) {
     $.ajax(options)
         .done(function () {
             $(this)
-                .removeAttr('id')
                 .attr('id', 'remove-favorite')
                 .toggleClass('favorite__active');
         });
@@ -27,7 +26,6 @@ var removeFavorite = function (url, self) {
     $.ajax(options)
         .done(function () {
             self
-                .removeAttr('id')
                 .attr('id', 'add-favorite')
                 .toggleClass('favorite__active');
         });
@@ -44,7 +42,6 @@ var showGoogleMap = function (address) {
     GMaps.geocode({
         address: address,
         callback: function (results, status) {
-            console.log(results);
             if (status == 'OK') {
                 var latlng = results[0].geometry.location;
 

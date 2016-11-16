@@ -59,16 +59,21 @@
 }
 
 .favorite {
-    color: #ccc;
+    color: #ccc !important;
     font-size: 20px;
 }
 
 .favorite:hover, .favorite:link {
+    color: #2a9fd6;
     text-decoration: none;
 }
 
 .favorite__active {
-    color: #2a9fd6;
+    color: #2a9fd6 !important;
+}
+
+.favorite__active:hover {
+    color: #ccc;
 }
 
 .img--30x30 {

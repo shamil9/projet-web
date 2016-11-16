@@ -38,10 +38,10 @@ class ProMemberRegistrationController extends BaseController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            
+
             return $this->redirectToRoute('homepage');
         }
-        
+
         return $this->render(':registration:pro_member_register_form.html.twig', [
             'form' => $form->createView()
         ]);

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="well">
+            <h1>{{ category.name }}</h1>
+            <p>{{ category.description }}</p>
+        </div>
+        {% if category.users is not empty %}
+            <h2>Liste des prestataires dans cette catégorie</h2>
+            {% include 'pro_member/partials/_users.html.twig' with {'users': category.users} %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

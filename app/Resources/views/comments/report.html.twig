@@ -1,0 +1,27 @@
+<div class="modal fade" id="reportComment-{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="reportCommentModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="reportCommentModal">Message</h4>
+            </div>
+            <div class="modal-body">
+                 {{ form_start(form, {'action': path('comments_report', {'id': comment.id}), 'attr': {'class': 'form', 'id': 'comment-report-' ~ comment.id}}) }}
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.description) }}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        {# La function reportComment prends 2 paramètres l'url et le ID du commentaire #}
+                        <button
+                            onclick="reportComment('{{ path('comments_report', {'id': comment.id}) }}', {{ comment.id }})"
+                            type="submit"
+                            class="btn btn-primary">Envoyer</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>

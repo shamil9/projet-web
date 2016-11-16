@@ -1,6 +1,4 @@
 <?php
-
-
 namespace AppBundle\Controller\Member;
 
 
@@ -18,12 +16,12 @@ use Symfony\Component\HttpFoundation\Response;
 class CommentsController extends BaseController
 {
     /**
-     * @Route("/prestataires/{slug}/commentaires/nouveau", name="pro_member_comments_new")
+     * @Route("/prestataires/{user}/comments/new", name="comments_new")
      * @param Request $request
      * @param ProMember $proMember
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request, ProMember $proMember)
+    public function newAction(Request $request, ProMember $user)
     {
         //Construction du formulaire de commentaire
         $comment = new Comment();
@@ -32,7 +30,7 @@ class CommentsController extends BaseController
 
         if ($commentForm->isValid()) {
             $comment->setMember($this->getUser());
-            $comment->setProMember($proMember);
+            $comment->setProMember($user);
             $this->em()->persist($comment);
             $this->em()->flush();
 
@@ -41,7 +39,7 @@ class CommentsController extends BaseController
 
         return $this->render(':pro_member/partials:_comments-form.html.twig', [
             'commentForm' => $commentForm->createView(),
-            'proMember' => $proMember,
+            'proMember' => $user,
         ]);
     }
 
