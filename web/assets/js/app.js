@@ -9,9 +9,10 @@ var addFavorite = function (url, self) {
 
     $.ajax(options)
         .done(function () {
-            $(this)
-                .attr('id', 'remove-favorite')
-                .toggleClass('favorite__active');
+            // self
+            //     .attr('id', 'remove-favorite')
+            //     .attr('title', 'supprimer le favori')
+            //     .toggleclass('favorite__active');
         });
 };
 
@@ -25,9 +26,10 @@ var removeFavorite = function (url, self) {
 
     $.ajax(options)
         .done(function () {
-            self
-                .attr('id', 'add-favorite')
-                .toggleClass('favorite__active');
+            // self
+            //     .attr('id', 'add-favorite')
+            //     .attr('title', 'Ajouter aux favoris')
+            //     .toggleClass('favorite__active');
         });
 };
 

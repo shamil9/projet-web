@@ -27,7 +27,7 @@ class MemberEditType extends AbstractType
 //                'required' => false,
 //                'mapped' => false,
 //            ])
-            ->add('password', RepeatedType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 'type'            => PasswordType::class,
                 'invalid_message' => 'Mots de passe ne corresponds pas',
                 'first_options'   => ['label' => 'Mot de passe'],

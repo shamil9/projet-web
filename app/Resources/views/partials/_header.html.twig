@@ -29,19 +29,21 @@
                 <ul class="nav navbar-right">
                     <li>
                         {% if app.user %}
-                            <a class="" href=""
+                            <a href=""
                                data-toggle="dropdown" id="user"
                                aria-haspopup="true"
                                aria-expanded="true">
                                <img src="/assets/img/uploads/avatars/{{ user.picture }}" class="img--30x30 img-circle" alt="{{ user.username }}">
                             </a>
-                        {% else %}
-                            <a href="{{ path('login') }}" class="navbar-btn btn-success">Connexion</a>
-                        {% endif %}
                         <ul class="dropdown-menu" aria-labelledby="user">
                             <li><a href="{{ path('edit_profile') }}">Profil</a></li>
                             <li><a href="{{ path('logout') }}">Déconnexion</a></li>
                         </ul>
+                        {% else %}
+                            <p class="navbar-text">
+                                <a class="navbar-link" href="{{ path('login') }}">Connexion</a>
+                            </p>
+                        {% endif %}
                     </li>
                 </ul>
             </nav>

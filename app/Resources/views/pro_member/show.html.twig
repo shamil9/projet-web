@@ -16,7 +16,6 @@
                                 {% if loop.first %}class="active"{% endif %}></li>
                         {% endfor %}
                     </ol>
-
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
                         {% for image in user.images %}
@@ -132,7 +131,9 @@
                         {% if user.workshops is not empty  %}
                         <div role="tabpanel" class="tab-pane" id="stages">
                             <h1>Stages</h1>
-                            {% include 'pro_member/partials/_workshops.html.twig' %}
+                            {% for stage in user.workshops %}
+                            {% include 'workshop/partials/_workshops.html.twig' %}
+                            {% endfor %}
                         </div>
                         {% endif %}
 
@@ -183,40 +184,41 @@
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
         {% if app.user %}
-
-        //Ajout du favori
-        $('#add-favorite').on('click', function (e) {
-            e.preventDefault();
-            addFavorite('{{ path('members_add_favorite', {'proMember': user.id}) }}', $(this));
-        });
-
-        //Suppression du favori
-        $('#remove-favorite').on('click', function (e) {
-            e.preventDefault();
-            removeFavorite('{{ path('members_remove_favorite', {'proMember': user.id}) }}', $(this));
-        });
-
-        //Ajout de commentaire
-        $('#comments').on('submit', function (e) {
-            e.preventDefault();
-
-            postComment( {
-                url: '{{ path('comments_new', {'user': user.id}) }}',
-                user: '{{ app.user.username }}',
-                picture: '{{ app.user.picture }}',
-                self: this
+        (function(){
+            //Ajout du favori
+            $('#add-favorite').on('click', function (e) {
+//                e.preventDefault();
+                addFavorite('{{ path('members_add_favorite', {'proMember': user.id}) }}', $(this));
             });
-        });
-        {% endif %}
 
-        $('#comment_rating').barrating({
-            theme: 'bootstrap-stars'
-        });
+            //Suppression du favori
+            $('#remove-favorite').on('click', function (e) {
+//                e.preventDefault();
+                removeFavorite('{{ path('members_remove_favorite', {'proMember': user.id}) }}', $(this));
+            });
 
-        $('#location').on('shown.bs.tab', function (e) {
-            showGoogleMap('{{ user.street }}, {{ user.city }}');
-        });
+            //Ajout de commentaire
+            $('#comments').on('submit', function (e) {
+                e.preventDefault();
 
-        getSuggestions('{{ path('pro_member_suggestions', {'user': user.id}) }}');
+                postComment({
+                    url: '{{ path('comments_new', {'user': user.id}) }}',
+                    user: '{{ app.user.username }}',
+                    picture: '{{ app.user.picture }}',
+                    self: this
+                });
+            });
+            {% endif %}
+
+            $('#comment_rating').barrating({
+                theme: 'bootstrap-stars'
+            });
+
+            $('#location').on('shown.bs.tab', function (e) {
+                showGoogleMap('{{ user.street }}, {{ user.city }}');
+            });
+
+            getSuggestions('{{ path('pro_member_suggestions', {'user': user.id}) }}');
+        })();
     </script>
 {% endblock %}

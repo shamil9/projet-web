@@ -4,48 +4,13 @@
 namespace AppBundle\Controller\Member;
 
 use AppBundle\Controller\BaseController;
-use AppBundle\Controller\CrudInterface;
 use AppBundle\Entity\Member;
 use AppBundle\Form\MemberEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-class MemberController extends BaseController implements CrudInterface
+class MemberController extends BaseController
 {
-    /**
-     * Affichage de la liste complète
-     */
-    public function indexAction()
-    {
-    }
-
-    /**
-     * Nouveau enregistrement
-     * @param Request $request
-     */
-    public function newAction(Request $request)
-    {
-    }
-
-    /**
-     * Affichage individuel
-     *
-     * @param $entity
-     */
-    public function showAction($entity)
-    {
-        $user = $this->getUser();
-
-        return $this->render('member/partials/_blocks.html.twig', ['user' => $user]);
-    }
-
-    /**
-     * Edition
-     */
-    public function editAction()
-    {
-    }
-
     /**
      * Met à jour les données d'utilisateur
      *
@@ -63,12 +28,10 @@ class MemberController extends BaseController implements CrudInterface
 
         if ($form->isSubmitted() && $form->isValid()) {
             //Changement de mot de passe
-            if ($request->getPassword()) {
+            if ($user->getPlainPassword()) {
                 $password = $this->get('security.password_encoder')
-                    ->encodePassword($user, $request->get('password'));
+                    ->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
-                dump($user->getPassword());
-                die();
             }
 
             $this->createAvatarImage($form, $user);

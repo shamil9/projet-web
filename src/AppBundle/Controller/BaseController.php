@@ -89,7 +89,7 @@ abstract class BaseController extends Controller
     protected function userCheck()
     {
         if (!$this->getUser()) {
-            $this->createAccessDeniedException('Action non autorisée');
+            throw $this->createAccessDeniedException('Action non autorisée');
         }
     }
 

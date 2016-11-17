@@ -166,7 +166,9 @@ class User
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        if (!is_null($password)) {
+            $this->password = $password;
+        }
     }
 
     /**
@@ -297,7 +299,7 @@ class User
     }
 
     /**
-     * @ORM\PostRemove()
+     * @ORM\PreRemove()
      */
     public function removePicture()
     {

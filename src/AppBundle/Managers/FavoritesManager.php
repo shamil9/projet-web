@@ -6,6 +6,7 @@ namespace AppBundle\Managers;
 use AppBundle\Entity\Favorite;
 use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,6 +25,21 @@ class FavoritesManager
     }
 
     /**
+     * @param $favorites
+     * @param $id
+     * @throws \Exception
+     */
+    public function checkIfExist($favorites, $id)
+    {
+        /** @var Favorite $favorite */
+        foreach ($favorites->toArray() as $favorite) {
+            if ($favorite->getProMember()->getId() === $id) {
+                throw new \Exception('Utilisateur déjà dans les favoris');
+            }
+        }
+    }
+
+    /**
      * Enregistre un prestataire favoris
      *
      * @param Member $member
@@ -33,9 +49,7 @@ class FavoritesManager
      */
     public function addFavoriteProMember(Member $member, ProMember $proMember)
     {
-        if (!$member) {
-            throw new \Exception('Operation non permise');
-        }
+        $this->checkIfExist($member->getFavorites(), $proMember->getId());
 
         $favorite = new Favorite();
         $favorite->setMember($member);
@@ -57,7 +71,7 @@ class FavoritesManager
         if (!$member) {
             throw new \Exception('Operation non permise');
         }
-        
+
         $repo = $this->em->getRepository('AppBundle:Favorite');
         //Rechercher l'entrée
         $favorite = $repo->findOneBy([

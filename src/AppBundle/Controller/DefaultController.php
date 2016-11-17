@@ -130,8 +130,6 @@ class DefaultController extends BaseController
         $category = $request->get('categorie');
         $results = $this->getRepository('AppBundle:ProMember')->search($userName, $city, $category);
 
-        dump('asdflkja');
-
         return $this->render('default/search.html.twig', [
             'results' => $results,
         ]);

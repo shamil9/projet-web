@@ -18,9 +18,10 @@ class FavoritesController extends BaseController
      */
     public function addFavoriteAction(ProMember $proMember)
     {
+        $this->userCheck();
+        
         try {
             $favoriteManager = $this->get('app.favorites_manager');
-
             $favoriteManager->addFavoriteProMember($this->getUser(), $proMember);
 
             return JsonResponse::create(null, 200);
@@ -36,6 +37,8 @@ class FavoritesController extends BaseController
      */
     public function removeFavoriteAction(ProMember $proMember)
     {
+        $this->userCheck();
+
         try {
             $favoriteManager = $this->get('app.favorites_manager');
 
