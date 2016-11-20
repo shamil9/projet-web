@@ -53,6 +53,8 @@ class UserController extends BaseController
      */
     public function destroyAction(User $id, Request $request)
     {
+        $this->adminCheck();
+
         //suppression de l'utilisateur
         $this->deleteUser($request, $id);
 

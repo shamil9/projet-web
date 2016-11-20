@@ -15,7 +15,7 @@
             <ul class="list-group">
             {% for favorite in user.favorites %}
                 <li class="list-group-item">
-                    <a href="{{ path('user_profile', {'slug': favorite.proMember.slug}) }}" title="">{{ favorite.proMember.name }}</a>
+                    <a href="{{ path('pro_user_profile', {'slug': favorite.proMember.slug}) }}" title="">{{ favorite.proMember.name }}</a>
                 </li>
             {% endfor %}
             </ul>

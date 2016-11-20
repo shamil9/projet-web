@@ -88,9 +88,17 @@ abstract class BaseController extends Controller
 
     protected function userCheck()
     {
-        if (!$this->getUser()) {
-            throw $this->createAccessDeniedException('Action non autorisée');
-        }
+        $this->denyAccessUnlessGranted('ROLE_USER');
+    }
+
+    protected function adminCheck()
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+    }
+
+    protected function proUserCheck()
+    {
+        $this->denyAccessUnlessGranted('ROLE_PRO_USER');
     }
 
     protected function sendEmail($to, $from, $subject)

@@ -42,22 +42,4 @@ class MemberController extends BaseController
 
         return $this->redirect('/profil');
     }
-
-    /**
-     * Suppression
-     *
-     * @Route("/destroy", name="user_delete")
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function destroyAction(Request $request)
-    {
-        $user = $this->getUser();
-
-        //suppression de l'utilisateur
-        $this->deleteUser($request, $user);
-
-        return $this->redirectToRoute('homepage');
-    }
-
 }

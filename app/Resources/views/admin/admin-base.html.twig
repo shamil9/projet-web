@@ -1,0 +1,78 @@
+{% set avatars = '/assets/img/uploads/avatars/' %}
+{% set slides = '/assets/img/uploads/slider/' %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <link href="http://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/admin/libraries/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/admin/libraries/owl.carousel/assets/owl.carousel.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('assets/admin/libraries/colorbox/example1/colorbox.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('assets/admin/libraries/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/admin/libraries/bootstrap-fileinput/fileinput.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/admin/css/superlist.css') }}" rel="stylesheet" type="text/css" >
+    <title>{% block title %}Administration{% endblock %}</title>
+    </head>
+<body>
+
+<div class="page-wrapper">
+    <div class="main">
+        <div class="outer-admin">
+            <div class="wrapper-admin">
+                <div class="sidebar-admin">
+                    <ul>
+                        <li class="active">
+                            <a href="{{ path('admin_index') }}"><i class="fa fa-home"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-user"></i></a></li>
+                        <li><a href="#"><i class="fa fa-newspaper-o"></i></a></li>
+                        <li><a href="#"><i class="fa fa-comments"></i></a></li>
+                        <li><a href="#"><i class="fa fa-list"></i></a></li>
+                        <li><a href="#"><i class="fa fa-picture-o"></i></a></li>
+                    </ul>
+                </div><!-- /.sidebar-admin-->
+
+                <div class="content-admin">
+                    <div class="content-admin-wrapper">
+                        <div class="content-admin-main">
+                            <div class="content-admin-main-inner">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                        {% block body %}{% endblock %}
+                                        </div>
+                                    </div>
+                                </div><!-- /.container-fluid -->
+                            </div><!-- /.content-admin-main-inner -->
+                        </div><!-- /.content-admin-main -->
+
+                        <div class="content-admin-footer">
+                            <div class="container-fluid">
+                                <div class="content-admin-footer-inner">
+                                    &copy; 2015 All rights reserved. Created by <a href="#">Aviators</a>.
+                                </div><!-- /.content-admin-footer-inner -->
+                            </div><!-- /.container-fluid -->
+                        </div><!-- /.content-admin-footer  -->
+                    </div><!-- /.content-admin-wrapper -->
+                </div><!-- /.content-admin -->
+            </div><!-- /.wrapper-admin -->
+        </div><!-- /.outer-admin -->
+    </div><!-- /.main -->
+</div><!-- /.page-wrapper -->
+
+<script src="{{ asset('assets/js/jquery.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/admin/libraries/colorbox/jquery.colorbox-min.js') }}"></script>
+<script src="{{ asset('assets/admin/libraries/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ asset('assets/admin/libraries/flot/jquery.flot.spline.js') }}"></script>
+<script src="{{ asset('assets/admin/libraries/bootstrap-select/bootstrap-select.min.js') }}"></script>
+<script src="{{ asset('assets/admin/libraries/owl.carousel/owl.carousel.js') }}"></script>
+<script src="{{ asset('assets/admin/libraries/bootstrap-fileinput/fileinput.min.js') }}"></script>
+<script src="{{ asset('assets/admin/js/superlist.js') }}"></script>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

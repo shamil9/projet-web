@@ -48,7 +48,7 @@ class WorkshopController extends BaseController
             $this->em()->persist($workshop);
             $this->em()->flush();
 
-            return $this->redirectToRoute( 'user_profile', [ 'slug' => $this->getUser()->getSlug() ] );
+            return $this->redirectToRoute( 'pro_user_profile', [ 'slug' => $this->getUser()->getSlug() ] );
         }
 
         return $this->render('workshop/new.html.twig', array(
