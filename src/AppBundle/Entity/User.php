@@ -303,6 +303,8 @@ class User
      */
     public function removePicture()
     {
-        unlink(__DIR__ . '/../../../web/assets/img/uploads/avatars/' . $this->getPicture());
+        if ($this->picture) {
+            unlink(__DIR__ . '/../../../web/assets/img/uploads/avatars/' . $this->picture);
+        }
     }
 }

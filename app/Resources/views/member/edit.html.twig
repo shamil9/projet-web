@@ -4,84 +4,9 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            {% if errors %}{{ dump(errors) }}{% endif %}
             <div class="col-lg-8">
                 {{ form_start(form, {'attr': {'action': path('member_update'), 'class': 'form-horizontal'}}) }}
-                    <div class="form-group">
-                        {{ form_label(form.name, "Nom prénom") }}
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
-                                    </span>
-                                {{ form_widget(form.name, {'attr': {
-                                    'class': 'form-control',
-                                    'value': user.name
-                                }}) }}
-                            </div>
-                        </div>
-                    </div>
-
-                <div class="form-group">
-                    {{ form_label(form.email, "Adresse Email") }}
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
-                                    </span>
-                            {{ form_widget(form.email, {'attr': {
-                                'class': 'form-control',
-                                'value': user.email
-                            }}) }}
-                        </div>
-                            </div>
-                        </div>
-
-                    <div class="form-group">
-                        {{ form_label(form.picture, 'Avatar') }}
-                        <img src="/assets/img/uploads/avatars/{{ user.picture }}" alt="{{ user.username }}"
-                             class="pull-right img-circle img--100x100">
-                        {{ form_widget(form.picture, {'attr': {
-                            'value': avatars ~ user.picture}
-                        }) }}
-                        <p class="help-block">Choisissez votre avatar (au format jpg ou png)</p>
-                    </div>
-
-                    {#<div class="form-group">#}
-                        {#{{ form_label(form.currentPassword, 'Ancien mot de passe') }}#}
-                        {#<div class="cols-sm-10">#}
-                            {#<div class="input-group">#}
-                                {#<span class="input-group-addon">#}
-                                    {#<i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>#}
-                                {#{{ form_errors(form.currentPassword) }}#}
-                                {#{{ form_widget(form.currentPassword, {'attr': {'class': 'form-control'}}) }}#}
-                            {#</div>#}
-                        {#</div>#}
-                    {#</div>#}
-
-                    <div class="form-group">
-                        {{ form_errors(form.plainPassword.first) }}
-                        {{ form_label(form.plainPassword.first, 'Nouveau mot de passe') }}
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
-                                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        {{ form_label(form.plainPassword.second, 'Confirmez le mot de passe') }}
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
-                                {{ form_errors(form.plainPassword.second) }}
-                                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                    </div>
-
+                    {% include 'member/partials/_edit-form.html.twig' %}
                     <div class="form-group ">
                         <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Enregistrer</button>
                     </div>

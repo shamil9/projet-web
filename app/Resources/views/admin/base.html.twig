@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
     <link href="http://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="{{ asset('assets/admin/libraries/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/admin/libraries/owl.carousel/assets/owl.carousel.css') }}" rel="stylesheet" type="text/css" >
     <link href="{{ asset('assets/admin/libraries/colorbox/example1/colorbox.css') }}" rel="stylesheet" type="text/css" >
@@ -25,10 +26,10 @@
             <div class="wrapper-admin">
                 <div class="sidebar-admin">
                     <ul>
-                        <li class="active">
+                        <li id="index">
                             <a href="{{ path('admin_index') }}"><i class="fa fa-home"></i></a>
                         </li>
-                        <li><a href="#"><i class="fa fa-user"></i></a></li>
+                        <li id="users"><a href="{{ path('admin_users') }}"><i class="fa fa-user"></i></a></li>
                         <li><a href="#"><i class="fa fa-newspaper-o"></i></a></li>
                         <li><a href="#"><i class="fa fa-comments"></i></a></li>
                         <li><a href="#"><i class="fa fa-list"></i></a></li>
@@ -73,6 +74,16 @@
 <script src="{{ asset('assets/admin/libraries/owl.carousel/owl.carousel.js') }}"></script>
 <script src="{{ asset('assets/admin/libraries/bootstrap-fileinput/fileinput.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/superlist.js') }}"></script>
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+<script>
+    var path = window.location.pathname
+    if (/\/admin\/users+/.test(path)) {
+        $('#users').addClass('active');
+    }
+    if (path === '/admin') {
+        $('#index').addClass('active');
+    }
+</script>
+{% endblock %}
 </body>
 </html>

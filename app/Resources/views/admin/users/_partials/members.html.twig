@@ -1,0 +1,20 @@
+{% for member in members | reverse | slice(0, count) %}
+    <tr>
+        <td>
+            <img src="{{ avatars ~ member.picture }}" alt="{{ member.username }}">
+        </td>
+        <td class="hidden-xs visible-sm visible-md visible-lg">
+            <h2>{{ member.username }}</h2>
+            <span>Date d'inscription {{ member.registrationDate | date('d/m/y') }}</span>
+        </td>
+        <td class="right">
+            <a href="{{ path('admin_users_edit', {'user': member.id}) }}" class="btn btn-xs btn-primary">Editer</a>
+            {% if member.isActive %}
+            <a href="{{ path('admin_users_ban', {'user': member.id}) }}" class="btn btn-xs btn-danger">Bloquer</a>
+            {% else %}
+            <a href="{{ path('admin_users_ban', {'user': member.id}) }}" class="btn btn-xs btn-primary">Débloquer</a>
+            {% endif %}
+            <a href="{{ path('admin_users_destroy', {'user': member.id}) }}" class="btn btn-xs btn-danger">X</a>
+        </td>
+    </tr>
+{% endfor %}

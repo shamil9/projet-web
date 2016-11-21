@@ -1,0 +1,24 @@
+{% for proMember in proMembers | reverse | slice(0, count) %}
+    <tr>
+        <td>
+            <a class="user" href="{{ path('pro_user_profile', {'slug': proMember.slug}) }}">
+                <img src="{{ avatars ~ proMember.picture }}" alt="{{ proMember.username }}">
+            </a>
+        </td>
+        <td class="hidden-xs visible-sm visible-md visible-lg">
+            <h2>
+                <a href="{{ path('pro_user_profile', {'slug': proMember.slug}) }}">{{ proMember.name }}</a>
+            </h2>
+            <span>Date d'inscription {{ proMember.registrationDate | date('d/m/y') }}</span>
+        </td>
+        <td class="right">
+            <a href="{{ path('admin_users_edit', {'user': proMember.id}) }}" class="btn btn-xs btn-primary">Editer</a>
+            {% if proMember.isActive %}
+            <a href="{{ path('admin_users_ban', {'user': proMember.id}) }}" class="btn btn-xs btn-danger">Bloquer</a>
+            {% else %}
+            <a href="{{ path('admin_users_ban', {'user': proMember.id}) }}" class="btn btn-xs btn-primary">Débloquer</a>
+            {% endif %}
+            <a href="{{ path('admin_users_destroy', {'user': proMember.id}) }}" class="btn btn-xs btn-danger">X</a>
+        </td>
+    </tr>
+{% endfor %}

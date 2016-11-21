@@ -1,4 +1,4 @@
-{% extends 'admin/admin-base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 {% block body %}
 <h3>Statistiques</h3>
 <div class="row">
@@ -44,27 +44,7 @@
     <div class="col-sm-6">
         <div class="users">
             <h2>Membres</h2>
-            <div class="statusbox-content">
-                <table class="table">
-                    <tbody>
-                    {% for member in members | reverse | slice(0, 4) %}
-                        <tr>
-                            <td>
-                                <img src="{{ avatars ~ member.picture }}" alt="{{ member.username }}">
-                            </td>
-                            <td class="hidden-xs visible-sm visible-md visible-lg">
-                                <h2>{{ member.username }}</h2>
-                                <span>Date d'inscription {{ member.registrationDate | date('d/m/y') }}</span>
-                            </td>
-                            <td class="right">
-                                <a href="{{ path('edit_profile') }}" class="btn btn-xs btn-primary">Editer</a>
-                                <a href="{{ path('user_delete') }}" class="btn btn-xs btn-danger">Supprimer</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            {% include 'admin/users/_partials/members.html.twig' with {'count': 4} %}
         </div>
     </div>
     <div class="col-sm-6">
@@ -73,23 +53,7 @@
             <div class="statusbox-content">
                 <table class="table">
                     <tbody>
-                    {% for proMember in proMembers | reverse | slice(0, 4) %}
-                        <tr>
-                            <td>
-                                <a class="user" href="{{ path('pro_user_profile', {'slug': proMember.slug}) }}">
-                                    <img src="{{ avatars ~ proMember.picture }}" alt="{{ proMember.username }}">
-                                </a>
-                            </td>
-                            <td class="hidden-xs visible-sm visible-md visible-lg">
-                                <h2><a href="{{ path('pro_user_profile', {'slug': proMember.slug}) }}">{{ proMember.name }}</a></h2>
-                                <span>Date d'inscription {{ proMember.registrationDate | date('d/m/y') }}</span>
-                            </td>
-                            <td class="right">
-                                <a href="{{ path('edit_profile') }}" class="btn btn-xs btn-primary">Editer</a>
-                                <a href="{{ path('user_delete') }}" class="btn btn-xs btn-danger">Supprimer</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                    {% include 'admin/users/_partials/pro-members.html.twig' with {'count': 4} %}
                     </tbody>
                 </table>
             </div>

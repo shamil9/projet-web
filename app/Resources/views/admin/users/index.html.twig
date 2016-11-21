@@ -1,0 +1,40 @@
+{% extends 'admin/base.html.twig' %}
+{% block title 'Gestion des utilisateurs' %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        <form class="form">
+            <div class="form-group form-group-lg">
+                <input type="text" class="form-control" placeholder="Rechercher un membre">
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h2>Prestataires</h2>
+        <div class="users">
+            <div class="statusbox-content">
+                <table class="table">
+                    <tbody>
+                    {% include 'admin/users/_partials/pro-members.html.twig' with {'count': 20} %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <h2>Utilisateurs</h2>
+        <div class="users">
+            <div class="statusbox-content">
+                <table class="table">
+                    <tbody>
+                    {% include 'admin/users/_partials/members.html.twig' with {'count': 20} %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

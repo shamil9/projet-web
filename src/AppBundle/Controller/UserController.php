@@ -42,23 +42,4 @@ class UserController extends BaseController
             'errors' => null,
         ]);
     }
-
-    /**
-     * Supprime un utilisateur
-     *
-     * @Route("/supprimer", name="user_delete")
-     * @param User $id
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function destroyAction(User $id, Request $request)
-    {
-        $this->adminCheck();
-
-        //suppression de l'utilisateur
-        $this->deleteUser($request, $id);
-
-
-        return $this->redirectToRoute('homepage');
-    }
 }
