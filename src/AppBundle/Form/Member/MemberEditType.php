@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Member;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

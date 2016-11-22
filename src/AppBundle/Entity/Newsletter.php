@@ -3,12 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Newsletter
  *
  * @ORM\Table(name="newsletters")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsletterRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Newsletter
 {
@@ -39,6 +41,7 @@ class Newsletter
      * @var string
      *
      * @ORM\Column(name="document", type="string", length=255)
+     * @Assert\File(mimeTypes={"application/pdf", "application/x-pdf"})
      */
     private $document;
 
@@ -122,6 +125,14 @@ class Newsletter
     public function getDocument()
     {
         return $this->document;
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function removeDocument()
+    {
+            unlink(__DIR__ . '/../../../web/assets/img/uploads/newsletters/' . $this->document);
     }
 }
 

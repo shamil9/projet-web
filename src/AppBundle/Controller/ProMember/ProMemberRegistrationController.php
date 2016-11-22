@@ -6,7 +6,7 @@ namespace AppBundle\Controller\ProMember;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\ProMember;
-use AppBundle\Form\ProMemberRegistrationType;
+use AppBundle\Form\ProMember\ProMemberRegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 

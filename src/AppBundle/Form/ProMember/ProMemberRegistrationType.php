@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\ProMember;
 
 use Faker\Provider\DateTime;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

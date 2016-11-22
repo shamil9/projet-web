@@ -5,7 +5,7 @@ namespace AppBundle\Controller\Member;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Member;
-use AppBundle\Form\MemberEditType;
+use AppBundle\Form\Member\MemberEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 

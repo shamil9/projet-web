@@ -1,0 +1,16 @@
+{% for newsletter in newsletters | reverse %}
+<tr>
+    <td>
+        <a href="{{ pdf ~ newsletter.document }}">
+            <i class="fa fa-file-text-o" style="font-size: 40px" aria-hidden="true"></i>
+        </a>
+    </td>
+    <td class="hidden-xs visible-sm visible-md visible-lg">
+        <h2>{{ newsletter.title }}</h2>
+        <span>Date d'envoi {{ newsletter.postedAt | date('d/m/y') }}</span>
+    </td>
+    <td class="right">
+        <a href="{{ path('admin_newsletters_destroy', {'id': newsletter.id}) }}" class="btn btn-xs btn-danger">Supprimer</a>
+    </td>
+</tr>
+{% endfor %}

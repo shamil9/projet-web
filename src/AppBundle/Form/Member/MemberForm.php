@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Member;
 
 use AppBundle\Entity\Member;
 use Doctrine\Common\Persistence\ObjectManager;

@@ -9,7 +9,7 @@ use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
 use AppBundle\Entity\User;
 use AppBundle\Form\ContactFormType;
-use AppBundle\Form\ProMemberEditType;
+use AppBundle\Form\ProMember\ProMemberEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;

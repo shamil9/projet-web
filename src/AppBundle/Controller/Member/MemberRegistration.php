@@ -6,7 +6,7 @@ namespace AppBundle\Controller\Member;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Member;
-use AppBundle\Form\MemberRegistrationType;
+use AppBundle\Form\Member\MemberRegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 

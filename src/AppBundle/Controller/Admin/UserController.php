@@ -6,8 +6,8 @@ use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
 use AppBundle\Entity\User;
-use AppBundle\Form\MemberEditType;
-use AppBundle\Form\ProMemberEditType;
+use AppBundle\Form\Member\MemberEditType;
+use AppBundle\Form\ProMember\ProMemberEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 

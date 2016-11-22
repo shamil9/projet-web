@@ -1,0 +1,22 @@
+{% extends 'admin/base.html.twig' %}
+{% block title 'Ajouter une newsletter' %}
+{% block body %}
+<div class="row">
+    <div class="col-md-5">
+        <h2>Newsletters</h2>
+        <div class="statusbox">
+            <div class="statusbox-content users">
+                <table class="table">
+                    <tbody>
+                        {% include 'admin/newsletters/partials/_list.html.twig' %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <h2>Ajouter une newsletter</h2>
+        {% include 'admin/newsletters/partials/_new-form.html.twig' %}
+    </div>
+</div>
+{% endblock %}
