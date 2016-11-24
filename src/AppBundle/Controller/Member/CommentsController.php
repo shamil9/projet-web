@@ -61,6 +61,7 @@ class CommentsController extends BaseController
         if ($form->isValid()) {
             $report->setDate(new \DateTime('now'));
             $report->setComment($id);
+            $report->setMember($this->getUser());
 
             //Envoi de message
             $message = $this->sendEmail($this->getParameter('admin_mail'), 'system@bien-etre.com', $request->get('description'))

@@ -21,6 +21,7 @@ class NewsletterType extends AbstractType
             ->add('title', TextType::class)
             ->add('document', FileType::class, [
                 'data_class' => null,
+                'invalid_message' => 'Le fichier doit être en format PDF',
             ]);
     }
 

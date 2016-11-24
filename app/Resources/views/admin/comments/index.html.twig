@@ -1,0 +1,42 @@
+{% extends 'admin/base.html.twig' %}
+{% block title 'Gestion des commentaires' %}
+
+{% block body %}
+<div class="row">
+    <h2>Commentaires signalés</h2>
+    <div class="reviews">
+        {% for report in reports %}
+        <div class="col-md-6">
+            <div class="review">
+                <div class="review-image">
+                    <img src="{{ avatars ~ report.comment.member.picture }}" alt="{{ report.comment.member.name }}">
+                </div>
+                <div class="review-inner">
+                    <div class="review-title">
+                        <h2><span class="text-secondary">{{ report.member.name }}</span> a signalé(e) le commentaire suivant</h2>
+                    </div>
+                    <div class="review-content-wrapper">
+                        <div class="review-content">
+                            <h4>Commentaire de <span class="text-secondary">{{ report.comment.member.name }}</span>:</h4>
+                            <p>{{ report.comment.comment }}</p>
+                            <h4>Description attachée:</h4>
+                            <p>{{ report.description }}</p>
+                            <span class="pull-left">
+                                <a href="{{ path('admin_comments_destroy', {'id': report.comment.id}) }}" class="btn btn-danger btn-xs">Supprimmer</a>
+                                <a href="{{ path('admin_comments_report_dismiss', {'id': report.id}) }}" class="btn btn-primary btn-xs">Ne rien faire</a>
+                            </span>
+                            <span class="pull-right">Prestataire: <span class="text-secondary">
+                                <a href="{{ path('pro_user_profile', {'slug': report.comment.proMember.slug}) }}">
+                                    {{ report.comment.proMember.name }}
+                                </a>
+                            </span></span>
+                        </div>
+                        <!-- /.review-content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

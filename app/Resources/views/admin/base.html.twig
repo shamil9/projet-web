@@ -32,7 +32,7 @@
                         </li>
                         <li id="users"><a href="{{ path('admin_users') }}"><i class="fa fa-user"></i></a></li>
                         <li id="newsletters"><a href="{{ path('admin_newsletters') }}"><i class="fa fa-newspaper-o"></i></a></li>
-                        <li><a href="#"><i class="fa fa-comments"></i></a></li>
+                        <li id="comments"><a href="{{ path('admin_comments') }}"><i class="fa fa-comments"></i></a></li>
                         <li><a href="#"><i class="fa fa-list"></i></a></li>
                         <li><a href="#"><i class="fa fa-picture-o"></i></a></li>
                     </ul>
@@ -83,6 +83,9 @@
 
     if (/\/admin\/newsletters+/.test(path))
         $('#newsletters').addClass('active');
+
+    if (/\/admin\/comments+/.test(path))
+        $('#comments').addClass('active');
 
     if (path === '/admin')
         $('#index').addClass('active');

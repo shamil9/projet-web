@@ -36,6 +36,12 @@ class CommentReport
     private $date;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Member")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $member;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Comment", inversedBy="reports", cascade={"persist"})
      * @ORM\JoinColumn(name="comment_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -119,6 +125,30 @@ class CommentReport
     public function setComment($comment)
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of member.
+     *
+     * @return mixed
+     */
+    public function getMember()
+    {
+        return $this->member;
+    }
+
+    /**
+     * Sets the value of member.
+     *
+     * @param mixed $member the member
+     *
+     * @return self
+     */
+    public function setMember($member)
+    {
+        $this->member = $member;
 
         return $this;
     }
