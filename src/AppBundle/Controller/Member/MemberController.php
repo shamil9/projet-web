@@ -34,7 +34,7 @@ class MemberController extends BaseController
                 $user->setPassword($password);
             }
 
-            $this->createAvatarImage($form, $user);
+            $this->createAvatarImage($request, $user);
 
             $this->em()->persist($user);
             $this->em()->flush();

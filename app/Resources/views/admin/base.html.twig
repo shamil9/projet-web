@@ -8,7 +8,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-
     <link href="http://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="{{ asset('assets/admin/libraries/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
@@ -33,7 +32,7 @@
                         <li id="users"><a href="{{ path('admin_users') }}"><i class="fa fa-user"></i></a></li>
                         <li id="newsletters"><a href="{{ path('admin_newsletters') }}"><i class="fa fa-newspaper-o"></i></a></li>
                         <li id="comments"><a href="{{ path('admin_comments') }}"><i class="fa fa-comments"></i></a></li>
-                        <li><a href="#"><i class="fa fa-list"></i></a></li>
+                        <li id="categories"><a href="{{ path('admin_categories') }}"><i class="fa fa-list"></i></a></li>
                         <li><a href="#"><i class="fa fa-picture-o"></i></a></li>
                     </ul>
                 </div><!-- /.sidebar-admin-->
@@ -86,6 +85,9 @@
 
     if (/\/admin\/comments+/.test(path))
         $('#comments').addClass('active');
+
+    if (/\/admin\/categories+/.test(path))
+        $('#categories').addClass('active');
 
     if (path === '/admin')
         $('#index').addClass('active');

@@ -1,0 +1,13 @@
+{% extends 'admin/base.html.twig' %}
+{% block title 'Gestion des catégories' %}
+{% block body %}
+    <div class="row">
+        <h3>Services disponibles</h3>
+        <div class="col-md-8">
+            {% include 'admin/categories/partials/_list.html.twig' %}
+        </div>
+        <div class="col-md-4">
+            {{ render(controller('AppBundle:Admin/Category:new'))}}
+        </div>
+    </div>
+{% endblock %}

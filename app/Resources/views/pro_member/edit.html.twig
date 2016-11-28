@@ -78,8 +78,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
         Dropzone.options.sliderImages = {
-            paramName: 'images',
-            url: '{{ path('slider_new') }}',
+            paramName: 'slider[path]',
+            url: '{{ path('slider_create') }}',
             acceptedFiles: 'image/jpeg, image/png',
             dictDefaultMessage: 'Glissez vos images ici'
         };

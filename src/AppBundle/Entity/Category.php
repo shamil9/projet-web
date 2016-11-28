@@ -54,6 +54,12 @@ class Category
     protected $slug;
 
     /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Image")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $image;
+
+    /**
      * Category constructor.
      * @param $user
      */

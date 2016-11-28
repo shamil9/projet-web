@@ -1,0 +1,12 @@
+{% for categorie in categories | reverse %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="lead">
+                <a href="{{ path('category_show', {'slug': categorie.slug}) }}" title="{{ categorie.name }}">{{ categorie.name }}</a>
+            </span>
+        </div>
+        <div class="panel-body">
+            {{ categorie.description }}
+        </div>
+    </div>
+{% endfor %}

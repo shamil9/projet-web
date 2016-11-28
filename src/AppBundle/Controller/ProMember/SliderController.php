@@ -3,11 +3,10 @@
 
 namespace AppBundle\Controller\ProMember;
 
-
 use AppBundle\Controller\BaseController;
-use AppBundle\Controller\CrudInterface;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\ProMember;
+use AppBundle\Form\SliderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SliderController extends BaseController implements CrudInterface
+class SliderController extends BaseController
 {
 
     /**
@@ -34,7 +33,6 @@ class SliderController extends BaseController implements CrudInterface
     /**
      * Nouveau enregistrement
      *
-     * @Route("/slider/add", name="slider_new")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -42,62 +40,37 @@ class SliderController extends BaseController implements CrudInterface
     {
         $this->userCheck();
 
-        $form = $this->createFormBuilder()->getForm();
-        $form->handleRequest($request);
+        $form = $this->createForm(SliderType::class);
 
-        if ($form->isValid() && $request->files->has('images')) {
-            /** @var ProMember $user */
-            $user = $this->getUser();
-            $image = new Image();
-
-            /** @var UploadedFile $file */
-            $file = $request->files->get('images');
-            $fileName = $user->getName() . '_' . random_int(0, 99999) . '.' . $file->guessExtension();
-            $folder = $this->getParameter('assets_root') . '/img/uploads/slider/';
-
-            $file->move($folder, $fileName);
-            $this->createSliderImage($folder . $fileName);
-
-            $image->setUser($user);
-            $image->setPath($fileName);
-
-            $this->em()->persist($image);
-            $this->em()->flush();
-
-            return Response::create();
-        }
-
-        return $this->render('pro_member/partials/_slider-form.html.twig', [
+        return $this->render('slider/_partials/_new-form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * Affichage individuel
-     * @param $entity
-     */
-    public function showAction($entity)
-    {
-        // TODO: Implement showAction() method.
-    }
-
-    /**
-     * Edition
-     */
-    public function editAction()
-    {
-        // TODO: Implement editAction() method.
-    }
-
-    /**
-     * Mise à jour
+     * Enregistrer image slider
      *
-     * @param Request $request
-     * @return mixed
+     * @Route("/slider/create", name="slider_create")
+     * @param  Request $request
+     * @return Response
      */
-    public function updateAction(Request $request)
+    public function createAction(Request $request)
     {
-        // TODO: Implement updateAction() method.
+        $this->userCheck();
+
+        $image = new Image();
+        $form = $this->createForm(SliderType::class, $image);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->createSliderImage($image);
+
+            $this->em()->persist($image);
+            $this->em()->flush();
+
+            return JsonResponse::create(null, 200);
+        }
+        return JsonResponse::create(null, 500);
     }
 
     /**
@@ -115,7 +88,7 @@ class SliderController extends BaseController implements CrudInterface
             if ($this->getUser() != $image->getUser()) {
                 $this->createAccessDeniedException('Action non autorisée');
             }
-            
+
             unlink($this->getParameter('assets_root') . '/img/uploads/slider/' . $image->getPath());
 
             $this->em()->remove($image);

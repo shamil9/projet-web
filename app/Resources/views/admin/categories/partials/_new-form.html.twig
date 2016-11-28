@@ -1,0 +1,29 @@
+<div class="background-white p20 mb50">
+    {{ form_start(form,
+            {'action': path('admin_categories_create'),
+            'attr': {'class': 'form-vertical'}
+        })
+    }}
+        <div class="form-group">
+            {{ form_label(form.name, 'Titre') }} <br>
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.name) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.description, 'Déscription') }} <br>
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.description) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.image, 'Image') }} <br>
+            {{ form_widget(form.image) }}
+            {{ form_errors(form.image) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.promoted, 'Service du mois') }} <br>
+            {{ form_widget(form.promoted, {'attr': {'class': 'form-control', 'style': 'display: inline;'}}) }}
+            {{ form_errors(form.promoted) }}
+        </div>
+        <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i>Ajouter</button>
+    {{ form_end(form) }}
+</div>

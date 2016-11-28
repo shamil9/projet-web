@@ -34,7 +34,6 @@ class Image
      */
     private $path;
 
-
     /**
      * Get id
      *
@@ -93,4 +92,3 @@ class Image
         $this->userPicture = $userPicture;
     }
 }
-
