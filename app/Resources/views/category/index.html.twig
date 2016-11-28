@@ -4,22 +4,11 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        {% for category in categories %}
-            <div class="col-lg-6">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="media">
-                            <div class="media-body">
-                                <h4 class="media-heading">
-                                    <a href="{{ path('category_show', {'slug': category.slug}) }}">{{ category.name }}</a>
-                                </h4>
-                                <p>{{ category.description }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="background-white p30 mb50">
+            <div class="cards-system">
+                {% include 'admin/categories/partials/_list.html.twig' %}
             </div>
-        {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

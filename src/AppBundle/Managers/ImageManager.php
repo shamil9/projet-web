@@ -62,4 +62,11 @@ class ImageManager
 
         return $this;
     }
+
+    public function createCategoryImage(int $width = 360, int $height = 245)
+    {
+        $this->image->resize($width, $height)->save($this->file);
+
+        return $this;
+    }
 }

@@ -21,8 +21,13 @@ class CategoryType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('image', FileType::class)
-            ->add('promoted', CheckboxType::class);
+            ->add('image', FileType::class, [
+                'data_class' => null,
+                'required' => false
+            ])
+            ->add('promoted', CheckboxType::class, [
+                'required' => false
+            ]);
     }
 
     /**

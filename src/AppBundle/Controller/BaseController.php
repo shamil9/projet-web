@@ -3,7 +3,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Image;
+use AppBundle\Entity\ProMember;
 use AppBundle\Entity\User;
 use Illuminate\Support\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -65,24 +67,22 @@ abstract class BaseController extends Controller
      * @param $form Form
      * @param $user User
      */
-    protected function createAvatarImage($request, $user)
+    protected function createAvatarImage($user)
     {
         //Gestion d'avatar
-        if (!is_null($request->files->get('member_edit')['picture'])) {
-            $folder = $this->getParameter('assets_root') . '/img/uploads/avatars/';
-            /** @var UploadedFile $file */
-            $file = $user->getPicture();
-            $fileName = $user->getUsername() . '.' . $file->guessExtension();
+        $folder = $this->getParameter('assets_root') . '/img/uploads/avatars/';
+        /** @var UploadedFile $file */
+        $file = $user->getPicture();
+        $fileName = $user->getUsername() . '.' . $file->guessExtension();
 
-            $file->move($folder, $fileName);
+        $file->move($folder, $fileName);
 
-            $image = $this->get('app.image_manager')->make($folder . $fileName);
-            $image->createAvatar();
-            $user->setPicture($fileName);
-        }
+        $image = $this->get('app.image_manager')->make($folder . $fileName);
+        $image->createAvatar();
+        $user->setPicture($fileName);
     }
 
-    protected function createSliderImage($slide)
+    protected function createSliderImage(Image $slide)
     {
         /** @var ProMember $user */
         $user = $this->getUser();
@@ -99,6 +99,23 @@ abstract class BaseController extends Controller
 
         $image = $this->get('app.image_manager')->make($folder . $fileName);
         $image->createSlide();
+    }
+
+    protected function createCategoryImage(Category $category)
+    {
+        /** @var UploadedFile $file */
+        $file = $category->getImage();
+        $image = new Image();
+        $fileName = random_int(0, 99999) . '.' . $file->guessExtension();
+        $folder = $this->getParameter('assets_root') . '/img/uploads/category/';
+
+        $file->move($folder, $fileName);
+
+        $image->setPath($fileName);
+        $category->setImage($image);
+
+        $imageManager = $this->get('app.image_manager')->make($folder . $fileName);
+        $imageManager->createCategoryImage();
     }
 
     protected function userCheck()
@@ -118,6 +135,7 @@ abstract class BaseController extends Controller
 
     /**
      * Dump and die pour debug
+     * @param $content
      */
     protected function dd($content)
     {
@@ -128,8 +146,8 @@ abstract class BaseController extends Controller
     protected function sendEmail($to, $from, $subject)
     {
         return \Swift_Message::newInstance()
-                ->setSubject($subject)
-                ->setFrom($from)
-                ->setTo($to);
+            ->setSubject($subject)
+            ->setFrom($from)
+            ->setTo($to);
     }
 }

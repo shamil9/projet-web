@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Category
  *
  * @ORM\Table(name="categories")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
  */
 class Category
@@ -54,8 +55,7 @@ class Category
     protected $slug;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Image")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
 
@@ -173,6 +173,43 @@ class Category
     public function setSlug($slug)
     {
         $this->slug = $slug;
+    }
+
+    /**
+     * Gets the value of image.
+     *
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Sets the value of image.
+     *
+     * @param mixed $image the image
+     *
+     * @return self
+     */
+    public function setImage($image)
+    {
+        if (!is_null($image)) {
+            $this->image = $image;
+
+            return $this;
+        }
+        return $this;
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function removeImage()
+    {
+        if ($this->image) {
+            unlink(__DIR__ . '/../../../web/assets/img/uploads/category/' . $this->image->getPath());
+        }
     }
 }
 

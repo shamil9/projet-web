@@ -75,7 +75,9 @@ class ProMemberController extends BaseController
                 $user->setPassword($password);
             }
 
-            $this->createAvatarImage($form, $user);
+            if (!is_null($request->files->get('pro_member_edit')['picture'])) {
+                $this->createAvatarImage($user);
+            }
 
             $this->em()->persist($user);
             $this->em()->flush();

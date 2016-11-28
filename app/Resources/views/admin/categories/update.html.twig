@@ -1,0 +1,16 @@
+{% extends 'admin/base.html.twig' %}
+{% block title 'Editer une catégorie' %}
+{% block body %}
+<div class="row">
+    <div class="background-white p20 mb50">
+        {{ form_start(form,
+            {'action': path('admin_categories_update', {'id': category.id}),
+                'attr': {'class': 'form-vertical'}
+            })
+        }}
+            {% include 'admin/categories/partials/_form.html.twig' %}
+            <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i>Soumettre</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
