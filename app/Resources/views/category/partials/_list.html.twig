@@ -1,0 +1,16 @@
+{% for category in categories %}
+    {% set image = catImage ~ category.image.path ?? 'default-cat.svg' %}
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="lead">
+                        <a href="{{ path('category_show', {'slug': category.slug}) }}" title="{{ category.name }}">{{ category.name }}</a>
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <img class="img--100x100 pull-left" class="thumbnail" src="{{ image }}" alt="{{ category.name }}">
+                    <p>{{ category.description }}</p>
+                </div>
+            </div>
+        </div>
+{% endfor %}

@@ -44,7 +44,11 @@
     <div class="col-sm-6">
         <div class="users">
             <h2>Membres</h2>
-            {% include 'admin/users/_partials/members.html.twig' with {'count': 4} %}
+            <table class="table">
+                 <tbody>
+                    {% include 'admin/users/_partials/members.html.twig' with {'count': 4} %}
+                 </tbody>
+             </table>
         </div>
     </div>
     <div class="col-sm-6">

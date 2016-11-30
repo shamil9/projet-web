@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ category.name }}{% endblock %}
+{% set image = '/assets/img/uploads/category/' ~ category.image.path ?? 'default-cat.svg' %}
 
 {% block body %}
 <div class="container">
     <div class="row">
         <div class="well">
+            <img class="img--100x100 pull-left" class="thumbnail" src="{{ image }}" alt="{{ category.name }}">
+
             <h1>{{ category.name }}</h1>
             <p>{{ category.description }}</p>
         </div>

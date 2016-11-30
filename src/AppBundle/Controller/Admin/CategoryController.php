@@ -57,6 +57,7 @@ class CategoryController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
+            $this->removePreviousPromotion();
             $this->createCategoryImage($category);
 
             $this->em()->persist($category);
@@ -90,6 +91,11 @@ class CategoryController extends BaseController
 
                 $this->createCategoryImage($category);
            }
+
+           if ($category->getPromoted()) {
+               $this->removePreviousPromotion();
+           }
+
             $this->em()->persist($category);
             $this->em()->flush();
 
@@ -116,5 +122,18 @@ class CategoryController extends BaseController
         $this->em()->flush();
 
         return $this->redirectToRoute('admin_categories');
+    }
+
+    private function removePreviousPromotion()
+    {
+        $promoted = $this->collection(
+            $this->getRepository('AppBundle:Category')->findBy(['promoted' => true])
+        );
+
+        $promoted->each(function ($featuredCat) {
+            $featuredCat->setPromoted(0);
+            $this->em()->persist($featuredCat);
+        });
+        $this->em()->flush();
     }
 }

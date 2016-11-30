@@ -125,7 +125,10 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="categories">
-                            {% include 'pro_member/partials/_categories.html.twig' %}
+                            <h1>Catégories</h1>
+                            <div class="row">
+                                {% include 'category/partials/_list.html.twig' with {'categories': user.categories } %}
+                            </div>
                         </div>
 
                         {% if user.workshops is not empty  %}

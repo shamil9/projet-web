@@ -1,19 +1,22 @@
-{% for category in categories | reverse %}
-    <div class="card-system">
-        <div class="card-system-inner">
-            <div class="card-system-image"
-                data-background-image="{{ catImage ~ category.image.path }}"
-                style="background-image: url({{ catImage ~ category.image.path }});">
-                <a href="{{ path('category_show', {'slug': category.slug}) }}" title="{{ category.name }}">
-                </a>
-            </div><!-- /.card-system-image -->
+{% if categories is not empty %}
+    {% for category in categories | reverse %}
+    {% set image = catImage ~ category.image.path ?? 'default-cat.svg' %}
+        <div class="card-system">
+            <div class="card-system-inner">
+                <div class="card-system-image"
+                    data-background-image="{{ image }}"
+                    style="background-image: url({{ image }});">
+                    <a href="{{ path('category_show', {'slug': category.slug}) }}" title="{{ category.name }}">
+                    </a>
+                </div><!-- /.card-system-image -->
 
-            <div class="card-system-content">
-                <h2><a href="{{ path('category_show', {'slug': category.slug}) }}" title="{{ category.name }}">{{ category.name }}</a></h2>
-                <h3>{{ category.description }}</h3>
-                <a href="{{ path('admin_categories_update', {'id': category.id}) }}" class="btn btn-primary btn-xs">Editer</a>
-                <a href="{{ path('admin_categories_destroy', {'id': category.id}) }}" class="btn btn-secondary btn-xs">Supprimer</a>
+                <div class="card-system-content">
+                    <h2><a href="{{ path('category_show', {'slug': category.slug}) }}" title="{{ category.name }}">{{ category.name }}</a></h2>
+                    <h3>{{ category.description }}</h3>
+                    <a href="{{ path('admin_categories_update', {'id': category.id}) }}" class="btn btn-primary btn-xs">Editer</a>
+                    <a href="{{ path('admin_categories_destroy', {'id': category.id}) }}" class="btn btn-secondary btn-xs">Supprimer</a>
+                </div>
             </div>
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
+{% endif %}
