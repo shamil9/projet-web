@@ -3,7 +3,7 @@
         <li style="position: relative;" class="slider-image" id="{{ image.id }}">
             <a href="{{ path('slider_destroy', {'slider': image.id}) }}"><span
                         class="glyphicon glyphicon-remove-circle img-circle remove-button"></span></a>
-            <img src="{{ '/assets/img/uploads/slider/' ~ image.path }}" alt="" class="img--100x100 thumbnail">
+            <img src="{{ slides ~ image.path }}" alt="" class="img--100x100 thumbnail">
         </li>
     {% endfor %}
 </ul>

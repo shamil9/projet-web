@@ -1,0 +1,28 @@
+{% extends 'admin/base.html.twig' %}
+{% block title 'Gestion des images du slider' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/dropzone.min.css') }}">
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-lg-8">
+        <h2>Images actives</h2>
+        {% include 'admin/sliders/partials/_list.html.twig' %}
+    </div>
+    <div class="col-lg-4">
+        <h2>Ajouter</h2>
+        {{ render(controller('AppBundle:Admin/Slider:new')) }}
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('assets/js/dropzone.js') }}"></script>
+<script>
+    Dropzone.options.sliderImages = {
+        paramName: 'slider[path]',
+        url: '{{ path('admin_sliders_create') }}',
+        acceptedFiles: 'image/jpeg, image/png',
+        dictDefaultMessage: 'Glissez vos images ici'
+    };
+</script>
+{% endblock %}

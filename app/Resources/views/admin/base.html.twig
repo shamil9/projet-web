@@ -17,6 +17,7 @@
     <link href="{{ asset('assets/admin/libraries/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/admin/libraries/bootstrap-fileinput/fileinput.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/admin/css/superlist.css') }}" rel="stylesheet" type="text/css" >
+    {% block stylesheets %}{% endblock %}
     <title>{% block title %}Administration{% endblock %}</title>
     </head>
 <body>
@@ -34,7 +35,7 @@
                         <li id="newsletters"><a href="{{ path('admin_newsletters') }}"><i class="fa fa-newspaper-o"></i></a></li>
                         <li id="comments"><a href="{{ path('admin_comments') }}"><i class="fa fa-comments"></i></a></li>
                         <li id="categories"><a href="{{ path('admin_categories') }}"><i class="fa fa-list"></i></a></li>
-                        <li><a href="#"><i class="fa fa-picture-o"></i></a></li>
+                        <li id="sliders"><a href="{{ path('admin_sliders') }}"><i class="fa fa-picture-o"></i></a></li>
                     </ul>
                 </div><!-- /.sidebar-admin-->
 
@@ -75,7 +76,6 @@
 <script src="{{ asset('assets/admin/libraries/owl.carousel/owl.carousel.js') }}"></script>
 <script src="{{ asset('assets/admin/libraries/bootstrap-fileinput/fileinput.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/superlist.js') }}"></script>
-{% block javascripts %}
 <script>
     var path = window.location.pathname
     if (/\/admin\/users+/.test(path))
@@ -90,9 +90,12 @@
     if (/\/admin\/categories+/.test(path))
         $('#categories').addClass('active');
 
+    if (/\/admin\/sliders+/.test(path))
+        $('#sliders').addClass('active');
+
     if (path === '/admin')
         $('#index').addClass('active');
 </script>
-{% endblock %}
+{% block javascripts %}{% endblock %}
 </body>
 </html>

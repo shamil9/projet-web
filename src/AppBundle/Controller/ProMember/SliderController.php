@@ -63,6 +63,8 @@ class SliderController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $image->setUser($this->getUser());
+            $image->setType('user-slider');
             $this->createSliderImage($image);
 
             $this->em()->persist($image);

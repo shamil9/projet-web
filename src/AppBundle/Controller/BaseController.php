@@ -84,17 +84,13 @@ abstract class BaseController extends Controller
 
     protected function createSliderImage(Image $slide)
     {
-        /** @var ProMember $user */
-        $user = $this->getUser();
-
         /** @var UploadedFile $file */
         $file = $slide->getPath();
-        $fileName = $user->getName() . '_' . random_int(0, 99999) . '.' . $file->guessExtension();
+        $fileName = random_int(0, 99999) . '.' . $file->guessExtension();
         $folder = $this->getParameter('assets_root') . '/img/uploads/slider/';
 
         $file->move($folder, $fileName);
 
-        $slide->setUser($user);
         $slide->setPath($fileName);
 
         $image = $this->get('app.image_manager')->make($folder . $fileName);
@@ -112,6 +108,7 @@ abstract class BaseController extends Controller
         $file->move($folder, $fileName);
 
         $image->setPath($fileName);
+        $image->setType('category');
         $category->setImage($image);
 
         $imageManager = $this->get('app.image_manager')->make($folder . $fileName);

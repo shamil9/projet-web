@@ -1,0 +1,10 @@
+{{ form_start(form, {
+    'attr':{
+        'class': 'form-horizontal dropzone',
+        'id': 'slider-images',
+        'enctype': 'multipart/form-data'
+    },
+    'action': path('admin_sliders_create')
+}) }}
+{{ form_widget(form.path, {'attr': {'style': 'display: none;'}}) }}
+{{ form_end(form) }}

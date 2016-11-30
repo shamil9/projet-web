@@ -98,3 +98,12 @@
 .promoted-category {
     height: 250px;
 }
+
+.slide {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 1140px;
+    height: 445px;
+    overflow: hidden;
+}

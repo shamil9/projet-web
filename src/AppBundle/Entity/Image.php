@@ -35,6 +35,11 @@ class Image
     private $path;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $type;
+
+    /**
      * Get id
      *
      * @return int
@@ -90,5 +95,29 @@ class Image
     public function setUserPicture($userPicture)
     {
         $this->userPicture = $userPicture;
+    }
+
+    /**
+     * Gets the value of type.
+     *
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Sets the value of type.
+     *
+     * @param mixed $type the type
+     *
+     * @return self
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }

@@ -19,6 +19,7 @@ class SliderType extends AbstractType
             ->add('path', FileType::class, [
                 'data_class' => null,
                 'required' => false,
+                'label' => false,
             ]);
     }
 

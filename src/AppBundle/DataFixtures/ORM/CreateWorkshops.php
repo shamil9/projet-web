@@ -23,7 +23,7 @@ class CreateWorkshops extends AbstractFixture implements OrderedFixtureInterface
         $em = $this->container->get('doctrine');
         $users = new Collection($em->getRepository('AppBundle:ProMember')->findAll());
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $workshop = new Workshop();
             $workshop->setName(array_reduce($faker->words(2), function($carry, $item) {
                 $carry = $carry . ' ' . $item;

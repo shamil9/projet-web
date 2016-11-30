@@ -52,7 +52,7 @@ class ImageManager
      * @param int $width
      * @return $this
      */
-    public function createSlide(int $width = 1440)
+    public function createSlide(int $width = 1140, int $height = 445)
     {
         $this->image
             ->resize($width, null, function ($constraint) {

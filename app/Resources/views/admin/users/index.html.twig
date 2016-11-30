@@ -13,24 +13,24 @@
 </div>
 <div class="row">
     <div class="col-sm-6">
-        <h2>Prestataires</h2>
+        <h2>10 derniers Prestataires</h2>
         <div class="users">
             <div class="statusbox-content">
                 <table class="table">
                     <tbody>
-                    {% include 'admin/users/_partials/pro-members.html.twig' with {'count': 20} %}
+                    {% include 'admin/users/_partials/pro-members.html.twig' with {'count': 10} %}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
     <div class="col-sm-6">
-        <h2>Utilisateurs</h2>
+        <h2>10 derniers Utilisateurs</h2>
         <div class="users">
             <div class="statusbox-content">
                 <table class="table">
                     <tbody>
-                    {% include 'admin/users/_partials/members.html.twig' with {'count': 20} %}
+                    {% include 'admin/users/_partials/members.html.twig' with {'count': 10} %}
                     </tbody>
                 </table>
             </div>

@@ -26,9 +26,9 @@ class CreateProUsers extends AbstractFixture implements OrderedFixtureInterface,
     {
         $faker = Factory::create('fr_BE');
         $em = $this->container->get('doctrine');
-        
+
         $categories = new Collection($em->getRepository('AppBundle:Category')->findAll());
-        
+
         $customUser = new ProMember();
         $customUser->setIsActive(1);
         $customUser->setUsername('ProMembre');
@@ -46,8 +46,8 @@ class CreateProUsers extends AbstractFixture implements OrderedFixtureInterface,
         $customUser->setCategories($categories->random(3)->all());
         $customUser->setRegistrationDate();
         $manager->persist($customUser);
-        
-        for ($i = 0; $i < 10; $i++) {
+
+        for ($i = 0; $i < 50; $i++) {
             $proUser = new ProMember();
             $proUser->setIsActive(1);
             $proUser->setUsername($faker->userName);
@@ -65,7 +65,7 @@ class CreateProUsers extends AbstractFixture implements OrderedFixtureInterface,
             $proUser->setRegistrationDate();
             $manager->persist($proUser);
         }
-        
+
         $manager->flush();
     }
 
