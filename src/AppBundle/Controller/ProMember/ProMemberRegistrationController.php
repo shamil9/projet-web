@@ -6,7 +6,7 @@ namespace AppBundle\Controller\ProMember;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\ProMember;
-use AppBundle\Form\ProMember\ProMemberRegistrationType;
+use AppBundle\Form\ProMember\ProMemberType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,7 +25,7 @@ class ProMemberRegistrationController extends BaseController
     public function registerAction(Request $request)
     {
         $user = new ProMember();
-        $form = $this->createForm(ProMemberRegistrationType::class, $user);
+        $form = $this->createForm(ProMemberType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

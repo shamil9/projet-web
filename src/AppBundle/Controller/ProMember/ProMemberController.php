@@ -3,13 +3,12 @@
 namespace AppBundle\Controller\ProMember;
 
 use AppBundle\Controller\BaseController;
-use AppBundle\Controller\CrudInterface;
 use AppBundle\Entity\Favorite;
 use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
 use AppBundle\Entity\User;
 use AppBundle\Form\ContactFormType;
-use AppBundle\Form\ProMember\ProMemberEditType;
+use AppBundle\Form\ProMemberType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,14 +57,15 @@ class ProMemberController extends BaseController
     /**
      * @Route("/pro-member/update", name="pro_member_update")
      * @param Request $request
-     * @return mixed|void
+     * @return mixed
      */
     public function updateAction(Request $request)
     {
         /** @var ProMember $user */
         $user = $this->getUser();
-        $form = $this->createForm(ProMemberEditType::class, $user);
+        $form = $this->createForm(ProMemberType::class, $user, ['validation_groups' => 'edit']);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             //Changement de mot de passe
@@ -95,7 +95,7 @@ class ProMemberController extends BaseController
     {
         $query = $this->getRepository('AppBundle:ProMember')->findProUserSuggestions($user);
         $suggestions = $this->collection($query)
-            ->map(function (ProMember $item, $key) {
+            ->map(function (ProMember $item) {
                 return [
                     'name'    => $item->getName(),
                     'picture' => $item->getPicture(),
@@ -130,7 +130,7 @@ class ProMemberController extends BaseController
 
         $this->get('mailer')->send($message);
 
-        return $this->redirectToRoute('pro_pro_user_profile', [
+        return $this->redirectToRoute('pro_user_profile', [
             'slug' => $proMember->getSlug(),
         ]);
     }

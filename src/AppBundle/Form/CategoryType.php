@@ -2,9 +2,9 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Form\EventListener\AddImageFieldSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,13 +21,10 @@ class CategoryType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('image', FileType::class, [
-                'data_class' => null,
-                'required' => false
-            ])
             ->add('promoted', CheckboxType::class, [
                 'required' => false
             ]);
+        $builder->addEventSubscriber(new AddImageFieldSubscriber());
     }
 
     /**

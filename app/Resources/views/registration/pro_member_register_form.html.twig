@@ -115,7 +115,7 @@
 {% block javascripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
-        $( '#pro_member_registration_categories' ).select2( {
+        $( '#pro_member_categories' ).select2( {
             language: 'fr',
             placeholder: 'Sélectionnez votre catégorie',
             theme: 'bootstrap'
@@ -129,8 +129,8 @@
 
         //Recherche de la ville sur base de la valeur du champ "Ville"
         var findCity = function(cities) {
-            var zipInput = $('#pro_member_registration_zip');
-            var cityInput = $('#pro_member_registration_city');
+            var zipInput = $('#pro_member_zip');
+            var cityInput = $('#pro_member_city');
             var options;
             var zip = parseInt(zipInput.val());
             var pattern = RegExp('^' + zip + '\d*', 'g');
@@ -152,6 +152,7 @@
             zipInput.on('change', function(e) {
                 var zip = parseInt(zipInput.val());
                 var pattern = RegExp('^' + zip + '\d*', 'g');
+                options = null;
 
                 //Filtrage des ville par le code postal
                 var results = cities.filter(function(key) {
@@ -160,10 +161,10 @@
                 });
 
                 //Insértion des résultats dans le champ "ville"
-                results.forEach(function(key, index) {
+                results.forEach(function(key) {
                     options += '<option value="' + key.name + '">'+ key.name +'</option>';
                 });
-                cityInput.html(options);
+                cityInput.empty().html(options);
             });
         };
     </script>

@@ -5,7 +5,7 @@ namespace AppBundle\Controller\Member;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Member;
-use AppBundle\Form\Member\MemberEditType;
+use AppBundle\Form\MemberType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,7 +23,7 @@ class MemberController extends BaseController
         $this->userCheck();
 
         /** @var Member $user */
-        $form = $this->createForm(MemberEditType::class, $user = $this->getUser());
+        $form = $this->createForm(MemberType::class, $user = $this->getUser(), ['validation_groups' => 'edit']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

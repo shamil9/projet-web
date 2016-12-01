@@ -17,7 +17,6 @@ class DefaultController extends BaseController
         $regions = $this->getRepository('AppBundle:ProMember')->findCitiesWithProUsers();
         $categories = $this->getRepository('AppBundle:Category')->findAll();
         $slides = $this->getRepository('AppBundle:Image')->findBy(['type' => 'admin-slider']);
-        dump($slides);
 
         return $this->render('default/index.html.twig', [
             'regions' => $regions,

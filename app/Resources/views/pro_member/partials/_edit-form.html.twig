@@ -59,6 +59,12 @@
 </div>
 
 <div class="form-group">
+    {{ form_label(form.website, 'Site Web') }}
+    {{ form_errors(form.website) }}
+    {{ form_widget(form.website, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<div class="form-group">
     {{ form_label(form.picture, 'Avatar') }}
     <img src="/assets/img/uploads/avatars/{{ user.picture }}" alt="{{ user.username }}"
          class="pull-right img-circle img--100x100">

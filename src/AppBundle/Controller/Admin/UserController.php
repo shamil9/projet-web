@@ -6,14 +6,14 @@ use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
 use AppBundle\Entity\User;
-use AppBundle\Form\Member\MemberEditType;
-use AppBundle\Form\ProMember\ProMemberEditType;
+use AppBundle\Form\MemberType;
+use AppBundle\Form\ProMemberType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
-* Gestion des utilisateurs
-*/
+ * Gestion des utilisateurs
+ */
 class UserController extends BaseController
 {
     /**
@@ -37,6 +37,7 @@ class UserController extends BaseController
      *
      * @Route("/admin/users/{user}/edit", name="admin_users_edit")
      * @param  User $user
+     * @param Request $request
      * @return Response
      */
     public function editAction(User $user, Request $request)
@@ -44,11 +45,11 @@ class UserController extends BaseController
         // $this->adminCheck();
 
         if ($user instanceof ProMember) {
-            $form = $this->createForm(ProMemberEditType::class, $user);
+            $form = $this->createForm(ProMemberType::class, $user);
         }
 
         if ($user instanceof Member) {
-            $form = $this->createForm(MemberEditType::class, $user);
+            $form = $this->createForm(MemberType::class, $user);
         }
 
         $form->handleRequest($request);
@@ -61,7 +62,7 @@ class UserController extends BaseController
                 $user->setPassword($password);
             }
 
-            $this->createAvatarImage($form, $user);
+            $this->createAvatarImage($user);
 
             $this->em()->persist($user);
             $this->em()->flush();
@@ -78,7 +79,7 @@ class UserController extends BaseController
      *
      * @Route("admin/users/{user}/destroy", name="admin_users_destroy")
      * @param  Request $request
-     * @param  User    $user
+     * @param  User $user
      * @return Response
      */
     public function destroyAction(Request $request, User $user)
@@ -94,7 +95,7 @@ class UserController extends BaseController
      *
      * @Route("/admin/users/{user}/ban", name="admin_users_ban")
      *
-     * @param  User   $user
+     * @param  User $user
      * @return Response
      */
     public function blockAction(User $user)
