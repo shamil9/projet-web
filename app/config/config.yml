@@ -9,6 +9,10 @@ parameters:
     locale: en
     image_driver: gd
     assets_root: "%kernel.root_dir%/../web/assets"
+    avatars_folder: "%assets_root%/img/uploads/avatars/"
+    sliders_folder: "%assets_root%/img/uploads/slider/"
+    categories_folder: "%assets_root%/img/uploads/category/"
+    newsletters_folder: "%assets_root%/img/uploads/newsletters/"
     admin_mail: admin@bien-etre.com
 
 framework:
@@ -43,6 +47,10 @@ twig:
     globals:
         favorite_manager: "@app.favorites_manager"
         gmaps_api_key: "AIzaSyBt6NP5o5G-VPddw-tdyZ7I-N41_l04Sic"
+        avatars_folder: "/assets/img/uploads/avatars/"
+        sliders_folder: "/assets/img/uploads/slider/"
+        categories_folder: "/assets/img/uploads/category/"
+        newsletters_folder: "/assets/img/uploads/newsletters/"
 
 # Doctrine Configuration
 doctrine:

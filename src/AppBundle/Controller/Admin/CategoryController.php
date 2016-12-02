@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Image;
 use AppBundle\Form\CategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,8 +22,6 @@ class CategoryController extends BaseController
      */
     public function indexAction()
     {
-        // $this->adminCheck();
-
         $categories = $this->getRepository('AppBundle:Category')->findAll();
 
         return $this->render('admin/categories/index.html.twig', [
@@ -32,8 +31,6 @@ class CategoryController extends BaseController
 
     public function newAction()
     {
-        // $this->adminCheck();
-
         $form = $this->createForm(CategoryType::class);
 
         return $this->render('admin/categories/new.html.twig', [
@@ -50,15 +47,21 @@ class CategoryController extends BaseController
      */
     public function createAction(Request $request)
     {
-        // $this->adminCheck();
-
         $category = new Category;
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
             $this->removePreviousPromotion();
-            $this->createCategoryImage($category);
+            $image = new Image();
+
+            $categoryImage = $this->get('app.image_storage_manager')->storeCategoryImage($category);
+            $imageManager = $this->get('app.image_manager')->make($categoryImage);
+            $imageManager->createCategoryImage();
+
+            $image->setPath($imageManager->image->basename);
+            $image->setType('category');
+            $category->setImage($image);
 
             $this->em()->persist($category);
             $this->em()->flush();
@@ -77,8 +80,6 @@ class CategoryController extends BaseController
      */
     public function updateAction(Request $request, Category $category)
     {
-        // $this->adminCheck();
-
         $currentImage = $category->getImage();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -86,7 +87,7 @@ class CategoryController extends BaseController
         if ($form->isValid() && $form->isSubmitted()) {
            if (!is_null($request->files->get('category')['image'])) {
                 //Supression de l'encienne image
-                unlink($this->getParameter('assets_root') . '/img/uploads/category/' . $currentImage->getPath());
+                unlink($this->getParameter('categories_folder') . $currentImage->getPath());
                 $this->em()->remove($currentImage);
 
                 $this->createCategoryImage($category);

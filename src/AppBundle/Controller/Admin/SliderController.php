@@ -22,7 +22,6 @@ class SliderController extends BaseController
      */
     public function indexAction()
     {
-        // $this->adminCheck();
         $sliders = $this->getRepository('AppBundle:Image')->findBy(['type' => 'admin-slider']);
 
         return $this->render('admin/sliders/index.html.twig', ['sliders' => $sliders]);
@@ -49,15 +48,17 @@ class SliderController extends BaseController
      */
     public function createAction(Request $request)
     {
-        // $this->adminCheck();
-
         $sliderImage = new Image();
         $form = $this->createForm(SliderType::class, $sliderImage);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $image = $this->get('app.image_storage_manager')->storeSliderImage($sliderImage);
+            $imageManager = $this->get('app.image_manager')->make($image);
+            $imageManager->createSlide();
+
             $sliderImage->setType('admin-slider');
-            $this->createSliderImage($sliderImage);
+            $sliderImage->setPath($imageManager->image->basename);
 
             $this->em()->persist($sliderImage);
             $this->em()->flush();
@@ -77,8 +78,6 @@ class SliderController extends BaseController
      */
     public function destroyAction(Image $slide)
     {
-        // $this->adminCheck();
-
         $this->em()->remove($slide);
         $this->em()->flush();
         //Supression de l'image

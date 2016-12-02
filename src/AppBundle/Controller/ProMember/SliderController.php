@@ -58,16 +58,20 @@ class SliderController extends BaseController
     {
         $this->userCheck();
 
-        $image = new Image();
-        $form = $this->createForm(SliderType::class, $image);
+        $sliderImage = new Image();
+        $form = $this->createForm(SliderType::class, $sliderImage);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $image->setUser($this->getUser());
-            $image->setType('user-slider');
-            $this->createSliderImage($image);
+            $image = $this->get('app.image_storage_manager')->storeSliderImage($sliderImage);
+            $imageManager = $this->get('app.image_manager')->make($image);
+            $imageManager->createSlide();
 
-            $this->em()->persist($image);
+            $sliderImage->setUser($this->getUser());
+            $sliderImage->setType('user-slider');
+            $sliderImage->setPath($imageManager->image->basename);
+
+            $this->em()->persist($sliderImage);
             $this->em()->flush();
 
             return JsonResponse::create(null, 200);
@@ -91,7 +95,8 @@ class SliderController extends BaseController
                 $this->createAccessDeniedException('Action non autorisée');
             }
 
-            unlink($this->getParameter('assets_root') . '/img/uploads/slider/' . $image->getPath());
+            //Suppression du fichier
+            unlink($this->getParameter('sliders_folder') . $image->getPath());
 
             $this->em()->remove($image);
             $this->em()->flush();

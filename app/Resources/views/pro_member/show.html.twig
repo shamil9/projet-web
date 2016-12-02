@@ -207,7 +207,7 @@
                 postComment({
                     url: '{{ path('comments_new', {'user': user.id}) }}',
                     user: '{{ app.user.username }}',
-                    picture: '{{ app.user.picture }}',
+                    picture: '{{ app.user.picture ?? 'user.svg'}}',
                     self: this
                 });
             });

@@ -10,7 +10,7 @@
     <div class="carousel-inner" role="listbox">
         {% for slide in sliderImages %}
             <div class="slide item {% if loop.first %}active{% endif %}"
-                style="background-image: url({{ slides ~ slide.path }});">
+                style="background-image: url({{ sliders_folder ~ slide.path }});">
             </div>
         {% endfor %}
     </div>

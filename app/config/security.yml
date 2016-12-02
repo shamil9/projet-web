@@ -8,6 +8,9 @@ security:
         AppBundle\Entity\ProMember:
                     algorithm: bcrypt
                     cost: 12
+        Symfony\Component\Security\Core\User\User:
+                    algorithm: bcrypt
+                    cost: 12
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_PRO_USER
@@ -15,12 +18,15 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-#        in_memory:
-#            memory:
-#                users:
-#                    bar:
-#                        password: foo
-#                        roles: 'ROLE_ADMIN'
+        chain_provider:
+            chain:
+                providers: [in_memory, orm]
+        in_memory:
+            memory:
+                users:
+                    admin:
+                        password: $2y$12$7U5GBGoC.3it7PqE6CO92OoVvgGuVbomTWqUEm7efu1lZSlggeW7a
+                        roles: 'ROLE_ADMIN'
         orm:
             entity: { class: AppBundle\Entity\User }
 
@@ -36,7 +42,7 @@ security:
             anonymous: true
 #            http_basic: ~
             form_login:
-                provider: orm
+                provider: chain_provider
                 csrf_token_generator: security.csrf.token_manager
                 login_path: login
                 check_path: login
@@ -48,11 +54,8 @@ security:
 
     access_control:
         - { path: ^/connexion$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/insciption$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/profil$, role: ROLE_USER }
         - { path: ^/edit$, role: ROLE_USER }
         - { path: ./stages/ajouter$, role: ROLE_PRO_USER }
-        - { path: ./stages/ajouter$, role: ROLE_PRO_USER }
-        - { path: ^/destroy$, role: ROLE_ADMIN }
-        - { path: ^/admin/$, role: ROLE_ADMIN }
+        - { path: ^/admin, role: ROLE_ADMIN }

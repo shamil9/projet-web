@@ -35,7 +35,10 @@ class MemberController extends BaseController
             }
 
             if (!is_null($request->files->get('member_edit')['picture'])) {
-                $this->createAvatarImage($user);
+                $avatar = $this->get('app.image_storage_manager')->storeAvatarImage($user);
+                $image = $this->get('app.image_manager')->make($avatar);
+
+                $user->setPicture($image->createAvatar()->image->basename);
             }
 
             $this->em()->persist($user);

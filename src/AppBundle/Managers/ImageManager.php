@@ -41,9 +41,7 @@ class ImageManager
      */
     public function createAvatar(int $width = 100, int $height = 100)
     {
-        $this->image->resize($width, $height)->save($this->file);
-
-        return $this;
+        return $this->image->resize($width, $height)->save($this->file);
     }
 
     /**
@@ -54,19 +52,15 @@ class ImageManager
      */
     public function createSlide(int $width = 1140, int $height = 445)
     {
-        $this->image
+        return $this->image
             ->resize($width, null, function ($constraint) {
                 $constraint->aspectRatio();
             })
             ->save($this->file);
-
-        return $this;
     }
 
     public function createCategoryImage(int $width = 360, int $height = 245)
     {
-        $this->image->resize($width, $height)->save($this->file);
-
-        return $this;
+        return $this->image->resize($width, $height)->save($this->file);
     }
 }

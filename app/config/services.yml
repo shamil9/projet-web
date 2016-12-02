@@ -21,8 +21,9 @@ services:
         class: AppBundle\Managers\ImageManager
         arguments: ["%assets_root%"]
 
-    app.form_manager:
-        class: AppBundle\Managers\FormManager
+    app.image_storage_manager:
+        class: AppBundle\Managers\ImageStorageManager
+        arguments: ["%avatars_folder%", "%sliders_folder%", "%categories_folder%"]
 
 #    app.avatar_upload_listener:
 #        class: AppBundle\EventListener\AvatarUploadListener
