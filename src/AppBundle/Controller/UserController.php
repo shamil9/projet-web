@@ -24,6 +24,7 @@ class UserController extends BaseController
         $this->userCheck();
 
         $user = $this->getUser();
+        
         if ($user instanceof Member) {
             $form = $this->createForm(MemberType::class, $this->getUser());
             $template = 'member/edit.html.twig';
