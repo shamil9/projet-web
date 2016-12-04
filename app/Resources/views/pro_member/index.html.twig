@@ -7,6 +7,11 @@
     <div class="row">
         {% include 'pro_member/partials/_users.html.twig' %}
     </div>
+    <div class="row">
+        <div class="navigation">
+            {{ knp_pagination_render(users) }}
+        </div>
+    </div>
 </div>
 {% endblock %}
 

@@ -109,12 +109,19 @@ class DefaultController extends BaseController
      * @Route("/stages", name="stages_list")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function workshopsAction()
+    public function workshopsAction(Request $request)
     {
         $workshops = $this->em()->getRepository('AppBundle:Workshop')->getAll();
 
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $workshops,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('default/workshops.html.twig', [
-            'workshops' => $workshops,
+            'workshops' => $pagination,
         ]);
     }
 

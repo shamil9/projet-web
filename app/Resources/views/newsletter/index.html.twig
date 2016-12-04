@@ -6,5 +6,10 @@
     <div class="row">
         {% include ':newsletter/partials:_list.html.twig' %}
     </div>
+    <div class="row">
+        <div class="navigation">
+            {{ knp_pagination_render(newsletters) }}
+        </div>
+    </div>
 </div>
 {% endblock %}

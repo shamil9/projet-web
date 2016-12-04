@@ -21,8 +21,6 @@ class NewsletterController extends BaseController
      */
     public function indexAction()
     {
-        // $this->adminCheck();
-
         $newsletters = $this->getRepository('AppBundle:Newsletter')->findAll();
         $form = $this->createForm(NewsletterType::class);
 
@@ -40,7 +38,6 @@ class NewsletterController extends BaseController
      */
     public function newAction(Request $request)
     {
-        // $this->adminCheck();
         $newsletter = new Newsletter();
         $form = $this->createForm(NewsletterType::class, $newsletter);
         $form->handleRequest($request);
@@ -73,8 +70,6 @@ class NewsletterController extends BaseController
      */
     public function destroyAction(Newsletter $newsletter)
     {
-        // $this->adminCheck();
-
         $this->em()->remove($newsletter);
         $this->em()->flush();
 

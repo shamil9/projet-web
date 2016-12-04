@@ -21,11 +21,16 @@ class ProMemberController extends BaseController
      *
      * @Route("/prestataires", name="pro_member_index")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $users = $this->getRepository('AppBundle:ProMember')->findAll();
-
-        return $this->render('pro_member/index.html.twig', ['users' => $users]);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $users,
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('pro_member/index.html.twig', ['users' => $pagination]);
     }
 
     /**
