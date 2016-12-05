@@ -1,12 +1,10 @@
 <?php
 
-
 namespace AppBundle\Controller\ProMember;
-
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\ProMember;
-use AppBundle\Form\ProMember\ProMemberType;
+use AppBundle\Form\ProMemberType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,7 +27,6 @@ class ProMemberRegistrationController extends BaseController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
@@ -38,6 +35,9 @@ class ProMemberRegistrationController extends BaseController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            // envoi d'email de confirmation
+            $this->get('app.registration')->sendConfirmationMail($user);
 
             return $this->redirectToRoute('homepage');
         }

@@ -1,12 +1,10 @@
 <?php
 
-
 namespace AppBundle\Controller\Member;
-
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Member;
-use AppBundle\Form\Member\MemberRegistrationType;
+use AppBundle\Form\MemberType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,11 +18,10 @@ class MemberRegistration extends BaseController
     public function registerAction(Request $request)
     {
         $user = new Member();
-        $form = $this->createForm(MemberRegistrationType::class, $user);
+        $form = $this->createForm(MemberType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
@@ -33,6 +30,8 @@ class MemberRegistration extends BaseController
             $this->em()->persist($user);
             $this->em()->flush();
 
+            // envoi d'email de confirmation
+            $this->get('app.registration')->sendConfirmationMail($user);
 
             return $this->redirectToRoute('homepage');
         }

@@ -48,14 +48,17 @@ class User
      * @Assert\Email()
      */
     protected $email;
+
     /**
      * @ORM\Column(type="string", length=64)
      */
     protected $password;
+
     /**
      * @ORM\Column(type="string", length=25, unique=true)
      */
     protected $username;
+
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Assert\File(mimeTypes={ "image/jpeg", "image/png", "image/svg+xml" })
@@ -63,6 +66,7 @@ class User
     protected $picture;
 
     protected $userType;
+
     /**
      * @Assert\NotBlank(message="Indiquez votre mot de passe")
      * @Assert\Length(
@@ -74,7 +78,12 @@ class User
      * @Assert\Regex("/[\x21-\x7E]+/",
      *     message="Le mot de passe doit contenir 7 caractères avec au moins 1 caractère alphabétique sans accents et au moins 1 chiffre.")
      */
-    private $plainPassword;
+    protected $plainPassword;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $confirmationToken;
 
     public function __construct()
     {
@@ -296,6 +305,22 @@ class User
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * @param mixed $confirmationToken
+     */
+    public function setConfirmationToken($confirmationToken)
+    {
+        $this->confirmationToken = $confirmationToken;
     }
 
     /**

@@ -25,9 +25,6 @@ services:
         class: AppBundle\Managers\ImageStorageManager
         arguments: ["%avatars_folder%", "%sliders_folder%", "%categories_folder%"]
 
-#    app.avatar_upload_listener:
-#        class: AppBundle\EventListener\AvatarUploadListener
-#        arguments: ["@app.image_manager"]
-#        tags:
-#            - { name: doctrine.event_listener, event: postRemove }
-
+    app.registration:
+        class: AppBundle\Service\RegistrationService
+        arguments: ["@mailer", "@templating"]

@@ -9,6 +9,7 @@ use AppBundle\Entity\User;
 use AppBundle\Form\MemberType;
 use AppBundle\Form\ProMemberType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends BaseController
 {
@@ -24,7 +25,7 @@ class UserController extends BaseController
         $this->userCheck();
 
         $user = $this->getUser();
-        
+
         if ($user instanceof Member) {
             $form = $this->createForm(MemberType::class, $this->getUser());
             $template = 'member/edit.html.twig';
@@ -39,5 +40,31 @@ class UserController extends BaseController
             'user' => $user,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * Confirmer un compte d'utilisateur
+     *
+     * @Route("/{id}/{token}", name="user_confirmation")
+     * @param User $user
+     * @param string $token
+     * @return Response
+     */
+    public function confirmAction(User $user, string $token)
+    {
+        $confirmed = $this->get('app.registration')->confirmUser($user, $token);
+
+        if (!$confirmed) {
+            $this->addFlash('confirmation', 'Erreur! Compte introuvable');
+
+            return $this->redirectToRoute('login');
+        }
+
+        $this->addFlash('confirmation', 'Votre compte a été bien confirmé. Vous pouvez maintenant vous identifier.');
+
+        $this->em()->persist($user);
+        $this->em()->flush();
+
+        return $this->redirectToRoute('login');
     }
 }

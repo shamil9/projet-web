@@ -1,184 +1,188 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ user.name }}{% endblock %}
-{% block stylesheets %}<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-stars.css') }}">
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-stars.css') }}">
 {% endblock %}
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12 pro-slider">
-            <div id="slider" class="carousel slide" data-ride="carousel"
-                 style="height: 445px; overflow: hidden; background-color: #333">
-                {% if user.images is not empty %}
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        {% for image in user.images %}
-                            <li data-target="#slider" data-slide-to="{{ loop.index0 }}"
-                                {% if loop.first %}class="active"{% endif %}></li>
-                        {% endfor %}
-                    </ol>
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" role="listbox">
-                        {% for image in user.images %}
-                            {% include 'pro_member/partials/_slider.html.twig' %}
-                        {% endfor %}
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 pro-slider">
+                <div id="slider" class="carousel slide" data-ride="carousel"
+                     style="height: 445px; overflow: hidden; background-color: #333">
+                    {% if user.images is not empty %}
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            {% for image in user.images %}
+                                <li data-target="#slider" data-slide-to="{{ loop.index0 }}"
+                                    {% if loop.first %}class="active"{% endif %}></li>
+                            {% endfor %}
+                        </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            {% for image in user.images %}
+                                {% include 'pro_member/partials/_slider.html.twig' %}
+                            {% endfor %}
+                        </div>
 
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#slider" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#slider" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                {% else %}
-                    <h3 class="text-center">{{ user.name }}</h3>
-                    <p class="text-center">{{ user.description }}</p>
-                {% endif %}
-            </div>
-
-            <div class="pro_userbar col-lg-12">
-                <div class="pro_avatar pull-left">
-                    <img src="{{ avatars ~ user.picture }}" alt="Avatar" class="pro_avatar img--100x100 thumbnail">
-                </div>
-                <span class="pro_user-info">{{ user.name }} </span>
-
-                {#Button de favoris#}
-                {% if app.user is member %}
-                    {% if favorite %}
-                        <a href="" class="glyphicon glyphicon-star favorite favorite__active"
-                                id="remove-favorite"
-                                title="Supprimer le favori">
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#slider" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#slider" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
                         </a>
                     {% else %}
-                        <a href="" class="glyphicon glyphicon-star favorite"
-                                id="add-favorite"
-                                title="Ajouter aux favoris">
-                        </a>
+                        <h3 class="text-center">{{ user.name }}</h3>
+                        <p class="text-center">{{ user.description }}</p>
                     {% endif %}
-                {% endif %}
+                </div>
 
-                {#Social media#}
-                <span class="pull-right">
+                <div class="pro_userbar col-lg-12">
+                    <div class="pro_avatar pull-left">
+                        <img src="{{ avatars ~ user.picture }}" alt="Avatar" class="pro_avatar img--100x100 thumbnail">
+                    </div>
+                    <span class="pro_user-info">{{ user.name }} </span>
+
+                    {#Button de favoris#}
+                    {% if app.user is member %}
+                        {% if favorite %}
+                            <a href="" class="glyphicon glyphicon-star favorite favorite__active"
+                               id="remove-favorite"
+                               title="Supprimer le favori">
+                            </a>
+                        {% else %}
+                            <a href="" class="glyphicon glyphicon-star favorite"
+                               id="add-favorite"
+                               title="Ajouter aux favoris">
+                            </a>
+                        {% endif %}
+                    {% endif %}
+
+                    {#Social media#}
+                    <span class="pull-right">
                     <a href="#"><img class="pro_social-icons" src="{{ asset('assets/img/icons/twitter.svg') }}" alt=""></a>
                     <a href="#"><img class="pro_social-icons" src="{{ asset('assets/img/icons/facebook.svg') }}" alt=""></a>
                     <a href="#" data-toggle="modal" data-target="#recommend-user-form">
                         <img class="pro_social-icons" src="{{ asset('assets/img/icons/mail.svg') }}" alt="">
                     </a>
-                    {% include'pro_member/partials/_recommend-form.html.twig' %}
+                        {% include'pro_member/partials/_recommend-form.html.twig' %}
                 </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="pro-tabs">
+                    <div>
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+
+                            <li role="presentation" class="active">
+                                <a href="#categories" aria-controls="categories" role="tab"
+                                   data-toggle="tab">Catégories</a>
+                            </li>
+
+                            {#Stages#}
+                            {% if user.workshops is not empty %}
+                                <li role="presentation">
+                                    <a href="#stages" aria-controls="stages" role="tab" data-toggle="tab">
+                                        Stages
+                                        <span class="badge">{{ user.workshops|length }}</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {#Promotions#}
+                            {% if user.sales is not empty %}
+                                <li role="presentation">
+                                    <a href="#promotions" aria-controls="promotions" role="tab" data-toggle="tab">
+                                        Promotions
+                                        <span class="badge">{{ user.sales|length }}</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {#Commentaire#}
+                            <li role="presentation">
+                                <a href="#commentaires" aria-controls="commentaires" role="tab" data-toggle="tab">
+                                    Commentaires
+                                    <span class="badge">{{ user.comments|length }}</span>
+                                </a>
+                            </li>
+
+                            {#La carte#}
+                            <li role="presentation">
+                                <a id="location" href="#localisation" aria-controls="localisation" role="tab"
+                                   data-toggle="tab">Localisation</a>
+                            </li>
+
+                            {#Formulaire de contact#}
+                            <li role="presentation">
+                                <a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">Contact</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="categories">
+                                <h1>Catégories</h1>
+                                <div class="row">
+                                    {% include 'category/partials/_list.html.twig' with {'categories': user.categories } %}
+                                </div>
+                            </div>
+
+                            {% if user.workshops is not empty %}
+                                <div role="tabpanel" class="tab-pane" id="stages">
+                                    <h1>Stages</h1>
+                                    {% for stage in user.workshops %}
+                                        {% include 'workshop/partials/_workshops.html.twig' %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% if user.sales is not empty %}
+                                <div role="tabpanel" class="tab-pane" id="promotions">
+                                    <h1>Promotions</h1>
+                                    {% include ':sale/partials:_list.html.twig' %}
+                                </div>
+                            {% endif %}
+
+                            <div role="tabpanel" class="tab-pane" id="commentaires">
+                                <h1>Commentaires</h1>
+                                {% include'pro_member/partials/_comments.html.twig' %}
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="localisation">
+                                <h1>Localisation</h1>
+                                <div id="map" class="col-lg-6 map"></div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="contact">
+                                <h1>Contacter</h1>
+                                <div id="contact" class="col-lg-6"></div>
+                                {{ render(controller('AppBundle:ProMember/ProMember:contact', {'id': user.id})) }}
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- tabs end -->
+
+                <hr>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3>Prestataires similaires</h3>
+                        <div id="suggestions">
+                            <img class="center-block" src="{{ asset('assets/img/icons/infinity.gif') }}" width="100px"
+                                 alt="">
+                        </div>
+                    </div>
+                </div> <!-- suggestion end -->
+
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="pro-tabs">
-                <div>
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-
-                        <li role="presentation" class="active">
-                            <a href="#categories" aria-controls="categories" role="tab" data-toggle="tab">Catégories</a>
-                        </li>
-
-                        {#Stages#}
-                        {% if user.workshops is not empty %}
-                        <li role="presentation">
-                            <a href="#stages" aria-controls="stages" role="tab" data-toggle="tab">
-                                Stages
-                                <span class="badge">{{ user.workshops|length }}</span>
-                            </a>
-                        </li>
-                        {% endif %}
-
-                        {#Promotions#}
-                        {% if user.sales is not empty %}
-                        <li role="presentation">
-                            <a href="#promotions" aria-controls="promotions" role="tab" data-toggle="tab">
-                                Promotions
-                                <span class="badge">{{ user.sales|length }}</span>
-                            </a>
-                        </li>
-                        {% endif %}
-
-                        {#Commentaire#}
-                        <li role="presentation">
-                            <a href="#commentaires" aria-controls="commentaires" role="tab" data-toggle="tab">
-                                Commentaires
-                                <span class="badge">{{ user.comments|length }}</span>
-                            </a>
-                        </li>
-
-                        {#La carte#}
-                        <li role="presentation">
-                            <a id="location" href="#localisation" aria-controls="localisation" role="tab" data-toggle="tab">Localisation</a>
-                        </li>
-
-                        {#Formulaire de contact#}
-                        <li role="presentation">
-                            <a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">Contact</a>
-                        </li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="categories">
-                            <h1>Catégories</h1>
-                            <div class="row">
-                                {% include 'category/partials/_list.html.twig' with {'categories': user.categories } %}
-                            </div>
-                        </div>
-
-                        {% if user.workshops is not empty  %}
-                        <div role="tabpanel" class="tab-pane" id="stages">
-                            <h1>Stages</h1>
-                            {% for stage in user.workshops %}
-                            {% include 'workshop/partials/_workshops.html.twig' %}
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-
-                        {% if user.sales is not empty %}
-                        <div role="tabpanel" class="tab-pane" id="promotions">
-                            <h1>Promotions</h1>
-                            {% include ':sale/partials:_list.html.twig' %}
-                        </div>
-                        {% endif %}
-
-                        <div role="tabpanel" class="tab-pane" id="commentaires">
-                            <h1>Commentaires</h1>
-                            {% include'pro_member/partials/_comments.html.twig' %}
-                        </div>
-
-                        <div role="tabpanel" class="tab-pane" id="localisation">
-                            <h1>Localisation</h1>
-                            <div id="map" class="col-lg-6 map"></div>
-                        </div>
-
-                        <div role="tabpanel" class="tab-pane" id="contact">
-                            <h1>Contacter</h1>
-                            <div id="contact" class="col-lg-6"></div>
-                            {{ render(controller('AppBundle:ProMember/ProMember:contact', {'id': user.id})) }}
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- tabs end -->
-
-            <hr>
-            <div class="row">
-                <div class="col-lg-12">
-                    <h3>Prestataires similaires</h3>
-                    <div id="suggestions">
-                        <img class="center-block" src="{{ asset('assets/img/icons/infinity.gif') }}" width="100px" alt="">
-                    </div>
-                </div>
-            </div> <!-- suggestion end -->
-
-        </div>
-    </div>
-</div>
 {% endblock %}
 {% block javascripts %}
     <script src="https://maps.googleapis.com/maps/api/js?key={{ gmaps_api_key }}"></script>
@@ -186,8 +190,8 @@
     <script src="{{ asset('assets/js/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
-        (function(){
-        {% if app.user %}
+        (function () {
+            {% if app.user %}
             //Ajout du favori
             $('#add-favorite').on('click', function (e) {
 //                e.preventDefault();
@@ -207,7 +211,7 @@
                 postComment({
                     url: '{{ path('comments_new', {'user': user.id}) }}',
                     user: '{{ app.user.username }}',
-                    picture: '{{ app.user.picture ?? 'user.svg'}}',
+                    picture: '{{ app.user.picture ?? 'user.svg' }}',
                     self: this
                 });
             });

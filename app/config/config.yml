@@ -51,6 +51,7 @@ twig:
         sliders_folder: "/assets/img/uploads/slider/"
         categories_folder: "/assets/img/uploads/category/"
         newsletters_folder: "/assets/img/uploads/newsletters/"
+        base_url: "http://projet-web.dev"
 
 # Doctrine Configuration
 doctrine:

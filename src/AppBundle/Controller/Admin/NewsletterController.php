@@ -9,8 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
-* Gestionde de newsletters
-*/
+ * Gestionde de newsletters
+ */
 class NewsletterController extends BaseController
 {
     /**
@@ -26,7 +26,7 @@ class NewsletterController extends BaseController
 
         return $this->render('admin/newsletters/index.html.twig', [
             'newsletters' => $newsletters,
-            'form' => $form->createView(),
+            'form'        => $form->createView(),
         ]);
     }
 
@@ -34,6 +34,7 @@ class NewsletterController extends BaseController
      * Ajouter une newsletter
      *
      * @Route("/admin/newsletters/create", name="admin_newsletters_create")
+     * @param Request $request
      * @return Response
      */
     public function newAction(Request $request)
@@ -82,18 +83,19 @@ class NewsletterController extends BaseController
 
         foreach ($subscribers as $subscriber) {
             $message = \Swift_Message::newInstance()
-            ->setSubject('Bien Etre Newsletter')
-            ->setFrom('bien@etre.com')
-            ->setTo($subscriber->getUser()->getEmail())
-            ->setBody(
-                $this->renderView(
-                    'emails/newsletter.html.twig', [
-                        'file' => 'http://bien-etre.com/assets/img/uploads/newsletters/' . $file,
-                        'user' => $subscriber->getUser(),
-                    ]
-                ),
-                'text/html'
-            );
+                ->setSubject('Bien Etre Newsletter')
+                ->setFrom('bien@etre.com')
+                ->setTo($subscriber->getUser()->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'emails/newsletter.html.twig',
+                        [
+                            'file' => 'http://bien-etre.com/assets/img/uploads/newsletters/' . $file,
+                            'user' => $subscriber->getUser(),
+                        ]
+                    ),
+                    'text/html'
+                );
             $this->get('mailer')->send($message);
         }
     }

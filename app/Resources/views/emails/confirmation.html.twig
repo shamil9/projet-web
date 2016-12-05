@@ -1,0 +1,4 @@
+<h1>Merci pour votre inscription sur Bien-Être</h1>
+<h2>Pour confirmer votre compte cliquez sur le lien ci-dessous</h2>
+<br>
+<a href="{{ base_url ~ path('user_confirmation', {'id': user.id, 'token': token}) }}">Confirmer votre compte</a>
