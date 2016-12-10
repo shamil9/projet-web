@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Event\EmailNotification;
 use AppBundle\Form\ContactFormType;
 use AppBundle\Form\ContactType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -83,19 +84,9 @@ class DefaultController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $message = \Swift_Message::newInstance()
-                ->setSubject($form->getData()['message'])
-                ->setFrom($form->getData()['from'])
-                ->setTo('contact@bien-etre.com')
-                ->setBody(
-                    $this->render('emails/contact.html.twig', [
-                        'message' => $form->getData()['message'],
-                        'from' => $form->getData()['from'],
-                    ]),
-                    'text/html'
-                );
-
-            $this->get('mailer')->send($message);
+            $event = new EmailNotification($request);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch('global.contact', $event);
 
             return $this->redirect('/');
         }

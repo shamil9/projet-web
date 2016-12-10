@@ -29,8 +29,7 @@
     {{ form_label(form.plainPassword.second, 'Confirmez le mot de passe') }}
     <div class="cols-sm-10">
         <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"
-                                               aria-hidden="true"></i></span>
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
             {{ form_errors(form.plainPassword.second) }}
             {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
         </div>
@@ -41,8 +40,7 @@
     {{ form_label(form.description, 'Déscription') }}
     <div class="cols-sm-10">
         <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"
-                                               aria-hidden="true"></i></span>
+            <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i></span>
             {{ form_errors(form.description) }}
             {{ form_widget(form.description, {
                 'attr': {'class': 'form-control'},
@@ -53,6 +51,7 @@
 </div>
 
 <div class="form-group">
+    <small class="pull-right"><a href="">Proposer une catégorie</a></small>
     {{ form_label(form.categories, 'Catégories de service') }}
     {{ form_errors(form.categories) }}
     {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}

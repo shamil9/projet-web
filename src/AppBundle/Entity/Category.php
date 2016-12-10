@@ -44,6 +44,13 @@ class Category
     private $promoted;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\ProMember", mappedBy="categories")
      */
     private $users;
@@ -211,5 +218,20 @@ class Category
             unlink(__DIR__ . '/../../../web/assets/img/uploads/category/' . $this->image->getPath());
         }
     }
-}
 
+    /**
+     * @return mixed
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param mixed $isActive
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+    }
+}

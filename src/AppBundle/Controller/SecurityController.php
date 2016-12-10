@@ -20,7 +20,6 @@ class SecurityController extends BaseController
 
         $authenticationUtils = $this->get('security.authentication_utils');
 
-
         //récupération de l'erreur si existe
         $error = $authenticationUtils->getLastAuthenticationError();
 

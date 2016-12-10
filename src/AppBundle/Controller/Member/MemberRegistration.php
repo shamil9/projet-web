@@ -5,8 +5,8 @@ namespace AppBundle\Controller\Member;
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Member;
 use AppBundle\Form\MemberType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class MemberRegistration extends BaseController
 {
@@ -32,6 +32,7 @@ class MemberRegistration extends BaseController
 
             // envoi d'email de confirmation
             $this->get('app.registration')->sendConfirmationMail($user);
+
 
             return $this->redirectToRoute('homepage');
         }

@@ -45,13 +45,14 @@ class UserController extends BaseController
     /**
      * Confirmer un compte d'utilisateur
      *
-     * @Route("/{id}/{token}", name="user_confirmation")
-     * @param User $user
+     * @Route("/confirm/{token}", name="user_confirmation")
      * @param string $token
      * @return Response
+     * @internal param User $user
      */
-    public function confirmAction(User $user, string $token)
+    public function confirmAction(string $token)
     {
+        $user = $this->getRepository('AppBundle:User')->findBy(['confirmationToken' => $token]);
         $confirmed = $this->get('app.registration')->confirmUser($user, $token);
 
         if (!$confirmed) {

@@ -28,3 +28,9 @@ services:
     app.registration:
         class: AppBundle\Service\RegistrationService
         arguments: ["@mailer", "@templating"]
+
+    app.event.email_notification:
+        class: AppBundle\EventListener\EmailNotificationListener
+        arguments: ["@twig", "@mailer"]
+        tags:
+            - { name: kernel.event_listener, event: global.contact, method: onGlobalContact }
