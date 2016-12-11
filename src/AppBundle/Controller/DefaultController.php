@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Event\EmailNotification;
 use AppBundle\Form\ContactFormType;
-use AppBundle\Form\ContactType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,8 +19,8 @@ class DefaultController extends BaseController
         $slides = $this->getRepository('AppBundle:Image')->findBy(['type' => 'admin-slider']);
 
         return $this->render('default/index.html.twig', [
-            'regions' => $regions,
-            'categories' => $categories,
+            'regions'      => $regions,
+            'categories'   => $categories,
             'sliderImages' => $slides,
         ]);
     }
@@ -48,7 +47,7 @@ class DefaultController extends BaseController
 
         return $this->render('partials/_header.html.twig', [
             'regions' => $regions,
-            'user' => $user,
+            'user'    => $user,
         ]);
     }
 
@@ -84,7 +83,7 @@ class DefaultController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $event = new EmailNotification($request);
+            $event = new EmailNotification(['request' => $request]);
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch('global.contact', $event);
 
@@ -98,13 +97,14 @@ class DefaultController extends BaseController
      * Affiche la liste de tous les stages
      *
      * @Route("/stages", name="stages_list")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function workshopsAction(Request $request)
     {
         $workshops = $this->em()->getRepository('AppBundle:Workshop')->getAll();
 
-        $paginator  = $this->get('knp_paginator');
+        $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $workshops,
             $request->query->getInt('page', 1),

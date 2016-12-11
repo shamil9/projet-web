@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoryController extends BaseController
 {
     /**
+     * La liste des tous les services
+     *
      * @Route("/services", name="category_list")
      */
     public function indexAction(Request $request)
@@ -22,6 +24,8 @@ class CategoryController extends BaseController
     }
 
     /**
+     * Affichage de service et les prestataires qui le propose
+     *
      * @Route("/services/{slug}", name="category_show")
      * @param Category $category
      * @return \Symfony\Component\HttpFoundation\Response
@@ -43,7 +47,7 @@ class CategoryController extends BaseController
     {
         $form = $this->createForm(CategoryType::class);
 
-        $this->render('emails/category-suggestion.html.twig', [
+        $this->render('admin/categories/partials/_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -57,7 +61,7 @@ class CategoryController extends BaseController
      */
     public function createAction(Request $request)
     {
-        $this->userCheck();
+        $this->proUserCheck();
 
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);

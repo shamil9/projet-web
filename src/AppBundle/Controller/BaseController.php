@@ -65,12 +65,4 @@ abstract class BaseController extends Controller
         dump($content);
         die();
     }
-
-    protected function sendEmail($to, $from, $subject)
-    {
-        return \Swift_Message::newInstance()
-            ->setSubject($subject)
-            ->setFrom($from)
-            ->setTo($to);
-    }
 }

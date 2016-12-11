@@ -7,6 +7,7 @@ use AppBundle\Entity\Favorite;
 use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
 use AppBundle\Entity\User;
+use AppBundle\Event\EmailNotification;
 use AppBundle\Form\ContactFormType;
 use AppBundle\Form\ProMemberType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -124,19 +125,9 @@ class ProMemberController extends BaseController
      */
     public function recommendAction(Request $request, ProMember $proMember)
     {
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Recommendation de prestataire')
-            ->setFrom('noreply@bien-etre.com')
-            ->setTo($request->get('mail'))
-            ->setBody(
-                $this->render('emails/commend-pro-user.html.twig', [
-                    'message' => $request->get('message'),
-                    'user'    => $proMember,
-                ]),
-                'text/html'
-            );
-
-        $this->get('mailer')->send($message);
+        $event = new EmailNotification(['request' => $request, 'user' => $proMember]);
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch('promember.recommendation', $event);
 
         return $this->redirectToRoute('pro_user_profile', [
             'slug' => $proMember->getSlug(),
@@ -157,22 +148,11 @@ class ProMemberController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $message = \Swift_Message::newInstance()
-                ->setSubject($form->getData()['message'])
-                ->setFrom($form->getData()['from'])
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->render('emails/contact-pro-user.html.twig', [
-                        'user'    => $user,
-                        'message' => $form->getData()['message'],
-                        'from'    => $form->getData()['from'],
-                    ]),
-                    'text/html'
-                );
+            $event = new EmailNotification(['request' => $request, 'user' => $user]);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch('promember.contact', $event);
 
-            $this->get('mailer')->send($message);
-
-            return $this->redirect('/');
+            return $this->redirectToRoute('pro_user_profile', ['slug' => $user->getSlug()]);
         }
 
         return $this->render('pro_member/partials/_contact-form.html.twig', [

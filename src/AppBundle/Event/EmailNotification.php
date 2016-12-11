@@ -7,10 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class EmailNotification extends Event
 {
-    public $request;
+    public $params;
 
-    public function __construct(Request $request)
+    public function __construct(array $params)
     {
-        $this->request = $request;
+        $this->params = $params;
     }
 }

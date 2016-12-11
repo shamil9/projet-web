@@ -31,6 +31,8 @@ services:
 
     app.event.email_notification:
         class: AppBundle\EventListener\EmailNotificationListener
-        arguments: ["@twig", "@mailer"]
+        arguments: ["@twig", "@mailer", "@logger"]
         tags:
             - { name: kernel.event_listener, event: global.contact, method: onGlobalContact }
+            - { name: kernel.event_listener, event: promember.recommendation, method: onProMemberRecommendation }
+            - { name: kernel.event_listener, event: promember.contact, method: onProMemberContact }
