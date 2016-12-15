@@ -1,0 +1,6 @@
+<h1>Une nouvelle catégorie a été suggérée par {{ user.name }}</h1>
+<h2>Titre: {{ category.name }}</h2>
+<h3>Description: </h3>
+<p>{{ category.description }}</p>
+
+<a href="{{ base_url ~ path('admin_categories_update', {'id': category.id}) }}">Gérer la catégorie</a>

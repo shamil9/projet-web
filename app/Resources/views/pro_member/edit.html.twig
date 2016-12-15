@@ -10,7 +10,8 @@
     <div class="container">
         <div class="row">
             <p class="text-right">
-                <a href="{{ path('pro_user_profile', {'slug': user.slug}) }}" class="btn btn-default">Afficher profil</a>
+                <a href="{{ path('pro_user_profile', {'slug': user.slug}) }}" class="btn btn-default">Afficher
+                    profil</a>
             </p>
             <div class="col-lg-8">
                 <div class="row">
@@ -83,80 +84,84 @@
             acceptedFiles: 'image/jpeg, image/png',
             dictDefaultMessage: 'Glissez vos images ici'
         };
-        $( '.slider-image' ).on( 'click', function ( e ) {
-            e.preventDefault();
-            var id = $( this ).attr( 'id' );
-            var url = '/slider/' + id + '/destroy';
-            var self = $( this );
-            $.ajax( url )
-                    .done( function () {
-                        self.animate( {
+        $ ('.slider-image').on ('click', function ( e ) {
+            e.preventDefault ();
+            var id   = $ (this).attr ('id');
+            var url  = '/slider/' + id + '/destroy';
+            var self = $ (this);
+            $.ajax (url)
+                    .done (function () {
+                        self.animate ({
                             opacity: 0
                         }, 300, function () {
-                            self.remove();
-                        } );
-                    } );
-        } );
+                            self.remove ();
+                        });
+                    });
+        });
+
+        $('#catSubmit').on('submit', function ( event ) {
+            event.preventDefault();
+        });
 
         {% for category in user.categories %}
-        $.each( $( 'option' ), function ( index, el ) {
-            el = $( el );
-            el.attr( 'selected', function () {
-                if ( '{{ category.id }}' === el.val() )
+        $.each ($ ('option'), function ( index, el ) {
+            el = $ (el);
+            el.attr ('selected', function () {
+                if ( '{{ category.id }}' === el.val () )
                     return 'selected';
-            } )
-        } );
+            })
+        });
         {% endfor %}
 
-        $( '#pro_member_categories' ).select2( {
+        $ ('#pro_member_categories').select2 ({
             language: 'fr',
             placeholder: 'Sélectionnez votre catégorie',
             theme: 'bootstrap'
-        } );
+        });
         var cities = [];
-        $.getJSON('{{ asset('assets/js/cities.json') }}')
-            .done(function(data) {
-                findCity(data)
-            });
+        $.getJSON ('{{ asset('assets/js/cities.json') }}')
+                .done (function ( data ) {
+                    findCity (data)
+                });
 
         //Recherche de la ville sur base de la valeur du champ "Ville"
-        var findCity = function(cities) {
-            var zipInput = $('#pro_member_zip');
-            var cityInput = $('#pro_member_city');
+        var findCity = function ( cities ) {
+            var zipInput  = $ ('#pro_member_zip');
+            var cityInput = $ ('#pro_member_city');
             var options;
-            var zip = parseInt(zipInput.val());
-            var pattern = RegExp('^' + zip + '\d*', 'g');
+            var zip       = parseInt (zipInput.val ());
+            var pattern   = RegExp ('^' + zip + '\d*', 'g');
 
-            //Inérsion du résultat après un rechargement de la page
-            if (zip) {
-                var results = cities.filter(function(key) {
-                    if (pattern.test(parseInt(key.zip)))
+            //Insertion du résultat après un rechargement de la page
+            if ( zip ) {
+                var results = cities.filter (function ( key ) {
+                    if ( pattern.test (parseInt (key.zip)) )
                         return key.name;
                 });
 
-                results.forEach(function(key, index) {
-                    options += '<option value="' + key.name + '">'+ key.name +'</option>';
+                results.forEach (function ( key, index ) {
+                    options += '<option value="' + key.name + '">' + key.name + '</option>';
                 });
 
-                cityInput.html(options);
+                cityInput.html (options);
             }
 
-            zipInput.on('change', function(e) {
-                var zip = parseInt(zipInput.val());
-                var pattern = RegExp('^' + zip + '\d*', 'g');
-                options = null;
+            zipInput.on ('change', function ( e ) {
+                var zip     = parseInt (zipInput.val ());
+                var pattern = RegExp ('^' + zip + '\d*', 'g');
+                options     = null;
 
                 //Filtrage des ville par le code postal
-                var results = cities.filter(function(key) {
-                    if (pattern.test(parseInt(key.zip)))
+                var results = cities.filter (function ( key ) {
+                    if ( pattern.test (parseInt (key.zip)) )
                         return key.name;
                 });
 
-                //Insértion des résultats dans le champ "ville"
-                results.forEach(function(key) {
-                    options += '<option value="' + key.name + '">'+ key.name +'</option>';
+                //Insertion des résultats dans le champ "ville"
+                results.forEach (function ( key ) {
+                    options += '<option value="' + key.name + '">' + key.name + '</option>';
                 });
-                cityInput.empty().html(options);
+                cityInput.empty ().html (options);
             });
         };
     </script>

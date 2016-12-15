@@ -65,4 +65,10 @@ abstract class BaseController extends Controller
         dump($content);
         die();
     }
+
+    protected function log($message)
+    {
+        $logger = $this->get('logger');
+        $logger->info($message);
+    }
 }

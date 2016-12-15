@@ -3,8 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Image;
+use AppBundle\Event\EmailNotification;
+use AppBundle\Form\CategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CategoryController extends BaseController
@@ -13,6 +15,8 @@ class CategoryController extends BaseController
      * La liste des tous les services
      *
      * @Route("/services", name="category_list")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {
@@ -38,26 +42,25 @@ class CategoryController extends BaseController
     }
 
     /**
-     * Suggestion de catégorie de sérvice
+     * Suggestion de catégorie de service
      *
-     * @param  Request $request
-     * @return Render
+     * @Route("categorie/ajouter", name="category_new")
      */
     public function newAction()
     {
         $form = $this->createForm(CategoryType::class);
 
-        $this->render('admin/categories/partials/_form.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('category/new.html.twig', [
+            'catSubmitForm' => $form->createView(),
         ]);
     }
 
     /**
      * Enregistrement de la catégories proposée
      *
-     * @Route("/category/submmit", name="category_submit")
+     * @Route("/category/submit", name="category_submit")
      * @param  Request $request
-     * @return JsonResponse
+     * @return RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -67,15 +70,29 @@ class CategoryController extends BaseController
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() && $form->isSubmitted()) {
+
             $category->setIsActive(0);
+
+            $image = new Image();
+            $categoryImage = $this->get('app.image_storage_manager')->storeCategoryImage($category);
+            $imageManager = $this->get('app.image_manager')->make($categoryImage);
+            $imageManager->createCategoryImage();
+
+            // Enregistrement d'image
+            $image->setPath($imageManager->image->basename);
+            $image->setType('category');
+            $category->setImage($image);
 
             $this->em()->persist($category);
             $this->em()->flush();
 
-            JsonResponse::create(null, 200);
+            // Envoi d'email de notification
+            $event = new EmailNotification(['category' => $category, 'user' => $this->getUser()]);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch('category.submission', $event);
         }
 
-        JsonResponse::create(null, 500);
+        return $this->redirectToRoute('pro_user_profile', ['slug' => $this->getUser()->getSlug()]);
     }
 }

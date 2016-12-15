@@ -13,8 +13,11 @@
                 <div class="card-system-content">
                     <h2><a href="{{ path('category_show', {'slug': category.slug}) }}" title="{{ category.name }}">{{ category.name }}</a></h2>
                     <h3>{{ category.description }}</h3>
-                    <a href="{{ path('admin_categories_update', {'id': category.id}) }}" class="btn btn-primary btn-xs">Editer</a>
-                    <a href="{{ path('admin_categories_destroy', {'id': category.id}) }}" class="btn btn-secondary btn-xs">Supprimer</a>
+                    <a href="{{ path('admin_categories_update', {'id': category.id}) }}" class="btn btn-info btn-xs">Editer</a>
+                    <a href="{{ path('admin_categories_destroy', {'id': category.id}) }}" class="btn btn-danger btn-xs">Supprimer</a>
+                    {% if not category.isActive %}
+                    <a href="{{ path('admin_categories_approve', {'id': category.id}) }}" class="btn btn-success btn-xs">Approuver</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

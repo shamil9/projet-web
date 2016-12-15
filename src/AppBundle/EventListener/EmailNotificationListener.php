@@ -2,6 +2,7 @@
 
 namespace AppBundle\EventListener;
 
+use AppBundle\Entity\ProMember;
 use AppBundle\Event\EmailNotification;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -97,5 +98,28 @@ class EmailNotificationListener
         $this->mailer->send($message);
 
         $this->logger->info('Pro Member contact email');
+    }
+
+    public function onCategorySubmission(EmailNotification $event)
+    {
+        /** @var ProMember $user */
+        $user = $event->params['user'];
+        $category = $event->params['category'];
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Nouvelle suggestion de catégorie')
+            ->setFrom($user->getEmail())
+            ->setTo('admin@bien-etre.com')
+            ->setBody(
+                $this->twig->render('emails/category-submission.html.twig', [
+                    'user'    => $user,
+                    'category' => $category,
+                ]),
+                'text/html'
+            );
+
+        $this->mailer->send($message);
+
+        $this->logger->info($user->getUsername() . ' suggested category ' . $category->getName());
     }
 }

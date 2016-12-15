@@ -1,10 +1,8 @@
 <div class="background-white p20 mb50">
     {{ form_start(form,
-        {'action': path('admin_categories_create'),
-            'attr': {'class': 'form-vertical'}
-        })
-    }}
+    {'action': path('admin_categories_create'),
+        'attr': {'class': 'form-vertical'}
+    }) }}
         {% include 'admin/categories/partials/_form.html.twig' %}
     <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i>Soumettre</button>
-    {{ form_end(form) }}
 </div>

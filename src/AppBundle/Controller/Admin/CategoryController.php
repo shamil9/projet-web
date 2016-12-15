@@ -65,6 +65,8 @@ class CategoryController extends BaseController
 
             $this->em()->persist($category);
             $this->em()->flush();
+
+            $this->log($category->getName() . ' category created.');
         }
 
         return $this->redirectToRoute('admin_categories');
@@ -100,6 +102,8 @@ class CategoryController extends BaseController
             $this->em()->persist($category);
             $this->em()->flush();
 
+            $this->log($category->getName() . ' category updated.');
+
             return $this->redirectToRoute('admin_categories');
         }
 
@@ -122,9 +126,14 @@ class CategoryController extends BaseController
         $this->em()->remove($category);
         $this->em()->flush();
 
+        $this->log($category->getName() . ' category removed.');
+
         return $this->redirectToRoute('admin_categories');
     }
 
+    /**
+     * Supprimer la promotion de la précédente catégorie
+     */
     private function removePreviousPromotion()
     {
         $promoted = $this->collection(
@@ -133,8 +142,30 @@ class CategoryController extends BaseController
 
         $promoted->each(function ($featuredCat) {
             $featuredCat->setPromoted(0);
+            $this->log($featuredCat->getName() . ' category removed promotion.');
             $this->em()->persist($featuredCat);
         });
+
         $this->em()->flush();
+    }
+
+    /**
+     * Approuve une catégorie suggérée par un prestataire
+     *
+     * @Route("/admin/category/{id}/approve", name="admin_categories_approve")
+     * @param Category $category
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function approuveCategoryAction(Category $category)
+    {
+        $category->setIsActive(1);
+
+        $this->em()->persist($category);
+        $this->em()->flush();
+
+        $this->log($category->getName() . ' category approved.');
+
+        return $this->redirectToRoute('admin_categories');
     }
 }

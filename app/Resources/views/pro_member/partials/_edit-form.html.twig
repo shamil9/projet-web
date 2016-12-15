@@ -51,7 +51,9 @@
 </div>
 
 <div class="form-group">
-    <small class="pull-right"><a href="">Proposer une catégorie</a></small>
+    <small class="pull-right">
+        <a href="{{ path('category_new') }}" class="label label-info">Proposer une catégorie</a>
+    </small>
     {{ form_label(form.categories, 'Catégories de service') }}
     {{ form_errors(form.categories) }}
     {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
