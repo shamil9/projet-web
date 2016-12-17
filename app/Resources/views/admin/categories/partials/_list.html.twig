@@ -1,6 +1,6 @@
 {% if categories is not empty %}
     {% for category in categories | reverse %}
-    {% set image = catImage ~ category.image.path ?? 'default-cat.svg' %}
+    {% set image = categories_folder ~ category.image.path ?? 'default-cat.svg' %}
         <div class="card-system">
             <div class="card-system-inner">
                 <div class="card-system-image"

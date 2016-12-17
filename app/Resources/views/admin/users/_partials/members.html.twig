@@ -1,7 +1,7 @@
 {% for member in members | reverse | slice(0, count) %}
     <tr>
         <td>
-            <img src="{{ avatars ~ member.picture }}" alt="{{ member.username }}">
+            <img src="{{ avatars_folder ~ member.picture }}" alt="{{ member.username }}">
         </td>
         <td class="hidden-xs visible-sm visible-md visible-lg">
             <h2>{{ member.username }}</h2>
@@ -10,11 +10,20 @@
         <td class="right">
             <a href="{{ path('admin_users_edit', {'user': member.id}) }}" class="btn btn-xs btn-primary">Editer</a>
             {% if member.isActive %}
-            <a href="{{ path('admin_users_ban', {'user': member.id}) }}" class="btn btn-xs btn-danger">Bloquer</a>
+                <form style="display: inline;" action="{{ path('admin_users_ban', {'user': member.id}) }}" method="POST">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_user_ban_token') }}">
+                    <button class="btn btn-xs btn-danger">Bloquer</button>
+                </form>
             {% else %}
-            <a href="{{ path('admin_users_ban', {'user': member.id}) }}" class="btn btn-xs btn-primary">Débloquer</a>
+                <form style="display: inline;" action="{{ path('admin_users_ban', {'user': member.id}) }}" method="POST">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_user_ban_token') }}">
+                    <button class="btn btn-xs btn-success">Débloquer</button>
+                </form>
             {% endif %}
-            <a href="{{ path('admin_users_destroy', {'user': member.id}) }}" class="btn btn-xs btn-danger">X</a>
+            <form style="display: inline;" action="{{ path('admin_users_destroy', {'user': member.id}) }}" method="POST">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_user_destroy_token') }}">
+                <button class="btn btn-xs btn-danger" type="submit">X</button>
+            </form>
         </td>
     </tr>
 {% endfor %}

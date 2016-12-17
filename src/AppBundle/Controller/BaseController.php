@@ -66,6 +66,11 @@ abstract class BaseController extends Controller
         die();
     }
 
+    /**
+     * Enregistrer l'historique
+     *
+     * @param $message
+     */
     protected function log($message)
     {
         $logger = $this->get('logger');

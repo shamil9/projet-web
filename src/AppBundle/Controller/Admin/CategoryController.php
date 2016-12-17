@@ -43,6 +43,7 @@ class CategoryController extends BaseController
      *
      * @Route("/admin/categories/create", name="admin_categories_create")
      * @param  Request $request
+     *
      * @return Response
      */
     public function createAction(Request $request)
@@ -76,8 +77,9 @@ class CategoryController extends BaseController
      * Mise à jour de la catégorie
      *
      * @Route("/admin/category/{id}", name="admin_categories_update")
-     * @param Request $request
+     * @param Request  $request
      * @param Category $category
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request, Category $category)
@@ -87,17 +89,17 @@ class CategoryController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
-           if (!is_null($request->files->get('category')['image'])) {
+            if (!is_null($request->files->get('category')['image'])) {
                 //Supression de l'encienne image
                 unlink($this->getParameter('categories_folder') . $currentImage->getPath());
                 $this->em()->remove($currentImage);
 
                 $this->createCategoryImage($category);
-           }
+            }
 
-           if ($category->getPromoted()) {
-               $this->removePreviousPromotion();
-           }
+            if ($category->getPromoted()) {
+                $this->removePreviousPromotion();
+            }
 
             $this->em()->persist($category);
             $this->em()->flush();
@@ -108,7 +110,7 @@ class CategoryController extends BaseController
         }
 
         return $this->render('admin/categories/update.html.twig', [
-            'form' => $form->createView(),
+            'form'     => $form->createView(),
             'category' => $category,
         ]);
     }
@@ -118,11 +120,11 @@ class CategoryController extends BaseController
      *
      * @Route("/admin/category/{id}/destroy", name="admin_categories_destroy")
      * @param  Category $category
+     *
      * @return Response
      */
     public function destroyAction(Category $category)
     {
-        // $this->adminCheck();
         $this->em()->remove($category);
         $this->em()->flush();
 

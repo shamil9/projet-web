@@ -17,9 +17,12 @@ class CommentsController extends BaseController
 {
     /**
      * @Route("/prestataires/{user}/comments/new", name="comments_new")
-     * @param Request $request
-     * @param ProMember $proMember
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request   $request
+     * @param ProMember $user
+     *
+     * @return Response
+     * @internal param ProMember $proMember
+     *
      */
     public function newAction(Request $request, ProMember $user)
     {
@@ -39,7 +42,7 @@ class CommentsController extends BaseController
 
         return $this->render(':pro_member/partials:_comments-form.html.twig', [
             'commentForm' => $commentForm->createView(),
-            'proMember' => $user,
+            'proMember'   => $user,
         ]);
     }
 
@@ -47,8 +50,12 @@ class CommentsController extends BaseController
      * Enregistre un commentaire signalé
      *
      * @Route("/comments/{id}/report", name="comments_report")
-     * @param  Comment $comment
+     * @param Request $request
+     * @param Comment $id
+     *
      * @return Response
+     * @internal param Comment $comment
+     *
      */
     public function reportAction(Request $request, Comment $id)
     {
@@ -67,8 +74,8 @@ class CommentsController extends BaseController
             $message = $this->sendEmail($this->getParameter('admin_mail'), 'system@bien-etre.com', $request->get('description'))
                 ->setBody(
                     $this->render('emails/comment-report.html.twig', [
-                        'user' => $this->getUser()->getUsername(),
-                        'url' => $request->server->get('HTTP_REFERER'),
+                        'user'    => $this->getUser()->getUsername(),
+                        'url'     => $request->server->get('HTTP_REFERER'),
                         'message' => $request->request->get('comment_report')['description'],
                     ])
                 );
@@ -82,7 +89,7 @@ class CommentsController extends BaseController
         }
 
         return $this->render('comments/report.html.twig', [
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
             'comment' => $id,
         ]);
     }

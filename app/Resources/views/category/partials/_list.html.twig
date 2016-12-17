@@ -1,5 +1,5 @@
 {% for category in categories %}
-    {% set image = catImage ~ category.image.path ?? 'default-cat.svg' %}
+    {% set image = categories_folder ~ category.image.path ?? 'default-cat.svg' %}
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">

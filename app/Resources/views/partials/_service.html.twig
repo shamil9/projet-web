@@ -1,5 +1,5 @@
 {% for category in categories if category.promoted %}
 <a href="{{ path('category_show', {'slug': category.slug}) }}">
-    <img class="thumbnail promoted-category" src="{{ catImage ~ category.image.path ?? 'default-cat.svg' }}" alt="{{ category.name }}" data-toggle="tooltip" data-placement="bottom" title="{{ category.name }}">
+    <img class="thumbnail promoted-category" src="{{ categories_folder ~ category.image.path ?? 'default-cat.svg' }}" alt="{{ category.name }}" data-toggle="tooltip" data-placement="bottom" title="{{ category.name }}">
 </a>
 {% endfor %}

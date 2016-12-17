@@ -33,7 +33,7 @@
     <img src="/assets/img/uploads/avatars/{{ user.picture }}" alt="{{ user.username }}"
          class="pull-right img-circle img--100x100">
     {{ form_widget(form.picture, {'attr': {
-        'value': avatars ~ user.picture}
+        'value': avatars_folder ~ user.picture}
     }) }}
     <p class="help-block">Choisissez votre avatar (au format jpg ou png)</p>
 </div>

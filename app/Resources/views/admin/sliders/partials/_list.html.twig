@@ -3,8 +3,8 @@
     {% for slider in sliders %}
         <div class="col-lg-6">
             <div class="card"
-                data-background-image="{{ slides ~ slider.path }}"
-                style="background-image: url("{{ slides ~ slider.path }}");">
+                data-background-image="{{ sliders_folder ~ slider.path }}"
+                style="background-image: url("{{ sliders_folder ~ slider.path }}");">
                 <div class="card-content">
                     <div class="card-actions">
                         <a href="{{ path('admin_sliders_destroy', {'id': slider.id}) }}" title="Supprimer">
