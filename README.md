@@ -26,10 +26,10 @@ Les  services proposés se fondent sur les informations fournies par les prestat
 
 
 ### Description fonctionnelle du site
-* Recherche par type de services ou_et  par lieu ou_et  par prestataire - attention prévoir une pagination pour les résultats de la recherche
-* Visualiser les services et leur description
-* Visualiser les différents prestataires
-* Visualiser les informations détaillées des prestataires de services
+* :white_check_mark: Recherche par type de services ou_et  par lieu ou_et  par prestataire - attention prévoir une pagination pour les résultats de la recherche
+* :white_check_mark: Visualiser les services et leur description
+* :white_check_mark: Visualiser les différents prestataires
+* :white_check_mark: Visualiser les informations détaillées des prestataires de services
 	* Description
 	* Photo
 	* Lien vers site officiel
@@ -37,13 +37,13 @@ Les  services proposés se fondent sur les informations fournies par les prestat
 		* nom
 		* adresse
 		* mobile
-* Numéro de TVA
-* Stages proposés
+* :white_check_mark: Numéro de TVA
+* :white_check_mark: Stages proposés
 	* Description
 	* Tarif + information complémentaire
 	* Date de début et date de fin
-* Promotions (si utilisateur authentifié)
-* Possibilité 
+* :white_check_mark: Promotions (si utilisateur authentifié)
+* :white_check_mark: Possibilité 
 	* Ajouter à mes favoris (si utilisateur authentifié)
 	* Laisser un commentaire (si utilisateur authentifié)
 	* Contacter cet établissement (formulaire de contact)
@@ -52,13 +52,13 @@ Les  services proposés se fondent sur les informations fournies par les prestat
 	* Zoomer sur le plan (affichage dans une lightbox un google map)
 	* Prévenir de commentaires abusifs (si utilisateur authentifié)
 
-* « Ces prestataires pourraient vous intéresser » afficher d’autres prestataires qui offrent des services comparables dans la même ville
-* Liens vers réseaux sociaux 
-* Prévoir la ré-écriture d’url
+* :white_check_mark: « Ces prestataires pourraient vous intéresser » afficher d’autres prestataires qui offrent des services comparables dans la même ville
+* :white_check_mark: Liens vers réseaux sociaux 
+* :white_check_mark: Prévoir la ré-écriture d’url
 
 #### Inscription sur le site
-* Un prestataire peut s’inscrire sur le site via un formulaire assez simple : nom – prénom – mail (vérification de l’inscription via mail) ou via Facebook Connect (à voir…)
-* Une fois connecté, le prestataire peut modifier toutes les informations qui apparaissent dans sa page d’information :
+* :white_check_mark: Un prestataire peut s’inscrire sur le site via un formulaire assez simple : nom – prénom – mail (vérification de l’inscription via mail) ou via Facebook Connect (à voir…)
+* :white_check_mark: Une fois connecté, le prestataire peut modifier toutes les informations qui apparaissent dans sa page d’information :
 	* Description
 	* Photos
 	* Lien vers site officiel
@@ -67,19 +67,19 @@ Les  services proposés se fondent sur les informations fournies par les prestat
 		* adresse
 		* téléphone 
 		* Numéro de TVA
-* Ajout de promo en vue de fidéliser les internautes (par exemple : promotion sur un type de soin/massage – une réduction sur un stage, … ) => pdf à télécharger (créer dynamiquement via les données insérées dans le formulaire)
-* Le prestataire choisit   les  catégories dans lesquelles il désire apparaître.  Si la catégorie est manquante, il peut demander sa création (avec modération de l’administrateur du site pour éviter des doublons avec fautes d’orthographes, par exemple).
-* Il peut également annoncer des stages
-* Pour chaque stage, les informations suivantes sont demandées :
+* :white_check_mark: Ajout de promo en vue de fidéliser les internautes (par exemple : promotion sur un type de soin/massage – une réduction sur un stage, … ) => pdf à télécharger (créer dynamiquement via les données insérées dans le formulaire)
+* :white_check_mark: Le prestataire choisit   les  catégories dans lesquelles il désire apparaître.  Si la catégorie est manquante, il peut demander sa création (avec modération de l’administrateur du site pour éviter des doublons avec fautes d’orthographes, par exemple).
+* :white_check_mark: Il peut également annoncer des stages
+* :white_check_mark: Pour chaque stage, les informations suivantes sont demandées :
 	* Description
 	* Tarif + information complémentaire
 	* Date de début et date de fin
 	* Date à partir laquelle il désire que l’annonce soit publiée + durée de parution
 	
 #### Internautes
-* Un internaute peut s’inscrire sur le site via un formulaire assez simple :
+* :white_check_mark: Un internaute peut s’inscrire sur le site via un formulaire assez simple :
  nom – prénom – mail (vérification de l’inscription via mail) ou via Facebook Connect (à voir…)
-* Une fois connecté, l’internaute peut 
+* :white_check_mark: Une fois connecté, l’internaute peut 
 	* gérer les informations de son profil : Nom – prénom – avatar – mail
 	* laisser des commentaires sur les prestataires
 	* donner une appréciation (cotation sous forme d’étoile)
@@ -88,8 +88,8 @@ Les  services proposés se fondent sur les informations fournies par les prestat
 
 
 #### Administrateur du site
-* Gestion des catégories de services
-* Gestion des prestataires (avec bannissement)
-* Gestion des utilisateurs internautes  (avec bannissement)
-* Gestion des commentaires	
+* :white_check_mark: Gestion des catégories de services
+* :white_check_mark: Gestion des prestataires (avec bannissement)
+* :white_check_mark: Gestion des utilisateurs internautes  (avec bannissement)
+* :white_check_mark: Gestion des commentaires	
 
