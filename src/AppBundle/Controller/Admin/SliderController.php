@@ -63,6 +63,8 @@ class SliderController extends BaseController
             $this->em()->persist($sliderImage);
             $this->em()->flush();
 
+            $this->log('Slider image added');
+
             return JsonResponse::create(null, 200);
         }
 
@@ -73,15 +75,21 @@ class SliderController extends BaseController
      * Supprime l'image du slider
      *
      * @Route("/admin/sliders/{id}/destroy", name="admin_sliders_destroy")
+     * @param Request $request
      * @param  Image  $slide
      * @return JsonResponse
      */
-    public function destroyAction(Image $slide)
+    public function destroyAction(Request $request, Image $slide)
     {
-        $this->em()->remove($slide);
-        $this->em()->flush();
-        //Supression de l'image
-        unlink($this->getParameter('assets_root') . '/img/uploads/slider/' . $slide->getPath());
+        $token = $request->get('_csrf_token');
+        if ($this->isCsrfTokenValid('admin_slider_destroy_token', $token)) {
+            $this->em()->remove($slide);
+            $this->em()->flush();
+
+            //Supression de l'image
+            unlink($this->getParameter('assets_root') . '/img/uploads/slider/' . $slide->getPath());
+            $this->log('Slider image deleted');
+        }
 
         return $this->redirectToRoute('admin_sliders');
     }

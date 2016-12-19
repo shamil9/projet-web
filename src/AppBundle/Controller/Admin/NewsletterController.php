@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Newsletter;
+use AppBundle\Event\EmailNotification;
 use AppBundle\Form\NewsletterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,6 +58,8 @@ class NewsletterController extends BaseController
             $this->sendNewsletter($fileName);
             $this->em()->persist($newsletter);
             $this->em()->flush();
+
+            $this->log('Newsletter enregistrée');
         }
 
         return $this->redirect('/admin/newsletters');
@@ -66,37 +69,32 @@ class NewsletterController extends BaseController
      * Supprimer une newsletter
      *
      * @Route("/admin/newsletters/{id}/destroy", name="admin_newsletters_destroy")
+     * @param Request     $request
      * @param  Newsletter $newsletter
      * @return Response
      */
-    public function destroyAction(Newsletter $newsletter)
+    public function destroyAction(Request $request, Newsletter $newsletter)
     {
-        $this->em()->remove($newsletter);
-        $this->em()->flush();
+        $token = $request->get('_csrf_token');
+        if ($this->isCsrfTokenValid('admin_newsletter_destroy_token', $token)) {
+            $this->em()->remove($newsletter);
+            $this->em()->flush();
+        }
 
-        return $this->redirect('/admin/newsletters');
+        $this->log('Newsletter supprimée');
+
+        return $this->redirectToRoute('admin_newsletters');
     }
 
     private function sendNewsletter($file)
     {
         $subscribers = $this->getRepository('AppBundle:NewsletterSubscriber')->findAll();
 
+        $dispatcher = $this->get('event_dispatcher');
+
         foreach ($subscribers as $subscriber) {
-            $message = \Swift_Message::newInstance()
-                ->setSubject('Bien Etre Newsletter')
-                ->setFrom('bien@etre.com')
-                ->setTo($subscriber->getUser()->getEmail())
-                ->setBody(
-                    $this->renderView(
-                        'emails/newsletter.html.twig',
-                        [
-                            'file' => 'http://bien-etre.com/assets/img/uploads/newsletters/' . $file,
-                            'user' => $subscriber->getUser(),
-                        ]
-                    ),
-                    'text/html'
-                );
-            $this->get('mailer')->send($message);
+            $event = new EmailNotification(['user' => $subscriber->getUser(), 'file' => $file]);
+            $dispatcher->dispatch('global.contact', $event);
         }
     }
 }

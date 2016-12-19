@@ -14,7 +14,10 @@
                     <h2><a href="{{ path('category_show', {'slug': category.slug}) }}" title="{{ category.name }}">{{ category.name }}</a></h2>
                     <h3>{{ category.description }}</h3>
                     <a href="{{ path('admin_categories_update', {'id': category.id}) }}" class="btn btn-info btn-xs">Editer</a>
-                    <a href="{{ path('admin_categories_destroy', {'id': category.id}) }}" class="btn btn-danger btn-xs">Supprimer</a>
+                    <form style="display: inline;" action="{{ path('admin_categories_destroy', {'id': category.id}) }}" method="POST">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_category_destroy_token') }}">
+                        <button class="btn btn-xs btn-danger" type="submit">Supprimer</button>
+                    </form>
                     {% if not category.isActive %}
                     <a href="{{ path('admin_categories_approve', {'id': category.id}) }}" class="btn btn-success btn-xs">Approuver</a>
                     {% endif %}

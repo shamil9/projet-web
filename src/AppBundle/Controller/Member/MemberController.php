@@ -43,8 +43,10 @@ class MemberController extends BaseController
 
             $this->em()->persist($user);
             $this->em()->flush();
+
+            $this->log('User updated');
         }
 
-        return $this->redirect('/profil');
+        return $this->redirectToRoute('edit_profile');
     }
 }

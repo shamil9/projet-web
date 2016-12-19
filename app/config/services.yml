@@ -37,3 +37,5 @@ services:
             - { name: kernel.event_listener, event: promember.recommendation, method: onProMemberRecommendation }
             - { name: kernel.event_listener, event: promember.contact, method: onProMemberContact }
             - { name: kernel.event_listener, event: category.submission, method: onCategorySubmission }
+            - { name: kernel.event_listener, event: newsletter.save, method: onNewsLetterSend }
+            - { name: kernel.event_listener, event: comment.report, method: onCommentReport }

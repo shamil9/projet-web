@@ -6,6 +6,7 @@ use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\CommentReport;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
 * Gestion des commentaires
@@ -32,14 +33,19 @@ class CommentController extends BaseController
      * Supprimer un signalement
      *
      * @Route("/admin/comments/report/{id}/destroy", name="admin_comments_report_dismiss")
-     * @param  ReportComment $report
+     * @param Request        $request
+     * @param  CommentReport $report
      * @return Response
      */
-    public function dismissAction(CommentReport $report)
+    public function dismissAction(Request $request, CommentReport $report)
     {
-        // $this->adminCheck();
-        $this->em()->remove($report);
-        $this->em()->flush();
+        $token = $request->get('_csrf_token');
+        if ($this->isCsrfTokenValid('admin_comment_dismiss_token', $token)) {
+            $this->em()->remove($report);
+            $this->em()->flush();
+        }
+
+        $this->log('Signalement du commentaire supprimé');
 
         return $this->redirectToRoute('admin_comments');
     }
@@ -48,15 +54,20 @@ class CommentController extends BaseController
      * Supprimer le commentaire
      *
      * @Route("/admin/comments/{id}/destroy", name="admin_comments_destroy")
+     * @param Request  $request
      * @param  Comment $comment
      * @return Response
      */
-    public function destroyAction(Comment $comment)
+    public function destroyAction(Request $request, Comment $comment)
     {
         // $this->adminCheck();
+        $token = $request->get('_csrf_token');
+        if ($this->isCsrfTokenValid('admin_comment_destroy_token', $token)) {
+            $this->em()->remove($comment);
+            $this->em()->flush();
+        }
 
-        $this->em()->remove($comment);
-        $this->em()->flush();
+        $this->log('Commentaire supprimé');
 
         return $this->redirectToRoute('admin_comments');
     }

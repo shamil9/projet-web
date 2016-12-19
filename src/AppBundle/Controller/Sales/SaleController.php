@@ -27,9 +27,9 @@ class SaleController extends BaseController
      */
     public function indexAction(ProMember $user)
     {
-        return $this->render('sale/index.html.twig', array(
+        return $this->render('sale/index.html.twig', [
             'user' => $user,
-        ));
+        ]);
     }
 
     /**
@@ -48,16 +48,16 @@ class SaleController extends BaseController
             $this->em()->persist($sale);
             $this->em()->flush();
 
-            return $this->redirectToRoute('sales_index', array(
-                'id' => $sale->getId(),
+            return $this->redirectToRoute('sales_index', [
+                'id'   => $sale->getId(),
                 'slug' => $this->getUser()->getSlug(),
-            ));
+            ]);
         }
 
-        return $this->render('sale/new.html.twig', array(
+        return $this->render('sale/new.html.twig', [
             'user' => $this->getUser(),
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -72,10 +72,10 @@ class SaleController extends BaseController
     {
         $deleteForm = $this->createDeleteForm($sale);
 
-        return $this->render('sale/show.html.twig', array(
-            'sale' => $sale,
+        return $this->render('sale/show.html.twig', [
+            'sale'        => $sale,
             'delete_form' => $deleteForm->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -83,7 +83,7 @@ class SaleController extends BaseController
      *
      * @Route("/{id}/editer", name="sale_edit")
      * @param Request $request
-     * @param Sale $sale
+     * @param Sale    $sale
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Sale $sale)
@@ -96,16 +96,16 @@ class SaleController extends BaseController
             $this->em()->persist($sale);
             $this->em()->flush();
 
-            return $this->redirectToRoute('sale_edit', array(
-                'id' => $sale->getId(),
+            return $this->redirectToRoute('sale_edit', [
+                'id'   => $sale->getId(),
                 'slug' => $this->getUser()->getSlug(),
-            ));
+            ]);
         }
 
-        return $this->render('sale/edit.html.twig', array(
-            'edit_form' => $editForm->createView(),
+        return $this->render('sale/edit.html.twig', [
+            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -113,7 +113,7 @@ class SaleController extends BaseController
      *
      * @Route("/{id}", name="sale_delete")
      * @param Request $request
-     * @param Sale $sale
+     * @param Sale    $sale
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Sale $sale)
@@ -141,10 +141,11 @@ class SaleController extends BaseController
     private function createDeleteForm(Sale $sale)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('sale_delete', array(
+            ->setAction($this->generateUrl('sale_delete',
+                [
                     'id'   => $sale->getId(),
                     'slug' => $this->getUser()->getSlug(),
-                )
+                ]
             ))
             ->setMethod('DELETE')
             ->getForm();

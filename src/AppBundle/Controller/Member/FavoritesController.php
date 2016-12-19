@@ -7,6 +7,7 @@ use AppBundle\Controller\BaseController;
 use AppBundle\Entity\ProMember;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class FavoritesController extends BaseController
 {
@@ -34,23 +35,21 @@ class FavoritesController extends BaseController
     /**
      * @Route("/membres/favoris/supprimer/{proMember}", name="members_remove_favorite")
      * @param ProMember $proMember
-     *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
      */
-    public function removeFavoriteAction(Request $request, ProMember $proMember)
+    public function removeFavoriteAction(ProMember $proMember)
     {
         $this->userCheck();
 
-//        if ($this->isCsrfTokenValid('favorite_remove_token')) {
-            try {
-                $favoriteManager = $this->get('app.favorites_manager');
+        try {
+            $favoriteManager = $this->get('app.favorites_manager');
 
-                $favoriteManager->removeFavorite($this->getUser(), $proMember);
+            $favoriteManager->removeFavorite($this->getUser(), $proMember);
 
-                return JsonResponse::create(null, 200);
-            } catch (\Exception $e) {
-                return JsonResponse::create($e, 500);
-            }
-//        }
+            return JsonResponse::create(null, 200);
+        } catch (\Exception $e) {
+            return JsonResponse::create($e, 500);
+        }
     }
 }

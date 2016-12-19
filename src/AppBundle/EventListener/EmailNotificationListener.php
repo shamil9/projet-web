@@ -2,13 +2,14 @@
 
 namespace AppBundle\EventListener;
 
+use AppBundle\Entity\Member;
 use AppBundle\Entity\ProMember;
 use AppBundle\Event\EmailNotification;
 use Symfony\Bridge\Monolog\Logger;
 
 /**
-* Enovi d'email pour différents actions
-*/
+ * Enovi d'email pour différents actions
+ */
 class EmailNotificationListener
 {
     private $mailer;
@@ -37,7 +38,7 @@ class EmailNotificationListener
             ->setBody(
                 $this->twig->render('emails/contact.html.twig', [
                     'message' => $form['message'],
-                    'from' => $form['from'],
+                    'from'    => $form['from'],
                 ]),
                 'text/html'
             );
@@ -112,7 +113,7 @@ class EmailNotificationListener
             ->setTo('admin@bien-etre.com')
             ->setBody(
                 $this->twig->render('emails/category-submission.html.twig', [
-                    'user'    => $user,
+                    'user'     => $user,
                     'category' => $category,
                 ]),
                 'text/html'
@@ -121,5 +122,48 @@ class EmailNotificationListener
         $this->mailer->send($message);
 
         $this->logger->info($user->getUsername() . ' suggested category ' . $category->getName());
+    }
+
+    public function onNewsLetterSend(EmailNotification $event)
+    {
+        /** @var Member $user */
+        $user = $event->params['user'];
+        $file = $event->params['file'];
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Bien Etre Newsletter')
+            ->setFrom('bien@etre.com')
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->twig(
+                    'emails/newsletter.html.twig',
+                    [
+                        'file' => 'http://bien-etre.com/assets/img/uploads/newsletters/' . $file,
+                        'user' => $user,
+                    ]
+                ),
+                'text/html'
+            );
+        $this->mailer->send($message);
+    }
+
+    public function onCommentReport(EmailNotification $event)
+    {
+        $user = $event->params['user'];
+        $url = $event->params['request']->server->get('HTTP_REFERER');
+        $description = $event->params['request']->server->get('comment_report')['description'];
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject("Signalement d'un commentaire")
+            ->setFrom($user->getEmail())
+            ->setTo('admin@bien-etre.com')
+            ->setBody(
+                $this->twig->render('emails/comment-report.html.twig', [
+                    'user'    => $user,
+                    'url'     => $url,
+                    'message' => $description,
+                ])
+            );
+        $this->mailer->send($message);
     }
 }

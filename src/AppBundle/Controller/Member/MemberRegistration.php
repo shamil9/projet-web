@@ -33,12 +33,13 @@ class MemberRegistration extends BaseController
             // envoi d'email de confirmation
             $this->get('app.registration')->sendConfirmationMail($user);
 
+            $this->log('User created');
 
             return $this->redirectToRoute('homepage');
         }
 
         return $this->render('registration/member_register_form.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

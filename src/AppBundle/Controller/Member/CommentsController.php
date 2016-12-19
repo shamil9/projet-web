@@ -6,6 +6,7 @@ use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\CommentReport;
 use AppBundle\Entity\ProMember;
+use AppBundle\Event\EmailNotification;
 use AppBundle\Form\Comment\CommentReportType;
 use AppBundle\Form\Comment\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -36,6 +37,8 @@ class CommentsController extends BaseController
             $comment->setProMember($user);
             $this->em()->persist($comment);
             $this->em()->flush();
+
+            $this->log('Comment Saved');
 
             return JsonResponse::create($request->get('comment'), 200);
         }
@@ -71,19 +74,15 @@ class CommentsController extends BaseController
             $report->setMember($this->getUser());
 
             //Envoi de message
-            $message = $this->sendEmail($this->getParameter('admin_mail'), 'system@bien-etre.com', $request->get('description'))
-                ->setBody(
-                    $this->render('emails/comment-report.html.twig', [
-                        'user'    => $this->getUser()->getUsername(),
-                        'url'     => $request->server->get('HTTP_REFERER'),
-                        'message' => $request->request->get('comment_report')['description'],
-                    ])
-                );
-            $this->get('mailer')->send($message);
+            $event = new EmailNotification(['user' => $this->getUser(), 'request' => $request]);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch('comment.report', $event);
 
             //Enregistrement dans la db
             $this->em()->persist($report);
             $this->em()->flush();
+
+            $this->log('Comment Reported');
 
             return JsonResponse::create('ok', 200);
         }

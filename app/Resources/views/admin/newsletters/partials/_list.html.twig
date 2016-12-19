@@ -10,7 +10,10 @@
         <span>Date d'envoi {{ newsletter.postedAt | date('d/m/y') }}</span>
     </td>
     <td class="right">
-        <a href="{{ path('admin_newsletters_destroy', {'id': newsletter.id}) }}" class="btn btn-xs btn-danger">Supprimer</a>
+        <form style="display: inline;" action="{{ path('admin_newsletters_destroy', {'id': newsletter.id}) }}" method="POST">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_newsletter_destroy_token') }}">
+            <button class="btn btn-xs btn-danger" type="submit">Supprimer</button>
+        </form>
     </td>
 </tr>
 {% endfor %}

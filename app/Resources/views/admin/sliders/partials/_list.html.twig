@@ -7,9 +7,10 @@
                 style="background-image: url("{{ sliders_folder ~ slider.path }}");">
                 <div class="card-content">
                     <div class="card-actions">
-                        <a href="{{ path('admin_sliders_destroy', {'id': slider.id}) }}" title="Supprimer">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                        </a>
+                        <form style="display: inline;" action="{{ path('admin_sliders_destroy', {'id': slider.id}) }}" method="POST">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_slider_destroy_token') }}">
+                            <button class="btn btn-xs btn-danger" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </form>
                     </div>
                 </div>
             </div>

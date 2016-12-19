@@ -90,7 +90,7 @@ class CategoryController extends BaseController
 
         if ($form->isValid() && $form->isSubmitted()) {
             if (!is_null($request->files->get('category')['image'])) {
-                //Supression de l'encienne image
+                //Suppression de l'encienne image
                 unlink($this->getParameter('categories_folder') . $currentImage->getPath());
                 $this->em()->remove($currentImage);
 
@@ -119,14 +119,17 @@ class CategoryController extends BaseController
      * Supression de la catégorie
      *
      * @Route("/admin/category/{id}/destroy", name="admin_categories_destroy")
+     * @param Request   $request
      * @param  Category $category
-     *
      * @return Response
      */
-    public function destroyAction(Category $category)
+    public function destroyAction(Request $request, Category $category)
     {
-        $this->em()->remove($category);
-        $this->em()->flush();
+        $token = $request->get('_csrf_token');
+        if ($this->isCsrfTokenValid('admin_category_destroy_token', $token)) {
+            $this->em()->remove($category);
+            $this->em()->flush();
+        }
 
         $this->log($category->getName() . ' category removed.');
 
@@ -144,7 +147,7 @@ class CategoryController extends BaseController
 
         $promoted->each(function ($featuredCat) {
             $featuredCat->setPromoted(0);
-            $this->log($featuredCat->getName() . ' category removed promotion.');
+            $this->log($featuredCat->getName() . ' removed category promotion.');
             $this->em()->persist($featuredCat);
         });
 

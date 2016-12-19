@@ -26,6 +26,7 @@ Les  services proposés se fondent sur les informations fournies par les prestat
 
 
 ### Description fonctionnelle du site
+* Site multilingue  : EN / FR
 * :white_check_mark: Recherche par type de services ou_et  par lieu ou_et  par prestataire - attention prévoir une pagination pour les résultats de la recherche
 * :white_check_mark: Visualiser les services et leur description
 * :white_check_mark: Visualiser les différents prestataires
@@ -93,3 +94,29 @@ Les  services proposés se fondent sur les informations fournies par les prestat
 * :white_check_mark: Gestion des utilisateurs internautes  (avec bannissement)
 * :white_check_mark: Gestion des commentaires	
 
+### Authentification 
+* Le compte est bloqué après 4 essais.  Un lien permet de débloquer le compte en envoyant un nouveau mot de passe par mail
+* :white_check_mark: Attention, le mot de passe doit comporter au minimum 7 caractères avec chiffres et lettres
+
+### Home
+#### La page d’accueil comportera 
+* :white_check_mark: un slider (dont les images sont gérées automatiquement par l’administrateur)
+* :white_check_mark: une zone de recherche permettant une recherche par type de services ou/et  par lieu ou/et  par prestataire – attention prévoir une pagination pour les résultats de la recherche
+* :white_check_mark: le service du mois (un service est mis aléatoirement en avant par mois : photo + nom – le clic sur cet élément renvoie à la page descriptive de ce service
+* :white_check_mark: les 4 derniers prestataires encodés.  Le logo apparait et au survol de celui-ci le nom et un lien vers la fiche du prestataire sont disponibles
+
+### Flux RSS
+* Un flux rss dynamique doit être mis en place sur les nouvelles insertions des prestataires
+#### Menus 
+* Un bloc présentant les différents services sera toujours présent
+* :white_check_mark: Menu principal : Home / A propos / Partenaire /  Par région / Stages / Contact 
+
+### Bloc additionnels
+* Top des 5 derniers stages insérés
+* API googleMaps Exemple : trouver les praticiens qui habitent à 10km de chez moi
+* Gestion d’annonces publicitaires
+* :white_check_mark: Gestion des newsletters
+* L’internaute, une fois authentifié peut choisir les « blocs » qui s’affichent (personnaliser un mini-portail)
+	* Les 5 derniers stages d’un praticien favori
+	* Les 5 praticiens favoris
+	* Les 5 derniers commentaires sur un praticien favori
