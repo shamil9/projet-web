@@ -5,6 +5,7 @@ namespace AppBundle\Managers;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\User;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
 * Enregistrement des images soumises depuis les différents formulaire du site
@@ -41,6 +42,7 @@ class ImageStorageManager
      * Déplace et enregistre l'image d'avatar
      *
      * @param $user User
+     * @return string
      */
     public function storeAvatarImage(User $user)
     {

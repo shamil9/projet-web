@@ -85,7 +85,7 @@ class ProMemberController extends BaseController
                 $avatar = $this->get('app.image_storage_manager')->storeAvatarImage($user);
                 $image = $this->get('app.image_manager')->make($avatar);
 
-                $user->setPicture($image->createAvatar()->image->basename);
+                $user->setPicture($image->createAvatar()->basename);
             }
 
             $this->em()->persist($user);

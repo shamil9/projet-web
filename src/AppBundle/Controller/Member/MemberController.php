@@ -34,11 +34,11 @@ class MemberController extends BaseController
                 $user->setPassword($password);
             }
 
-            if (!is_null($request->files->get('member_edit')['picture'])) {
+            if (!is_null($request->files->get('member')['picture'])) {
                 $avatar = $this->get('app.image_storage_manager')->storeAvatarImage($user);
                 $image = $this->get('app.image_manager')->make($avatar);
 
-                $user->setPicture($image->createAvatar()->image->basename);
+                $user->setPicture($image->createAvatar()->basename);
             }
 
             $this->em()->persist($user);

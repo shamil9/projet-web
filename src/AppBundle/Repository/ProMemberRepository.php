@@ -11,7 +11,7 @@ class ProMemberRepository extends EntityRepository
 {
     /**
      * @param ProMember $user
-     * @return \Doctrine\ORM\Query
+     * @return array
      */
     public function findProUserSuggestions(ProMember $user)
     {
@@ -33,7 +33,7 @@ class ProMemberRepository extends EntityRepository
     }
 
     /**
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return array
      */
     public function findLatestProUsers()
     {
@@ -51,11 +51,13 @@ class ProMemberRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        return $qb->select(['user.city', $qb->expr()->count('user.id') . ' as totalUsers'])
+        return  $qb->select(['user.city', $qb->expr()->count('user.id') . ' as totalUsers'])
             ->from('AppBundle:ProMember', 'user')
             ->groupBy('user.city')
             ->getQuery()
             ->getResult();
+
+
     }
 
     public function search($userName, $city, $id)
@@ -64,7 +66,7 @@ class ProMemberRepository extends EntityRepository
 
         $qb->select('users')
             ->from('AppBundle:ProMember', 'users')
-            ->innerJoin('users.categories', 'cat')
+            ->leftJoin('users.categories', 'cat')
             ->addSelect('cat');
 
             if ($userName) {

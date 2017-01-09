@@ -4,7 +4,9 @@
     <div class="container">
         <h1>Stages de {{ user.name }}</h1>
         <div class="row">
-            {% include ':pro_member/partials:_workshops.html.twig' %}
+            {% for stage in user.workshops %}
+                {% include ':workshop/partials:_workshops.html.twig' %}
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
