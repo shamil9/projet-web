@@ -62,13 +62,15 @@
 
                     {#Social media#}
                     <span class="pull-right">
-                    <a href="#"><img class="pro_social-icons" src="{{ asset('assets/img/icons/twitter.svg') }}" alt=""></a>
-                    <a href="#"><img class="pro_social-icons" src="{{ asset('assets/img/icons/facebook.svg') }}" alt=""></a>
-                    <a href="#" data-toggle="modal" data-target="#recommend-user-form">
-                        <img class="pro_social-icons" src="{{ asset('assets/img/icons/mail.svg') }}" alt="">
-                    </a>
-                        {% include'pro_member/partials/_recommend-form.html.twig' %}
-                </span>
+                        <a href="https://twitter.com/intent/tweet?url={{ app.request.uri }}&text=Check this out dawg"><img class="pro_social-icons" src="{{ asset('assets/img/icons/twitter.svg') }}" alt=""></a>
+                        <a href="https://facebook.com/sharer.php?u={{ app.request.uri }}"><img class="pro_social-icons" src="{{ asset('assets/img/icons/facebook.svg') }}" alt=""></a>
+                        {% if app.user %}
+                            <a href="#" data-toggle="modal" data-target="#recommend-user-form">
+                                <img class="pro_social-icons" src="{{ asset('assets/img/icons/mail.svg') }}" alt="">
+                            </a>
+                                {% include'pro_member/partials/_recommend-form.html.twig' %}
+                        {% endif %}
+                    </span>
                 </div>
             </div>
         </div>
@@ -79,8 +81,12 @@
                     <div>
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-
                             <li role="presentation" class="active">
+                                <a href="#infos" aria-controls="infos" role="tab"
+                                   data-toggle="tab">Infos</a>
+                            </li>
+
+                            <li role="presentation">
                                 <a href="#categories" aria-controls="categories" role="tab"
                                    data-toggle="tab">Catégories</a>
                             </li>
@@ -127,7 +133,43 @@
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="categories">
+                            <div role="tabpanel" class="tab-pane active" id="infos">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h2>Description</h2>
+                                        <p>{{ user.description }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h2>Infos</h2>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <span class="glyphicon glyphicon-euro" aria-hidden="true"></span>
+                                                {{ user.tva }}
+                                            </li>
+                                            <li class="list-group-item">
+                                                <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                                                {{ user.phone }}
+                                            </li>
+                                            {% if user.website %}
+                                                <li class="list-group-item">
+                                                    <span class="glyphicon glyphicon-globe`" aria-hidden="true"></span>
+                                                    <a href="{{ user.website }}">Site web</a>
+                                                </li>
+                                            {% endif %}
+                                            <li class="list-group-item">
+                                                <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Adresse:
+                                                <address>
+                                                    <strong>{{ user.name }}</strong><br>
+                                                    {{ user.street }} <br>
+                                                    {{ user.zip ~ ' ' ~ user.city }}
+                                                </address>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="categories">
                                 <h1>Catégories</h1>
                                 <div class="row">
                                     {% include 'category/partials/_list.html.twig' with {'categories': user.categories } %}
