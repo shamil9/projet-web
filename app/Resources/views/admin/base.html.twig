@@ -7,11 +7,11 @@
     <link href="http://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="{{ asset('assets/admin/libraries/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/admin/libraries/owl.carousel/assets/owl.carousel.css') }}" rel="stylesheet" type="text/css" >
+{#     <link href="{{ asset('assets/admin/libraries/owl.carousel/assets/owl.carousel.css') }}" rel="stylesheet" type="text/css" >
     <link href="{{ asset('assets/admin/libraries/colorbox/example1/colorbox.css') }}" rel="stylesheet" type="text/css" >
     <link href="{{ asset('assets/admin/libraries/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/admin/libraries/bootstrap-fileinput/fileinput.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/admin/css/superlist.css') }}" rel="stylesheet" type="text/css" >
+ #}    <link href="{{ asset('assets/admin/css/superlist.css') }}" rel="stylesheet" type="text/css" >
     {% block stylesheets %}{% endblock %}
     <title>{% block title %}Administration{% endblock %}</title>
     </head>
@@ -64,13 +64,14 @@
 
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/admin/libraries/colorbox/jquery.colorbox-min.js') }}"></script>
-<script src="{{ asset('assets/admin/libraries/flot/jquery.flot.min.js') }}"></script>
-<script src="{{ asset('assets/admin/libraries/flot/jquery.flot.spline.js') }}"></script>
-<script src="{{ asset('assets/admin/libraries/bootstrap-select/bootstrap-select.min.js') }}"></script>
-<script src="{{ asset('assets/admin/libraries/owl.carousel/owl.carousel.js') }}"></script>
-<script src="{{ asset('assets/admin/libraries/bootstrap-fileinput/fileinput.min.js') }}"></script>
-<script src="{{ asset('assets/admin/js/superlist.js') }}"></script>
+<script src="{{ asset('assets/js/app.js') }}"></script>
+{# <script src="{{ asset('assets/admin/libraries/colorbox/jquery.colorbox-min.js') }}"></script> #}
+{# <script src="{{ asset('assets/admin/libraries/flot/jquery.flot.min.js') }}"></script> #}
+{# <script src="{{ asset('assets/admin/libraries/flot/jquery.flot.spline.js') }}"></script> #}
+{# <script src="{{ asset('assets/admin/libraries/bootstrap-select/bootstrap-select.min.js') }}"></script> #}
+{# <script src="{{ asset('assets/admin/libraries/owl.carousel/owl.carousel.js') }}"></script> #}
+{# <script src="{{ asset('assets/admin/libraries/bootstrap-fileinput/fileinput.min.js') }}"></script> #}
+{# <script src="{{ asset('assets/admin/js/superlist.js') }}"></script> #}
 <script>
     var path = window.location.pathname
     if (/\/admin\/users+/.test(path))

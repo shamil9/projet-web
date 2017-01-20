@@ -29,16 +29,28 @@
                 <ul class="nav navbar-right">
                     <li>
                         {% if app.user %}
-                            <a href=""
-                               data-toggle="dropdown" id="user"
-                               aria-haspopup="true"
-                               aria-expanded="true">
-                               <img src="/assets/img/uploads/avatars/{{ app.user.picture ?? 'user.svg' }}" class="img--30x30 img-circle" alt="{{ app.user.username }}">
-                            </a>
-                        <ul class="dropdown-menu" aria-labelledby="user">
-                            <li><a href="{{ path('edit_profile') }}">Profil</a></li>
-                            <li><a href="{{ path('logout') }}">Déconnexion</a></li>
-                        </ul>
+                            {% if app.user.username == 'admin' %}
+                                <a href=""
+                                   data-toggle="dropdown" id="user"
+                                   aria-haspopup="true"
+                                   aria-expanded="true">
+                                   <img src="/assets/img/uploads/avatars/{{ app.user.picture ?? 'user.svg' }}" class="img--30x30 img-circle" alt="{{ app.user.username }}">
+                                   <ul class="dropdown-menu" aria-labelledby="user">
+                                       <li><a href="{{ path('admin_index') }}">Administration</a></li>
+                                       <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                                   </ul>
+                            {% else %}
+                                <a href=""
+                                   data-toggle="dropdown" id="user"
+                                   aria-haspopup="true"
+                                   aria-expanded="true">
+                                   <img src="/assets/img/uploads/avatars/{{ app.user.picture ?? 'user.svg' }}" class="img--30x30 img-circle" alt="{{ app.user.username }}">
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="user">
+                                    <li><a href="{{ path('edit_profile') }}">Profil</a></li>
+                                    <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                                </ul>
+                            {% endif %}
                         {% else %}
                             <p class="navbar-text">
                                 <a class="navbar-link" href="{{ path('login') }}">Connexion</a>

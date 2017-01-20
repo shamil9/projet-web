@@ -15,3 +15,95 @@
     <button class="btn btn-info btn-lg" type="submit">Enregistrer</button>
     {{ form_end(form) }}
 {% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/dropzone.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        Dropzone.options.sliderImages = {
+            paramName: 'slider[path]',
+            url: '{{ path('slider_create') }}',
+            acceptedFiles: 'image/jpeg, image/png',
+            dictDefaultMessage: 'Glissez vos images ici'
+        };
+        $ ('.slider-image').on ('click', function ( e ) {
+            e.preventDefault ();
+            var id   = $ (this).attr ('id');
+            var url  = '/slider/' + id + '/destroy';
+            var self = $ (this);
+            $.ajax (url)
+                    .done (function () {
+                        self.animate ({
+                            opacity: 0
+                        }, 300, function () {
+                            self.remove ();
+                        });
+                    });
+        });
+
+        $('#catSubmit').on('submit', function ( event ) {
+            event.preventDefault();
+        });
+
+        {% for category in user.categories %}
+        $.each ($ ('option'), function ( index, el ) {
+            el = $ (el);
+            el.attr ('selected', function () {
+                if ( '{{ category.id }}' === el.val () )
+                    return 'selected';
+            })
+        });
+        {% endfor %}
+
+        $ ('#pro_member_categories').select2 ({
+            language: 'fr',
+            placeholder: 'Sélectionnez votre catégorie',
+            theme: 'bootstrap'
+        });
+        var cities = [];
+        $.getJSON ('{{ asset('assets/js/cities.json') }}')
+                .done (function ( data ) {
+                    findCity (data)
+                });
+
+        //Recherche de la ville sur base de la valeur du champ "Ville"
+        var findCity = function ( cities ) {
+            var zipInput  = $('#pro_member_zip');
+            var cityInput = $('#pro_member_city');
+            var options;
+            var zip       = parseInt (zipInput.val ());
+            var pattern   = RegExp ('^' + zip + '\d*', 'g');
+
+            //Insertion du résultat après un rechargement de la page
+            if ( zip ) {
+                var results = cities.filter (function ( key ) {
+                    if ( pattern.test (parseInt (key.zip)) )
+                        return key.name;
+                });
+
+                results.forEach (function ( key, index ) {
+                    options += '<option value="' + key.name + '">' + key.name + '</option>';
+                });
+
+                cityInput.html (options);
+            }
+
+            zipInput.on ('change', function ( e ) {
+                var zip     = parseInt (zipInput.val ());
+                var pattern = RegExp ('^' + zip + '\d*', 'g');
+                options     = null;
+
+                //Filtrage des ville par le code postal
+                var results = cities.filter (function ( key ) {
+                    if ( pattern.test (parseInt (key.zip)) )
+                        return key.name;
+                });
+
+                //Insertion des résultats dans le champ "ville"
+                results.forEach (function ( key ) {
+                    options += '<option value="' + key.name + '">' + key.name + '</option>';
+                });
+                cityInput.empty ().html (options);
+            });
+        };
+    </script>
+{% endblock %}
